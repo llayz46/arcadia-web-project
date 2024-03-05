@@ -18,15 +18,15 @@
 
 // TYPOS : title
 %home-title-h1
-  font-size: clamp(2.5rem, 5vw, 4rem) // Responsive TEST
+  font-size: clamp(2.5rem, 5vw, 4rem)
   line-height: 115.5%
   font-weight: 700
   color: var.$color-light
 
 %home-title-h2
-  font-size: clamp(2rem, 5vw, 3rem) // Responsive TEST
+  font-size: clamp(2rem, 5vw, 3rem)
   font-weight: 700
-  color: var.$color-light
+  color: var.$color-dark
 
 %home-title-h3
   font-size: 1.5rem
@@ -59,3 +59,15 @@
   color: var.$color-light
 
 // END : typos
+
+// START : layout
+%flex-center
+  display: flex
+  justify-content: center
+  align-items: center
+
+%flex-column-center
+  display: flex
+  flex-direction: column
+  align-items: center
+// END : layout

@@ -1,5 +1,9 @@
 @use '../utils/all' as utils
 
+// Span
+.accent
+  color: utils.$color-accent
+
 // Header
 .header__logo
   @extend %logo
@@ -10,8 +14,17 @@
 // Hero
 .hero__title
   @extend %home-title-h1
-  span
-    color: utils.$color-accent
 
 .hero__description
   @extend %home-content-l
+
+// Habitat
+.habitat__title
+  @extend %home-title-h2
+
+.habitat__description
+  @extend %home-content-m
+  text-align: center
+
+.habitat__link
+  @extend %logo

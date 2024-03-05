@@ -1,0 +1,20 @@
+@use '../utils/all' as utils
+
+.habitat
+  margin-bottom: 100px // REMOVE  
+
+  &__separator
+    width: 100%
+    padding-bottom: utils.$margin-l
+
+  &__container-text
+    @extend %flex-column-center
+    gap: utils.$margin-sm
+    padding-bottom: utils.$margin-xl
+
+  &__description
+    width: 62%
+
+  &__container-cards
+    display: flex
+    gap: utils.$margin-sm
