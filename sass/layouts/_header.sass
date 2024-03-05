@@ -1,0 +1,30 @@
+@use '../utils/all' as utils
+
+.header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 30px 0
+
+  &__list
+    display: flex
+    gap: 3rem
+
+  &__link
+    padding: 0 0 4px 0
+    &.active
+      box-shadow: 0 1px 0 utils.$color-light
+
+  &__burger
+    display: none
+
+@media screen and (max-width: 800px)
+  .header
+    padding: 1rem 0
+
+  .header__login,
+  .header__nav
+    display: none
+
+  .header__burger
+    display: block
