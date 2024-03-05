@@ -1,12 +1,6 @@
 @use '../utils/all' as utils
 
 .habitat
-  margin-bottom: 100px // REMOVE  
-
-  &__separator
-    width: 100%
-    padding-bottom: utils.$margin-l
-
   &__container-text
     @extend %flex-column-center
     gap: utils.$margin-sm
@@ -18,3 +12,6 @@
   &__container-cards
     display: flex
     gap: utils.$margin-sm
+
+  &__card--middle
+    padding-bottom: utils.$margin-3xl 

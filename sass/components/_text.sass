@@ -4,27 +4,39 @@
 .accent
   color: utils.$color-accent
 
-// Header
-.header__logo
+// Home - logo size
+.header__logo,
+.habitat__link
   @extend %logo
 
+// Home - header
 .header__link
   @extend %header
 
-// Hero
+// Home title - H1
 .hero__title
   @extend %home-title-h1
 
+// Home title - H2
+.habitat__title,
+.ecology__title,
+.animal__title
+  @extend %home-title-h2
+
+// Home title - H3
+.ecology__subtitle
+  @extend %home-title-h3
+
+// Home content - L
 .hero__description
   @extend %home-content-l
 
-// Habitat
-.habitat__title
-  @extend %home-title-h2
+.accordion__title
+  @extend %home-content-l-dark
 
-.habitat__description
+// Home content - M
+.habitat__description,
+.ecology__description,
+.animal__description
   @extend %home-content-m
   text-align: center
-
-.habitat__link
-  @extend %logo
