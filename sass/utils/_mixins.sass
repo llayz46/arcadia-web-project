@@ -1,10 +1,12 @@
-@mixin home-content-s(color)
+@use '../utils/_variables' as var
+
+@mixin home-content-s($color)
   font-size: 1rem
   font-weight: 400
   line-height: 1.5rem
 
-  @if color === 'light'
+  @if $color == 'light'
     color: var.$color-text-light
 
-  @if color === 'dark'
+  @if $color == 'dark'
     color: var.$color-text-dark

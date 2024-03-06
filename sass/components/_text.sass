@@ -21,7 +21,8 @@
 .habitat__title,
 .ecology__title,
 .animal__title,
-.services__title
+.services__title,
+.testimonial__title
   @extend %home-title-h2
 
 // Home title - H3
@@ -33,7 +34,8 @@
 .hero__description
   @extend %home-content-l
 
-.accordion__title
+.accordion__title,
+.testimonial__card-title
   @extend %home-content-l-dark
 
 // Home content - M
@@ -44,3 +46,7 @@
 .services__content
   @extend %home-content-m
   text-align: center
+
+// Home content - S
+.testimonial__card-content
+  +utils.home-content-s(dark)

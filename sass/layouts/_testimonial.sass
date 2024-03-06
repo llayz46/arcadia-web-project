@@ -1,0 +1,16 @@
+@use '../utils/all' as utils
+
+.testimonial
+  @extend %padding-tb
+
+  &__title
+    text-align: center
+    padding-bottom: utils.$margin-l
+
+  &__container-card
+    display: flex
+    gap: utils.$margin-sm
+    justify-content: space-between
+
+  &__card
+    width: 33%
