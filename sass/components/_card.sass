@@ -1,4 +1,5 @@
 @use '../utils/all' as utils
+@use 'sass:math'
 
 // Habitat
 .habitat__card
@@ -17,3 +18,20 @@
   @extend %flex-center
   gap: utils.$margin-s
   margin-top: (utils.$margin-m * 2) * -1
+
+// Animal
+.animal
+  &__card
+    box-shadow: 3px 3px 15px 0px rgba(0, 0, 0, 0.25)
+    padding: utils.$margin-xs
+    border-radius: math.div(utils.$margin-ml, 2)
+
+    &-title
+      text-align: center
+      padding: utils.$margin-ml 0
+
+  &__image
+    height: 275px
+    width: 100%
+    object-fit: cover
+    border-radius: utils.$margin-s

@@ -1,0 +1,42 @@
+@use '../utils/all' as utils
+
+// Animal
+.animal
+  &__container-grid
+    display: grid
+    gap: utils.$margin-sm
+    grid-template-columns: repeat(4, 1fr)
+    grid-template-rows: repeat(2, 1fr)
+    grid-column-gap: utils.$margin-sm
+    grid-row-gap: utils.$margin-sm
+    justify-content: center
+
+  &__card:nth-child(1)
+    grid-column-start: 1
+    grid-column-end: 3
+
+  &__card:nth-child(2)
+    grid-column-start: 3
+    grid-column-end: 4
+
+  &__card:nth-child(3)
+    grid-column-start: 4
+    grid-column-end: 5
+
+  &__card:nth-child(4)
+    grid-row-start: 2
+    grid-row-end: 2
+    grid-column-start: 1
+    grid-column-end: 2
+
+  &__card:nth-child(5)
+    grid-row-start: 2
+    grid-row-end: 2
+    grid-column-start: 2
+    grid-column-end: 4
+
+  &__card:nth-child(6)
+    grid-row-start: 2
+    grid-row-end: 2
+    grid-column-start: 4
+    grid-column-end: 5

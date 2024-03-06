@@ -1,7 +1,7 @@
 @use '../utils/all' as utils
 
 .animal
-  padding-top: utils.$margin-xxl
+  padding: utils.$margin-xxl 0
 
   &__container-text
     text-align: center
@@ -12,3 +12,4 @@
   &__description
     width: 70%
     @extend %margin-center
+    padding-bottom: utils.$margin-l
