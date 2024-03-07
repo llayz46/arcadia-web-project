@@ -1,0 +1,49 @@
+@use '../utils/all' as utils
+
+.footer
+  @extend %padding-tb
+
+  &__flex
+    display: flex
+    justify-content: space-between
+    padding-bottom: utils.$margin-ml
+    border-bottom: 1px solid rgba(utils.$color-light, 0.6)
+
+  &__column
+    display: flex
+    gap: utils.$margin-s
+    width: 28%
+
+    &:nth-child(2)
+      justify-content: center
+
+    &:last-child
+      justify-content: flex-end
+
+    svg
+      width: 1.5rem
+      height: 1.5rem
+
+    &-title
+      color: utils.$color-light
+      text-align-last: left
+      padding-bottom: utils.$margin-xs
+
+  &__info
+    &-wrapper
+      display: flex
+      gap: utils.$margin-m
+
+    &-container
+      display: flex
+      flex-direction: column
+      gap: utils.$margin-xs
+
+  &__bottom
+    padding-top: utils.$margin-ml
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+  &__copyright
+    opacity: 0.6

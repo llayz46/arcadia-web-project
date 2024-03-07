@@ -6,11 +6,13 @@
 
 // Home - logo size
 .header__logo,
-.habitat__link
+.habitat__link,
+.footer__logo
   @extend %logo
 
-// Home - header
-.header__link
+// Home - header/footer
+.header__link,
+.footer__copyright
   @extend %header
 
 // Home title - H1
@@ -43,10 +45,14 @@
 .ecology__description,
 .animal__description,
 .services__description,
-.services__content
+.services__content,
+.footer__column-title
   @extend %home-content-m
   text-align: center
 
 // Home content - S
 .testimonial__card-content
   +utils.home-content-s(dark)
+
+.footer__column-info
+  +utils.home-content-s(light)
