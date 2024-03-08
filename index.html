@@ -9,7 +9,7 @@
 <body class="body">
   <!-- START : header -->
   <header class="header flux">
-    <h3 class="header__logo">Arcadia</h3>
+    <a class="header__logo" href="">Arcadia</a>
     <nav class="header__nav">
       <ul class="header__list">
         <li class="header__item">
@@ -97,26 +97,35 @@
       </div>
       <div class="ecology__flux flux">
         <h3 class="ecology__subtitle">Vous aussi vous pouvez <span class="accent">contribuer</span></h3>
-        <div class="ecology__accordion">
-          <div class="accordion__tab">
-            <p class="accordion__title">Trajet en covoiturage</p>
-            <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
-            </svg>
-          </div>
-          <div class="accordion__tab">
-            <p class="accordion__title">Trajet en bus</p>
-            <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
-            </svg>
-          </div>
-          <div class="accordion__tab">
-            <p class="accordion__title">Voiture électrique</p>
-            <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
-            </svg>
-          </div>
-        </div>
+        <ul class="ecology__accordion">
+          <li class="accordion__container js-accordion-ecology">
+            <div class="accordion__question">
+              <p class="accordion__title">Trajet en covoiturage</p>
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
+              </svg>
+            </div>
+            <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nihil tempore nam officiis nesciunt temporibus sunt exercitationem commodi illum eligendi soluta delectus error ipsa illo vel aliquid, doloribus repudiandae? Facere.</p>
+          </li>
+          <li class="accordion__container js-accordion-ecology">
+            <div class="accordion__question">
+              <p class="accordion__title">Trajet en bus</p>
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
+              </svg>
+            </div>
+            <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt facere dolor dolorum nostrum quasi voluptates, maxime velit necessitatibus soluta suscipit. Dicta eaque quidem totam, repellat deserunt ipsum consequuntur blanditiis recusandae.</p>
+          </li>
+          <li class="accordion__container js-accordion-ecology">
+            <div class="accordion__question">
+              <p class="accordion__title">Voiture électrique</p>
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424"/>
+              </svg>
+            </div>
+            <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora optio, nostrum rem corrupti sunt blanditiis quisquam praesentium inventore obcaecati impedit. Molestias perspiciatis repellat voluptate error eveniet optio quo natus fugiat?</p>
+          </li>
+        </ul>
       </div>
     </section>
     <!-- END : ecology -->
@@ -126,6 +135,7 @@
       <div class="animal__container-text">
         <h2 class="animal__title">À la découverte de nos <span class="accent">compagnons</span></h2>
         <p class="animal__description">Plongez dans la diversité de la faune à Arcadia, où chaque coin révèle une nouvelle merveille de la nature. Des tigres majestueux aux pandas roux espiègles, chaque rencontre est une expérience unique et enrichissante. Venez explorer et apprécier la beauté de nos compagnons à fourrure, à plumes et à écailles.</p>
+        <a href="" class="button-dark">Nos Animaux</a>
       </div>
       <div class="animal__container-grid">
         <div class="animal__card">
@@ -161,6 +171,7 @@
       <div class="services__container-text">
         <h2 class="services__title">Découvrez les <span class="accent">services</span> d'Arcadia</h2>
         <p class="services__description">Explorez les nombreux services offerts par Arcadia, conçus pour rendre votre expérience inoubliable. De notre restaurant gastronomique à des visites guidées des habitats avec un guide (gratuit), nous sommes là pour répondre à tous vos besoins. Laissez-nous vous guider à travers une aventure unique au cœur de la nature.</p>
+        <a href="" class="button-dark">Nos Services</a>
       </div>
       <div class="services__flux flux">
         <div class="services__flex">
@@ -284,14 +295,14 @@
           <h3 class="footer__column-title">Liens Rapides</h3>
           <div class="footer__info-wrapper">
             <div class="footer__info-container">
-              <p class="footer__column-info">Accueil</p>
-              <p class="footer__column-info">Habitats</p>
-              <p class="footer__column-info">Engagement</p>
+              <a href="" class="footer__column-info">Accueil</a>
+              <a href="" class="footer__column-info">Habitats</a>
+              <a href="" class="footer__column-info">Engagement</a>
             </div>
             <div class="footer__info-container">
-              <p class="footer__column-info">Animaux</p>
-              <p class="footer__column-info">Services</p>
-              <p class="footer__column-info">Avis</p>
+              <a href="" class="footer__column-info">Animaux</a>
+              <a href="" class="footer__column-info">Services</a>
+              <a href="" class="footer__column-info">Avis</a>
             </div>
           </div>
         </div>
@@ -302,7 +313,7 @@
         </svg>
         <div class="footer__column-content">
           <h3 class="footer__column-title">Nous trouver</h3>
-          <p class="footer__column-info">Arcadia - 123 Rue des Animaux, Forêt de Brocéliande, Bretagne, France</p>
+          <p class="footer__column-info--no-hover">Arcadia - 123 Rue des Animaux, Forêt de Brocéliande, Bretagne, France</p>
         </div>
       </div>
       <div class="footer__column">
@@ -337,5 +348,9 @@
     </div>
   </footer>
   <!-- END : footer -->
+
+  <!-- START : javascript -->
+  <script src="./assets/scripts/accordions.js"></script>
+  <!-- END : javascript -->
 </body>
 </html>

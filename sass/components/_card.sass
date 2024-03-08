@@ -18,6 +18,15 @@
   @extend %flex-center
   gap: utils.$margin-s
   margin-top: (utils.$margin-m * 2) * -1
+  transition: all 0.3s ease
+
+  &:hover
+    position: relative
+    z-index: 2
+    width: fit-content
+    margin-right: auto
+    margin-left: auto
+    box-shadow: 0 2px 0 utils.$color-light
 
 // Animal
 .animal
