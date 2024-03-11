@@ -15,3 +15,15 @@
 
   &__container-grid
     padding-top: utils.$margin-l
+
+@media screen and (max-width: 400px)
+  .animal
+    &__container-text
+      text-align: center
+      gap: utils.$margin-s
+
+    &__description
+      width: calc(100% - utils.$margin-s)
+
+    &__container-grid
+      padding-top: utils.$margin-m

@@ -12,3 +12,29 @@
     flex-direction: column
     gap: utils.$margin-l
     margin-left: utils.$margin-3xl
+
+  &__image--mobile
+    display: none
+
+@media screen and (max-width: 400px)
+  .hero
+    padding-top: utils.$margin-m
+    padding-bottom: utils.$margin-ssm
+    flex-direction: column
+    gap: utils.$margin-s
+
+    &__image
+      &--mobile
+        display: block
+        margin-left: auto
+
+      &--desktop
+        display: none
+
+    &__container-text
+      margin-left: 0
+      width: calc(100% - utils.$margin-m)
+      margin-right: auto
+      margin-left: auto
+      text-align: center
+      gap: utils.$margin-s

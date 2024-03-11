@@ -15,3 +15,18 @@
 
   &__card--middle
     padding-bottom: utils.$margin-3xl 
+
+  @media screen and (max-width: 400px)
+    &__container-text
+      gap: utils.$margin-s
+      padding-bottom: utils.$margin-m
+
+    &__description
+      width: calc(100% - utils.$margin-m)
+
+    &__container-cards
+      flex-direction: column
+      padding-bottom: utils.$margin-xl
+
+    &__card--middle
+      padding: utils.$margin-sm 0

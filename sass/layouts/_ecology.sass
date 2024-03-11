@@ -8,10 +8,8 @@
     width: 62%
     @extend %margin-center
 
-  &__title
-    padding-bottom: utils.$margin-sm
-
   &__description
+    padding-top: utils.$margin-sm
     padding-bottom: utils.$margin-l
 
   &__subtitle
@@ -19,3 +17,19 @@
 
   &__accordion
     padding-bottom: utils.$margin-xxl
+
+@media screen and (max-width: 400px)
+  .ecology
+    padding-top: utils.$margin-xl
+
+    &__container-text
+      width: calc(100% - utils.$margin-m)
+
+    &__description
+      padding: utils.$margin-s 0
+
+    &__subtitle
+      padding-bottom: utils.$margin-s
+
+    &__accordion
+      padding-bottom: utils.$margin-ml
