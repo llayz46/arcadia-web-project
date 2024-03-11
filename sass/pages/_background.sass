@@ -27,13 +27,19 @@
   background-color: utils.$color-dark
 
 // Responsive
-@media screen and (max-width: 400px)
+
+@media screen and (max-width: 1000px)
   .body
     background-image: url(../images/hero-background-parrot-mobile.jpg)
 
+  .ecology
+    margin-top: -50px
+
+@media screen and (max-width: 600px)
   .habitat
     padding-top: utils.$margin-xl
     clip-path: polygon(100% 2%, 100% 100%, 0 100%, 0 0)
 
   .ecology
+    margin-top: 0
     clip-path: polygon(27% 2%, 58% 0, 78% 2%, 100% 0, 100% 100%, 51% 100%, 27% 100%, 0 100%, 0 0)

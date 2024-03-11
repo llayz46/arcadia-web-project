@@ -28,7 +28,11 @@
     margin-left: auto
     box-shadow: 0 2px 0 utils.$color-light
 
-@media screen and (max-width: 400px)
+@media screen and (max-width: 800px)
+  .habitat__image
+    height: 300px
+
+@media screen and (max-width: 600px)
   .habitat__card
     width: 100%
 
@@ -76,3 +80,32 @@
   &-note
     display: flex
     justify-content: space-between
+
+.splide
+  &__slide
+    display: flex
+
+  &__arrow
+    background: none
+    opacity: 1
+    top: 100%
+
+    &:hover
+      svg
+        fill: utils.$color-accent
+
+    svg
+      width: 40px
+      height: 40px
+      fill: #111928
+      transition: all 0.12s ease-out
+
+  &__pagination
+    position: initial
+    padding-top: utils.$margin-sm
+
+    &__page
+      background-color: rgba(utils.$color-accent , 0.6)
+
+    &__page.is-active
+      background-color: utils.$color-accent

@@ -12,11 +12,29 @@
     flex-direction: column
     gap: utils.$margin-l
     margin-left: utils.$margin-3xl
+    padding-right: utils.$margin-ml
 
   &__image--mobile
     display: none
 
-@media screen and (max-width: 400px)
+  &__image--desktop
+    width: 40%
+
+@media screen and (max-width: 1000px)
+  .hero
+    flex-direction: column
+
+    &__container-text
+      width: 95%
+      padding: 0
+      margin: 0
+
+    &__image--desktop
+      padding-top: utils.$margin-s
+      margin-left: auto
+      width: 50%
+
+@media screen and (max-width: 800px)
   .hero
     padding-top: utils.$margin-m
     padding-bottom: utils.$margin-ssm
@@ -38,3 +56,9 @@
       margin-left: auto
       text-align: center
       gap: utils.$margin-s
+
+@media screen and (max-width: 350px)
+  .hero
+    &__image
+      &--mobile
+        display: none

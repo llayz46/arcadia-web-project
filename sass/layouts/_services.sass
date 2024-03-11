@@ -43,7 +43,7 @@
   &__type
     display: none
 
-@media screen and (max-width: 400px)
+@media screen and (max-width: 1000px)
   .services
     &__container-text
       width: calc(100% - utils.$margin-m)
@@ -75,9 +75,13 @@
     &__image
       border-radius: 0
       padding-bottom: utils.$margin-s
-      height: 250px
+      height: 400px
 
     &__content
       margin-left: auto
       margin-right: auto
       width: calc(100% - utils.$margin-m)
+
+@media screen and (max-width: 400px)
+  .services__image
+    height: 250px

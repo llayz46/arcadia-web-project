@@ -21,8 +21,10 @@
       justify-content: flex-end
 
     svg
-      width: 1.5rem
-      height: 1.5rem
+      width: 24px
+      min-width: 24px
+      height: 24px
+      min-height: 20px
 
     &-title
       color: utils.$color-light
@@ -53,3 +55,23 @@
 
   &__copyright
     opacity: 0.6
+
+@media screen and (max-width: 800px)
+  .footer
+    &__flex
+      flex-direction: column
+      gap: utils.$margin-sm
+
+    &__column
+      width: 100%
+
+      &:last-child
+        justify-content: flex-start
+
+      &:nth-child(2)
+        justify-content: flex-start
+
+    &__bottom
+      flex-direction: column
+      gap: utils.$margin-s
+      padding-top: utils.$margin-ssm
