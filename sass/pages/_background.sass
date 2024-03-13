@@ -1,4 +1,4 @@
-@use '../utils/all' as utils
+@use '../utils/_all' as utils
 
 // Hero
 .body
@@ -12,6 +12,14 @@
   background-color: utils.$color-light
   padding-top: utils.$margin-l + utils.$margin-xl
   clip-path: polygon(100% 5%, 100% 100%, 0 100%, 0 0)
+
+.habitats-body
+  width: 100vw
+  height: 100vh
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/habitat-jungle-01.jpg')
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
 
 // Ecology
 .ecology

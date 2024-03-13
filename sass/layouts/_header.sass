@@ -11,9 +11,24 @@
     gap: utils.$margin-l
 
   &__link
+    position: relative
     padding: 0 0 4px 0
+
     &.active
-      box-shadow: 0 1px 0 utils.$color-light
+      border-bottom: 2px solid utils.$color-light
+
+    &::after
+      content: ''
+      position: absolute
+      background-color: utils.$color-light
+      height: 2px
+      width: 0
+      left: 0
+      bottom: -2px
+      transition: 0.3s
+
+    &:hover::after
+      width: 100%
 
   &__burger
     display: none

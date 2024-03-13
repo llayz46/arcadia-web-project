@@ -7,7 +7,8 @@
 // Home - logo size
 .header__logo,
 .habitat__link,
-.footer__logo
+.footer__logo,
+.habitats__about
   @extend %logo
 
 // Home - header/footer
@@ -34,7 +35,8 @@
   @extend %home-title-h3
 
 // Home content - L
-.hero__description
+.hero__description,
+.habitats__text
   @extend %home-content-l
 
 .accordion__title,
@@ -62,3 +64,22 @@
 // Home content - XS
 .accordion__answers
   @extend %home-content-xs
+
+// Autres
+.habitats__num-link
+  color: utils.$color-light
+  font-size: 2.5rem
+  font-weight: 700
+  line-height: 115.5%
+
+.habitats__title
+  font-size: 8rem
+  color: utils.$color-light
+  font-weight: 700
+  line-height: 115.5%
+
+.habitats__left,
+.habitats__right
+  font-size: 1.5rem
+  color: utils.$color-light
+  font-weight: 600

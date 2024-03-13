@@ -1,11 +1,10 @@
 @use '../utils/_all.sass' as utils
 
 .button-dark
-  padding: 0.625rem utils.$margin-s
-  background-color: utils.$color-dark
-  @extend %header
-  border-radius: utils.$margin-m
-  transition: scale 0.2s ease-in-out
+  +utils.buttons(utils.$color-dark, utils.$color-light)
 
-  &:hover
-    scale: 1.05
+.button-light
+  +utils.buttons(utils.$color-light, utils.$color-dark)
+
+.button-accent
+  +utils.buttons(utils.$color-accent, utils.$color-light)

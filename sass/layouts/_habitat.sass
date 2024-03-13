@@ -33,3 +33,65 @@
 
     &__card--middle
       padding: utils.$margin-sm 0
+
+.habitats
+  &-body
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+  &-main
+    display: flex
+    align-items: center
+    gap: utils.$margin-3xl
+    margin-left: utils.$margin-l
+    margin-right: utils.$margin-3xl
+
+  &-header
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+
+  &__img
+    &-list
+      display: flex
+      flex-direction: column
+      gap: utils.$margin-sm
+
+  &__num
+    &-list
+      display: flex
+      flex-direction: column
+      gap: utils.$margin-l
+
+    &-item
+      @extend %flex-center
+
+  &__content
+    padding-right: utils.$margin-xl
+    display: flex
+    flex-direction: column
+
+  &__text
+    text-align: justify
+    padding: utils.$margin-ml 0
+
+  &__title
+    padding-bottom: utils.$margin-ml
+
+  &__button
+    margin-right: auto
+
+  &__bottom-nav
+    display: flex
+    align-items: center
+    gap: utils.$margin-s
+    position: fixed
+    bottom: utils.$margin-l
+
+  &__line
+    background-color: rgba(utils.$color-light, 0.5)
+    width: 330px
+    height: 2px
+    border-radius: 2px
