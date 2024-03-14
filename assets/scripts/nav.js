@@ -29,14 +29,28 @@ const habitatsNavIcons = document.querySelectorAll('.js-habitats-icon')
 // Création d'un tableau pour stocker les images actives
 let imagesArray = []
 
+// Récupération de l'habitat actif par le titre de la page
+let getHabitat = habitatsTitle.textContent
+
+// Vérification de l'habitat actif
+const habitatChecker = () => {
+  if (getHabitat === 'Jungle') {
+    return backgroundJungle
+  } else if (getHabitat === 'Savane') {
+    return backgroundSavane
+  } else if (getHabitat === 'Marais') {
+    return backgroundMarais
+  }
+}
+
 // Vérification de l'élément actif
-const habitatsNavBackground = () => { // chnage rle junglke par habitat 
+const habitatsNavBackground = () => {
   habitatsNavImages.forEach((image, index) => {
     if (image.classList.contains('active')) {
-      image.style.backgroundImage = `url(${backgroundJungle[index]})`
+      image.style.backgroundImage = `url(${habitatChecker()[index]})`
       imagesArray.push(image)
     } else {
-      image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundJungle[index]})`
+      image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${habitatChecker()[index]})`
     }
   })
 }
@@ -58,6 +72,8 @@ const backgroundChanger = () => {
       habitatsBody.style.backgroundImage = imagesArray[0].firstElementChild.style.backgroundImage
       
       imagesNavChanger()
+      
+      habitatsNavBackground()
     })
   })
 }

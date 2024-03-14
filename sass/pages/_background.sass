@@ -15,12 +15,17 @@
 
 .habitats-body
   height: 100vh
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/habitat-jungle-01.jpg')
   background-size: cover
   background-repeat: no-repeat
   background-position: center
   @media screen and (max-width: 1100px)
     height: 100%
+  &--jungle
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/habitat-jungle-01.jpg')
+  &--marais
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/habitat-marais-01.jpg')
+  &--savane
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/habitat-savane-01.jpg')
 
 // Ecology
 .ecology
