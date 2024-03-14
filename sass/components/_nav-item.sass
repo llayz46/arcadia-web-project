@@ -1,12 +1,14 @@
 @use '../utils/_all.sass' as utils
 
 .habitats__num-link
-  background-color: rgba(utils.$color-light, 0.25)
   padding: 17px 25px
   border-radius: 1.25rem
   width: 100%
   display: flex
   justify-content: center
+  cursor: pointer
+  &.active
+    background-color: rgba(utils.$color-light, 0.25)
 
 .habitats__img
   &-item
