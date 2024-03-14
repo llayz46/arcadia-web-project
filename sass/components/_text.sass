@@ -8,7 +8,8 @@
 .header__logo,
 .habitat__link,
 .footer__logo,
-.habitats__about
+.habitats__about,
+.service__about
   @extend %logo
 
 // Home - header/footer
@@ -66,20 +67,31 @@
   @extend %home-content-xs
 
 // Autres
-.habitats__num-link
+.habitats__num-link,
+.service__num-link
   color: utils.$color-light
   font-size: 2.5rem
   font-weight: 700
   line-height: 115.5%
 
-.habitats__title
+.habitats__title,
+.service__title
   font-size: 8rem
   color: utils.$color-light
   font-weight: 700
   line-height: 115.5%
 
 .habitats__left,
-.habitats__right
+.habitats__right,
+.service__left,
+.service__right
   font-size: 1.5rem
   color: utils.$color-light
   font-weight: 600
+
+.habitats__num-link--mobile,
+.service__num-link--mobile
+  font-size: 1.25rem
+  color: utils.$color-light
+  font-weight: 600
+  line-height: 115.5%

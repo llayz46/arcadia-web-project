@@ -37,36 +37,31 @@ const habitatsNavigation = () => {
   habitatsNavNumbers.forEach((i) => {
     i.addEventListener('click', () => {
       numbersArray = []
-      arrayTest3 = [] // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      TEST25 = [] // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
+      arrayNavImages = []
+      arrayNavImagesIndexed = []
       numbersArray.push(i)
       habitatsNavNumbers.forEach((num) => {
         num.classList.remove('active')
       })
       i.classList.add('active')
       contentChanger(numbersArray)
-      arrayTest3.push(i) // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      console.log(arrayTest3) // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      const parentTest = arrayTest3[0].parentElement // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      const parentOfParentTest = parentTest.parentElement // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI 
-      console.log(Array.from(parentOfParentTest.children).indexOf(parentTest)) // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      TEST25.push(Array.from(parentOfParentTest.children).indexOf(parentTest)) // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      console.log('test25', TEST25) // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-      if (TEST25[0] === 1) {
-        console.log('jungle')
-        habitatsNavigation()
-      }
+      arrayNavImages.push(i)
+      const parentNavImages =  arrayNavImages[0].parentElement
+      const parentOfparentNavImages = parentNavImages.parentElement
+      arrayNavImagesIndexed.push(Array.from(parentOfparentNavImages.children).indexOf(parentNavImages))
+      imagesNavChanger()
+
+      navSync()
     })
   })
 }
 
-let arrayTest3 = [] // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
-let TEST25 = [] // YGHEARZUHYBAZRZARBHURAZUBIAZRUIBOAZRUHI
+let arrayNavImages = []
+let arrayNavImagesIndexed = []
 
 habitatsNavigation()
 
 const habitatsNavBackground = () => {
-  // QUAND JUNGLE ALORS BG JUNBGLE / MARAIS BG MARAIS / SAVANE BG SAVANE
   habitatsNavImages.forEach((image, index) => {
     if (image.classList.contains('active')) {
       image.style.backgroundImage = `url(${backgroundJungle[index]})`
@@ -110,14 +105,8 @@ habitatsNavIcons.forEach(icon => {
     imagesArray.push(icon.parentElement)
     imagesArray[0].firstElementChild.classList.add('active')
     habitatsBody.style.backgroundImage = imagesArray[0].firstElementChild.style.backgroundImage
-
-    habitatsNavBackground()
-
-    let indexImageArray = []
-    habitatsNavImages.forEach((image) => {
-      indexImageArray.push(image.classList.contains('active'))
-    })
-    lineNav(indexImageArray.indexOf(true))
+    
+    imagesNavChanger()
   })
 })
 
@@ -136,4 +125,42 @@ const lineNav = (i) => {
       line.style.backgroundColor = '#fff'
       break
   }
+}
+
+const imagesNavChanger = () => {
+  if (arrayNavImagesIndexed[0] === 0) {
+    habitatsNavImages.forEach((image, index) => {
+      if (image.classList.contains('active')) {
+        image.style.backgroundImage = `url(${backgroundJungle[index]})`
+        imagesArray.push(image)
+      } else {
+        image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundJungle[index]})`
+      }
+    })
+  } else if (arrayNavImagesIndexed[0] === 1) {
+    habitatsNavImages.forEach((image, index) => {
+      if (image.classList.contains('active')) {
+        image.style.backgroundImage = `url(${backgroundSavane[index]})`
+        imagesArray.push(image)
+      } else {
+        image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundSavane[index]})`
+      }
+    })
+  } else {
+    habitatsNavImages.forEach((image, index) => {
+      if (image.classList.contains('active')) {
+        image.style.backgroundImage = `url(${backgroundMarais[index]})`
+        imagesArray.push(image)
+      } else {
+        image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundMarais[index]})`
+      }
+    })
+  }
+}
+
+const navSync = () => {
+  let indexOfPage = []
+  const GrandParent = numbersArray[0].parentElement.parentElement
+  indexOfPage.push(Array.from(GrandParent.children).indexOf(numbersArray[0].parentElement))
+  lineNav(indexOfPage[0])
 }

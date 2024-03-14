@@ -1,6 +1,7 @@
 @use '../utils/_all.sass' as utils
 
-.habitats__num-link
+.habitats__num-link,
+.service__num-link
   padding: 17px 25px
   border-radius: 1.25rem
   width: 100%
@@ -10,7 +11,16 @@
   &.active
     background-color: rgba(utils.$color-light, 0.25)
 
-.habitats__img
+  &--mobile
+    padding: 0.5rem 1rem
+    background-color: rgba(utils.$color-light, 0.25)
+    border-radius: 0.5rem
+    &.active
+      background-color: utils.$color-light
+      color: utils.$color-dark
+
+.habitats__img,
+.service__img
   &-item
     position: relative
     width: 160px
@@ -25,7 +35,6 @@
     border-radius: utils.$margin-xs
     background-size: cover
     background-position: center
-    transition: all 2s ease
 
   &-icon
     width: 20px
