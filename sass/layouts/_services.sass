@@ -110,12 +110,14 @@
       display: flex
       flex-direction: column
       gap: utils.$margin-sm
+      animation: 0.5s ease-in-out 0s 1 zoomIn8
 
   &__num
     &-list
       display: flex
       flex-direction: column
       gap: utils.$margin-l
+      animation: 0.5s ease-in-out 0s 1 fadeInLeft
 
     &-item
       @extend %flex-center
@@ -124,13 +126,14 @@
     padding-right: utils.$margin-xl
     display: flex
     flex-direction: column
-
+    animation: 0.5s ease-in-out 0s 1 zoomIn8
   &__text
     text-align: justify
     padding: utils.$margin-ml 0
 
   &__title
     padding-bottom: utils.$margin-ml
+    font-size: 8vw !important
 
   &__button
     margin-right: auto
@@ -141,6 +144,7 @@
     gap: utils.$margin-s
     position: fixed
     bottom: utils.$margin-l
+    animation: 0.75s ease-in-out 0s 1 slideFromBottom
 
   &__line
     width: 330px

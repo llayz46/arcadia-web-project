@@ -26,7 +26,8 @@
 .ecology__title,
 .animal__title,
 .services__title,
-.testimonial__title
+.testimonial__title,
+.contact__title
   @extend %home-title-h2
 
 // Home title - H3
@@ -56,7 +57,8 @@
   text-align: center
 
 // Home content - S
-.testimonial__card-content
+.testimonial__card-content,
+.contact__text
   +utils.home-content-s(dark)
 
 .footer__column-info,
@@ -64,7 +66,10 @@
   +utils.home-content-s(light)
 
 // Home content - XS
-.accordion__answers
+.accordion__answers,
+.contact__label,
+.contact__input,
+.contact__textarea
   @extend %home-content-xs
 
 // Autres
@@ -77,7 +82,7 @@
 
 .habitats__title,
 .service__title
-  font-size: 8rem
+  font-size: 8vw
   color: utils.$color-light
   font-weight: 700
   line-height: 115.5%
