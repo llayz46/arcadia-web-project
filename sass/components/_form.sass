@@ -45,3 +45,55 @@
     &:focus
       outline: none
       border: 1px solid rgba(0, 0, 0, 0.6)
+
+.login
+  background: rgba(255, 255, 255, 0.15)
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15)
+  border: 1px solid rgba(255, 255, 255, 0.3)
+  padding: utils.$margin-l
+  border-radius: utils.$margin-xs
+
+  &::before
+    content: ''
+    position: absolute
+    z-index: -1
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    backdrop-filter: blur(3px)
+
+  &__title
+    padding-bottom: utils.$margin-s
+
+  &__form
+    display: flex
+    flex-direction: column
+    gap: utils.$margin-sm
+
+    &-input
+      height: 2.5rem
+      width: 25vw
+      background: none
+      border: none
+      border-bottom: 1px solid rgba(255, 255, 255, 0.85)
+      outline: none
+      font-size: 1rem
+      font-weight: 200
+      color: utils.$color-light
+
+      @media screen and (max-width: 1200px)
+        width: 25rem
+
+      @media screen and (max-width: 550px)
+        width: 15rem
+
+      &:focus
+        color: utils.$color-light
+
+      &::placeholder
+        color: rgba(255, 255, 255, 0.65)
+
+    &-submit
+      margin-top: utils.$margin-s
+      cursor: pointer
