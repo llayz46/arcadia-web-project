@@ -1,15 +1,21 @@
+<?php
+require_once __DIR__ . '/lib/menu.php';
+
+$currentPage = basename($_SERVER['SCRIPT_NAME']);
+?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arcadia - Connexion</title>
+  <title><?= $mainMenu[$currentPage]['head_title'] ?> - Arcadia</title>
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body class="login-body">
   <!-- START : header -->
   <header class="header flux">
-    <a class="header__logo" href="../index.html">Arcadia</a>
+    <a class="header__logo" href="/index.php">Arcadia</a>
   </header>
   <!-- END : header -->
 

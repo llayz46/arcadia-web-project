@@ -1,0 +1,83 @@
+<?php
+require_once __DIR__ . '/templates/header.php';
+
+require_once __DIR__ . '/lib/habitats.php';
+
+$currentHabitat = null;
+
+$habitatsNumber = 1;
+
+if (isset($_GET['habitat'])) {
+  if (!empty($_GET['habitat'])) {
+    if (array_key_exists($_GET['habitat'], $habitats)) {
+      $currentHabitat = $_GET['habitat'];
+    } else {
+      header('Location: /habitat.php?habitat=' . key($habitats));
+    }
+  } else {
+    header('Location: /habitat.php?habitat=' . key($habitats));
+  }
+} else {
+  header('Location: /habitat.php?habitat=' . key($habitats));
+}
+?>
+
+<!-- START : main -->
+<main class="habitats-main">
+  <nav class="habitats__nav-number">
+    <ul class="habitats__num-list">
+      <?php foreach ($habitats as $key => $habitat) { ?>
+        <li class="habitats__num-item">
+          <a href="habitat.php?habitat=<?=$key?>" class="habitats__num-link <?php if($key === $currentHabitat) { echo 'active'; } ?>"><?= '0'. $habitatsNumber;?></a>
+        </li>
+      <?php $habitatsNumber++; } ?>
+    </ul>
+  </nav>
+  <div class="habitats__content">
+    <h1 class="habitats__title js-habitats-title"><?= ucfirst($habitats[$currentHabitat]['title']) ?></h1>
+    <p class="habitats__about"><?= ucfirst($habitats[$currentHabitat]['about']) ?></p>
+    <p class="habitats__text js-habitats-content"><?= $habitats[$currentHabitat]['content'] ?></p>
+    <div class="habitats__bottom-nav js-line-parent">
+      <h3 class="habitats__left">01</h3>
+      <div class="habitats__line habitats__line--<?=$currentHabitat?> js-line"></div>
+      <h3 class="habitats__right">03</h3>
+    </div>
+  </div>
+  <nav class="habitats__nav-image">
+    <ul class="habitats__img-list">
+      <li class="habitats__img-item">
+        <div class="habitats__img-images active js-habitats-images"></div>
+        <button class="habitats__img-icon-wrapper active js-habitats-icon">
+          <svg class="habitats__img-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M13.4686 6.49175H7.53135V0.531353C7.53135 0.254125 7.30033 0 7 0C6.72277 0 6.46865 0.231023 6.46865 0.531353V6.49175H0.531353C0.254125 6.49175 0 6.72277 0 7.0231C0 7.30033 0.231023 7.55446 0.531353 7.55446H6.49175V13.4686C6.49175 13.7459 6.72277 14 7.0231 14C7.30033 14 7.55446 13.769 7.55446 13.4686V7.53135H13.4686C13.7459 7.53135 14 7.30033 14 7C14 6.72277 13.7459 6.49175 13.4686 6.49175Z" fill="white" />
+          </svg>
+        </button>
+      </li>
+      <li class="habitats__img-item">
+        <div class="habitats__img-images js-habitats-images"></div>
+        <button class="habitats__img-icon-wrapper js-habitats-icon">
+          <svg class="habitats__img-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M13.4686 6.49175H7.53135V0.531353C7.53135 0.254125 7.30033 0 7 0C6.72277 0 6.46865 0.231023 6.46865 0.531353V6.49175H0.531353C0.254125 6.49175 0 6.72277 0 7.0231C0 7.30033 0.231023 7.55446 0.531353 7.55446H6.49175V13.4686C6.49175 13.7459 6.72277 14 7.0231 14C7.30033 14 7.55446 13.769 7.55446 13.4686V7.53135H13.4686C13.7459 7.53135 14 7.30033 14 7C14 6.72277 13.7459 6.49175 13.4686 6.49175Z" fill="white" />
+          </svg>
+        </button>
+      </li>
+      <li class="habitats__img-item">
+        <div class="habitats__img-images js-habitats-images"></div>
+        <button class="habitats__img-icon-wrapper js-habitats-icon">
+          <svg class="habitats__img-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M13.4686 6.49175H7.53135V0.531353C7.53135 0.254125 7.30033 0 7 0C6.72277 0 6.46865 0.231023 6.46865 0.531353V6.49175H0.531353C0.254125 6.49175 0 6.72277 0 7.0231C0 7.30033 0.231023 7.55446 0.531353 7.55446H6.49175V13.4686C6.49175 13.7459 6.72277 14 7.0231 14C7.30033 14 7.55446 13.769 7.55446 13.4686V7.53135H13.4686C13.7459 7.53135 14 7.30033 14 7C14 6.72277 13.7459 6.49175 13.4686 6.49175Z" fill="white" />
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</main>
+<!-- END : main -->
+
+<!-- START : script -->
+<script src="/assets/scripts/nav.js"></script>
+<script src="/assets/scripts/loading.js"></script>
+<!-- END : script -->
+</body>
+
+</html>
