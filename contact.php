@@ -26,15 +26,9 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
       <h1 class="contact__title">Nous contacter</h1>
       <p class="contact__text">Un problème ? Remplissez le formulaire ci-dessous pour nous contacter.</p>
       <form action="" class="contact__form">
-        <div class="contact__form-group-wrapper">
-          <div class="contact__form-group">
-            <label for="name" class="contact__label">Nom</label>
-            <input type="text" id="name" class="contact__input" required>
-          </div>
-          <div class="contact__form-group">
-            <label for="name" class="contact__label">Objet</label>
-            <input type="text" id="name" class="contact__input" required>
-          </div>
+        <div class="contact__form-group">
+          <label for="name" class="contact__label">Objet</label>
+          <input type="text" id="name" class="contact__input" required>
         </div>
         <div class="contact__form-group">
           <label for="email" class="contact__label">Email</label>
