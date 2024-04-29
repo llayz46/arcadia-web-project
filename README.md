@@ -5,5 +5,3 @@ This project uses following langages :
   - HTML
   - SASS
   - JavaScript
-
-ToDo : Login user
