@@ -6,4 +6,4 @@ This project uses following langages :
   - SASS
   - JavaScript
 
-ToDo : Login user, DB connection
+ToDo : Login user

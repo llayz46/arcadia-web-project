@@ -1,5 +1,10 @@
 <?php
+require_once __DIR__ . '/lib/config.php';
+require_once __DIR__ . '/lib/pdo.php';
+require_once __DIR__ . '/lib/habitats.php';
 require_once __DIR__ . '/templates/header.php';
+
+$habitats = getHabitats($pdo, 3);
 ?>
 
 <!-- START : main -->
@@ -10,8 +15,8 @@ require_once __DIR__ . '/templates/header.php';
       <h1 class="hero__title">Bienvenue au zoo <br><span class="accent">Arcadia</span></h1>
       <p class="hero__description">Découvrez une aventure au cœur de la nature à Arcadia, où chaque visite est une exploration inoubliable à travers les habitats diversifiés de notre monde. Depuis 1960, nous avons été dévoués à offrir à nos visiteurs une expérience immersive et éducative, tout en préservant et en protégeant la biodiversité de notre planète.</p>
     </div>
-    <img class="hero__image--desktop" src="<?=_PATH_ASSETS_IMAGES_ . 'hero-parrot-card.svg'?>" alt="Photo d'un perroquet">
-    <img class="hero__image--mobile" src="<?=_PATH_ASSETS_IMAGES_ . 'hero-parrot-card-mobile.png'?>" alt="Photo d'un perroquet">
+    <img class="hero__image--desktop" src="<?= _PATH_ASSETS_IMAGES_ . 'hero-parrot-card.svg' ?>" alt="Photo d'un perroquet">
+    <img class="hero__image--mobile" src="<?= _PATH_ASSETS_IMAGES_ . 'hero-parrot-card-mobile.png' ?>" alt="Photo d'un perroquet">
   </section>
   <!-- END : hero -->
 
@@ -23,36 +28,18 @@ require_once __DIR__ . '/templates/header.php';
       <a href="./habitat.php" class="button-dark">Nos Habitats</a>
     </div>
     <div class="habitat__container-cards flux">
-      <div class="habitat__card">
-        <img src="<?=_PATH_UPLOADS_ . 'habitats/habitat-jungle-01.jpg'?>" alt="Photo du ponton de la jungle" class="habitat__image">
-        <div class="habitat__button">
-          <a href="habitat.php?habitat=jungle" class="habitat__link">Jungle
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M19.7427 9.30757L11.8533 0.289855C11.5102 -0.0966184 10.9767 -0.0966184 10.6336 0.289855C10.2906 0.676328 10.2906 1.27751 10.6336 1.66398L17.0367 9.00698H0.838494C0.381134 9.00698 0 9.43639 0 9.95169C0 10.467 0.381134 10.9393 0.838494 10.9393H17.1129L10.6336 18.3682C10.2906 18.7547 10.2906 19.3559 10.6336 19.7424C10.7861 19.9141 11.0148 20 11.2434 20C11.4721 20 11.7008 19.9141 11.8533 19.6994L19.7427 10.6817C20.0858 10.2952 20.0858 9.69404 19.7427 9.30757Z" fill="white" />
-            </svg>
-          </a>
+      <?php $i = 0; foreach ($habitats as $key => $habitat) { $i++ ?>
+        <div class="habitat__card <?php if ($i === 2) { echo 'habitat__card--middle'; }?>">
+          <img src="<?= _PATH_UPLOADS_ . 'habitats/habitat-' . $key . '-01.jpg' ?>" alt="Photo de l'habitat : <?=$key?>" class="habitat__image">
+          <div class="habitat__button">
+            <a href="habitat.php?habitat=<?=$key?>" class="habitat__link"><?=ucfirst($key)?>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M19.7427 9.30757L11.8533 0.289855C11.5102 -0.0966184 10.9767 -0.0966184 10.6336 0.289855C10.2906 0.676328 10.2906 1.27751 10.6336 1.66398L17.0367 9.00698H0.838494C0.381134 9.00698 0 9.43639 0 9.95169C0 10.467 0.381134 10.9393 0.838494 10.9393H17.1129L10.6336 18.3682C10.2906 18.7547 10.2906 19.3559 10.6336 19.7424C10.7861 19.9141 11.0148 20 11.2434 20C11.4721 20 11.7008 19.9141 11.8533 19.6994L19.7427 10.6817C20.0858 10.2952 20.0858 9.69404 19.7427 9.30757Z" fill="white" />
+              </svg>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="habitat__card habitat__card--middle">
-        <img src="<?=_PATH_UPLOADS_ . 'habitats/habitat-savane.jpg'?>" alt="Photo de la savane" class="habitat__image">
-        <div class="habitat__button">
-          <a href="habitat.php?habitat=savane" class="habitat__link">Savane
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M19.7427 9.30757L11.8533 0.289855C11.5102 -0.0966184 10.9767 -0.0966184 10.6336 0.289855C10.2906 0.676328 10.2906 1.27751 10.6336 1.66398L17.0367 9.00698H0.838494C0.381134 9.00698 0 9.43639 0 9.95169C0 10.467 0.381134 10.9393 0.838494 10.9393H17.1129L10.6336 18.3682C10.2906 18.7547 10.2906 19.3559 10.6336 19.7424C10.7861 19.9141 11.0148 20 11.2434 20C11.4721 20 11.7008 19.9141 11.8533 19.6994L19.7427 10.6817C20.0858 10.2952 20.0858 9.69404 19.7427 9.30757Z" fill="white" />
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div class="habitat__card">
-        <img src="<?=_PATH_UPLOADS_ . 'habitats/habitat-marais-01.jpg'?>" alt="Photo du marais" class="habitat__image">
-        <div class="habitat__button">
-          <a href="habitat.php?habitat=marais" class="habitat__link">Marais
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M19.7427 9.30757L11.8533 0.289855C11.5102 -0.0966184 10.9767 -0.0966184 10.6336 0.289855C10.2906 0.676328 10.2906 1.27751 10.6336 1.66398L17.0367 9.00698H0.838494C0.381134 9.00698 0 9.43639 0 9.95169C0 10.467 0.381134 10.9393 0.838494 10.9393H17.1129L10.6336 18.3682C10.2906 18.7547 10.2906 19.3559 10.6336 19.7424C10.7861 19.9141 11.0148 20 11.2434 20C11.4721 20 11.7008 19.9141 11.8533 19.6994L19.7427 10.6817C20.0858 10.2952 20.0858 9.69404 19.7427 9.30757Z" fill="white" />
-            </svg>
-          </a>
-        </div>
-      </div>
+      <?php } ?>
     </div>
   </section>
   <!-- END : habitat -->
@@ -60,7 +47,7 @@ require_once __DIR__ . '/templates/header.php';
   <!-- START : ecology -->
   <section class="ecology" id="engagement">
     <div class="ecology__container-text">
-      <h2 class="ecology__title"><span class="accent">L’écologie</span>, notre engagement</h2>
+      <h2 class="ecology__title"><span class="accent">L’écologie,</span> notre engagement</h2>
       <p class="ecology__description">Chez Arcadia, nous croyons en la préservation de notre précieux écosystème. Nous sommes fiers d'être entièrement autonomes sur le plan énergétique et de soutenir des initiatives de conservation à l'échelle mondiale pour protéger les espèces en voie de disparition.</p>
     </div>
     <div class="ecology__flux flux">
@@ -144,14 +131,14 @@ require_once __DIR__ . '/templates/header.php';
       <div class="services__flex">
         <h3 class="services__type"><span class="accent">Restauration</span></h3>
         <div class="services__wrapper">
-          <img class="services__image" src="<?=_PATH_UPLOADS_ . 'services/service-restaurant.jpg'?>" alt="Image d'un restaurant type gastronomique">
+          <img class="services__image" src="<?= _PATH_UPLOADS_ . 'services/service-restaurant.jpg' ?>" alt="Image d'un restaurant type gastronomique">
           <p class="services__content">Découvrez une expérience culinaire exceptionnelle au restaurant gastronomique d'Arcadia. Avec une cuisine mettant en valeur des ingrédients frais et locaux, notre restaurant offre une vue imprenable sur les paysages enchanteurs du zoo, vous promettant une expérience culinaire inoubliable.</p>
         </div>
       </div>
       <div class="services__flex">
         <h3 class="services__type">Visite <span class="accent">guidée</span></h3>
         <div class="services__wrapper">
-          <img class="services__image" src="<?=_PATH_UPLOADS_ . 'services/service-visite.jpg'?>" alt="Image de visiteur du zoo">
+          <img class="services__image" src="<?= _PATH_UPLOADS_ . 'services/service-visite.jpg' ?>" alt="Image de visiteur du zoo">
           <p class="services__content">Explorez les merveilles de la faune en compagnie de nos guides experts lors d'une visite immersive au Zoo Arcadia. Laissez-vous guider à travers une aventure captivante où vous découvrirez les habitats naturels de nos résidents, en apprendrez d’avantage sur la vie sauvage et aurez l'occasion d'observer de près certains des animaux les plus fascinants de la planète.</p>
         </div>
       </div>

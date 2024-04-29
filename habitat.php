@@ -1,7 +1,9 @@
 <?php
-require_once __DIR__ . '/templates/header.php';
-
+require_once __DIR__ . '/lib/config.php';
+require_once __DIR__ . '/lib/pdo.php';
 require_once __DIR__ . '/lib/habitats.php';
+
+$habitats = getHabitats($pdo);
 
 $currentHabitat = null;
 
@@ -12,14 +14,16 @@ if (isset($_GET['habitat'])) {
     if (array_key_exists($_GET['habitat'], $habitats)) {
       $currentHabitat = $_GET['habitat'];
     } else {
-      header('Location: /habitat.php?habitat=' . key($habitats));
+      header('Location: /habitat.php?habitat=' . array_keys($habitats)[0]);
     }
   } else {
-    header('Location: /habitat.php?habitat=' . key($habitats));
+    header('Location: /habitat.php?habitat=' . array_keys($habitats)[0]);
   }
 } else {
-  header('Location: /habitat.php?habitat=' . key($habitats));
+  header('Location: /habitat.php?habitat=' . array_keys($habitats)[0]);
 }
+
+require_once __DIR__ . '/templates/header.php';
 ?>
 
 <!-- START : main -->
@@ -27,7 +31,7 @@ if (isset($_GET['habitat'])) {
   <nav class="habitats__nav-number">
     <ul class="habitats__num-list">
       <?php foreach ($habitats as $key => $habitat) { ?>
-        <li class="habitats__num-item">
+        <li class="habitats__num-item js-content <?php if($currentHabitat === $key) { echo 'active'; } ?>">
           <a href="habitat.php?habitat=<?=$key?>" class="habitats__num-link <?php if($key === $currentHabitat) { echo 'active'; } ?>"><?= '0'. $habitatsNumber;?></a>
         </li>
       <?php $habitatsNumber++; } ?>
@@ -35,11 +39,11 @@ if (isset($_GET['habitat'])) {
   </nav>
   <div class="habitats__content">
     <h1 class="habitats__title js-habitats-title"><?= ucfirst($habitats[$currentHabitat]['title']) ?></h1>
-    <p class="habitats__about"><?= ucfirst($habitats[$currentHabitat]['about']) ?></p>
+    <p class="habitats__about">À propos</p>
     <p class="habitats__text js-habitats-content"><?= $habitats[$currentHabitat]['content'] ?></p>
     <div class="habitats__bottom-nav js-line-parent">
       <h3 class="habitats__left">01</h3>
-      <div class="habitats__line habitats__line--<?=$currentHabitat?> js-line"></div>
+      <div class="habitats__line js-line"></div>
       <h3 class="habitats__right">03</h3>
     </div>
   </div>

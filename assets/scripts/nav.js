@@ -140,3 +140,24 @@ const contentChanger = () => {
 
 // Lancement de la fonction principale
 contentChanger()
+
+// Récupération des éléments du DOM pour le contenu
+const contents = document.querySelectorAll('.js-content')
+
+// Récupération du nombres d'éléments
+const navLength = contents.length
+
+// Récupération de l'élément actif
+const activeElement = Array.from(contents).findIndex(content => content.classList.contains('active')) + 1
+
+const lineBackground = (activeElement, navLength) => {
+  const line = document.querySelector('.js-line')
+  if (activeElement !== navLength) {
+    const percentage = (activeElement / navLength) * 100
+    line.style.background = `linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) ${percentage}%, rgba(255, 255, 255, 0.5) ${percentage}%, rgba(255, 255, 255, 0.5) 100%)`
+  } else {
+    line.style.background = `rgba(255, 255, 255, 1)`
+  }
+}
+
+lineBackground(activeElement, navLength)

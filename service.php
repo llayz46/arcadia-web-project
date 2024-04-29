@@ -1,7 +1,11 @@
 <?php
-require_once __DIR__ . '/templates/header.php';
-
+require_once __DIR__ . '/lib/config.php';
+require_once __DIR__ . '/lib/pdo.php';
 require_once __DIR__ . '/lib/services.php';
+
+$services = getServices($pdo);
+
+$totalServices = count($services);
 
 $currentService = null;
 
@@ -12,14 +16,16 @@ if (isset($_GET['service'])) {
     if (array_key_exists($_GET['service'], $services)) {
       $currentService = $_GET['service'];
     } else {
-      header('Location: /service.php?service=' . key($services));
+      header('Location: /service.php?service=' . array_keys($services)[0]);
     }
   } else {
-    header('Location: /service.php?service=' . key($services));
+    header('Location: /service.php?service=' . array_keys($services)[0]);
   }
 } else {
-  header('Location: /service.php?service=' . key($services));
+  header('Location: /service.php?service=' . array_keys($services)[0]);
 }
+
+require_once __DIR__ . '/templates/header.php';
 ?>
 
 <!-- START : main -->
@@ -27,7 +33,7 @@ if (isset($_GET['service'])) {
   <nav class="service__nav-number">
     <ul class="service__num-list">
       <?php foreach ($services as $key => $service) { ?>
-        <li class="service__num-item">
+        <li class="service__num-item js-content <?php if($currentService === $key) { echo 'active'; } ?>">
           <a href="service.php?service=<?=$key?>" class="service__num-link <?php if($key === $currentService) { echo 'active'; } ?>"><?= '0'. $servicesNumber;?></a>
         </li>
       <?php $servicesNumber++; } ?>
@@ -39,7 +45,7 @@ if (isset($_GET['service'])) {
     <p class="service__text js-service-content"><?= $services[$currentService]['content'] ?></p>
     <div class="service__bottom-nav js-line-parent">
       <h3 class="service__left">01</h3>
-      <div class="service__line service__line--<?=$currentService?> js-line"></div>
+      <div class="service__line js-line"></div>
       <h3 class="service__right">03</h3>
     </div>
   </div>

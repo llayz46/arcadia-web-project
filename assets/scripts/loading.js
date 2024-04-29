@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     el.style.display = 'none'
   })
 
-  // Afficher les éléments après 1 seconde
+  // Afficher les éléments après 300 milliseconde
   setTimeout(() => {
     line.forEach((el) => {
       el.style.display = 'flex'
     })
-  }, 600)
+  }, 300)
 })
