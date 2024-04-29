@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="footer__bottom flux">
-    <a href="./index.html" class="footer__logo">Arcadia</a>
+    <a href="./index.php" class="footer__logo">Arcadia</a>
     <div class="footer__copyright">
       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="10" viewBox="0 0 11 10" fill="none">
         <g opacity="0.6">

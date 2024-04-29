@@ -20,7 +20,7 @@ require_once __DIR__ . '/templates/header.php';
     <div class="habitat__container-text">
       <h2 class="habitat__title">Explorez nos <span class="accent">habitats</span></h2>
       <p class="habitat__description">Explorez nos habitats variés, de la savane africaine à la jungle amazonienne, en passant par les marais européens.</p>
-      <a href="./pages/habitats/jungle.html" class="button-dark">Nos Habitats</a>
+      <a href="./habitat.php" class="button-dark">Nos Habitats</a>
     </div>
     <div class="habitat__container-cards flux">
       <div class="habitat__card">
