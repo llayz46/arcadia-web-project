@@ -2,9 +2,12 @@
 require_once __DIR__ . '/lib/config.php';
 require_once __DIR__ . '/lib/pdo.php';
 require_once __DIR__ . '/lib/habitats.php';
+require_once __DIR__ . '/lib/reviews.php';
 require_once __DIR__ . '/templates/header.php';
 
 $habitats = getHabitats($pdo, 3);
+
+$reviews = getReviews($pdo);
 ?>
 
 <!-- START : main -->
@@ -28,11 +31,15 @@ $habitats = getHabitats($pdo, 3);
       <a href="./habitat.php" class="button-dark">Nos Habitats</a>
     </div>
     <div class="habitat__container-cards flux">
-      <?php $i = 0; foreach ($habitats as $key => $habitat) { $i++ ?>
-        <div class="habitat__card <?php if ($i === 2) { echo 'habitat__card--middle'; }?>">
-          <img src="<?= _PATH_UPLOADS_ . 'habitats/habitat-' . $key . '-01.jpg' ?>" alt="Photo de l'habitat : <?=$key?>" class="habitat__image">
+      <?php $i = 0;
+      foreach ($habitats as $key => $habitat) {
+        $i++ ?>
+        <div class="habitat__card <?php if ($i === 2) {
+                                    echo 'habitat__card--middle';
+                                  } ?>">
+          <img src="<?= _PATH_UPLOADS_ . 'habitats/habitat-' . $key . '-01.jpg' ?>" alt="Photo de l'habitat : <?= $key ?>" class="habitat__image">
           <div class="habitat__button">
-            <a href="habitat.php?habitat=<?=$key?>" class="habitat__link"><?=ucfirst($key)?>
+            <a href="habitat.php?habitat=<?= $key ?>" class="habitat__link"><?= ucfirst($key) ?>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M19.7427 9.30757L11.8533 0.289855C11.5102 -0.0966184 10.9767 -0.0966184 10.6336 0.289855C10.2906 0.676328 10.2906 1.27751 10.6336 1.66398L17.0367 9.00698H0.838494C0.381134 9.00698 0 9.43639 0 9.95169C0 10.467 0.381134 10.9393 0.838494 10.9393H17.1129L10.6336 18.3682C10.2906 18.7547 10.2906 19.3559 10.6336 19.7424C10.7861 19.9141 11.0148 20 11.2434 20C11.4721 20 11.7008 19.9141 11.8533 19.6994L19.7427 10.6817C20.0858 10.2952 20.0858 9.69404 19.7427 9.30757Z" fill="white" />
               </svg>
@@ -152,129 +159,29 @@ $habitats = getHabitats($pdo, 3);
     <div class="splide flux" role="group">
       <div class="splide__track">
         <ul class="splide__list">
-          <li class="splide__slide">
-            <div class="testimonial__card">
-              <div class="testimonial__card-container">
-                <h4 class="testimonial__card-title">Steve Johnson</h4>
-                <p class="testimonial__card-content">"Une expérience incroyable au Zoo Arcadia ! J'ai adoré explorer les différents habitats et rencontrer les animaux fascinants. Le personnel était extrêmement sympathique et compétent, et l'engagement envers l'écologie est vraiment inspirant. Je recommande vivement cette expérience à tous les amoureux de la nature !"</p>
-              </div>
-              <div class="testimonial__card-note">
-                <div class="testimonial__card-stars-container">
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
+          <?php foreach ($reviews as $review) { ?>
+            <li class="splide__slide">
+              <div class="testimonial__card">
+                <div class="testimonial__card-container">
+                  <h4 class="testimonial__card-title"><?=$review['nickname']?></h4>
+                  <p class="testimonial__card-content">"<?=$review['content']?>"</p>
+                </div>
+                <div class="testimonial__card-note">
+                  <div class="testimonial__card-stars-container">
+                    <?php for ($i = 0; $i < $review['note']; $i++) { ?>
+                    <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
+                    </svg>
+                    <?php } ?>
+                  </div>
+                    <!-- IF note > * alors afficher ca sinon ca sinon ca -->
+                  <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
                   </svg>
                 </div>
-                <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
-                </svg>
               </div>
-            </div>
-          </li>
-
-          <li class="splide__slide">
-            <div class="testimonial__card">
-              <div class="testimonial__card-container">
-                <h4 class="testimonial__card-title">Anna Lee</h4>
-                <p class="testimonial__card-content">"Une journée inoubliable au Zoo Arcadia ! La visite guidée était très informative et divertissante. Les habitats sont bien aménagés et les animaux semblent très bien pris en charge. Je suis particulièrement impressionné par l'engagement écologique du zoo. Je reviendrai certainement et je le recommande à tous ceux qui recherchent une expérience enrichissante en plein air."</p>
-              </div>
-              <div class="testimonial__card-note">
-                <div class="testimonial__card-stars-container">
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                </div>
-                <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
-                </svg>
-              </div>
-            </div>
-          </li>
-
-          <li class="splide__slide">
-            <div class="testimonial__card">
-              <div class="testimonial__card-container">
-                <h4 class="testimonial__card-title">Marc Talot</h4>
-                <p class="testimonial__card-content">"Une journée fantastique à Arcadia ! Les habitats étaient superbes et bien entretenus, les animaux semblaient heureux et en bonne santé. Les guides étaient très instructifs et sympathiques. L'engagement envers l'écologie est admirable. Je recommande vivement cette expérience !"</p>
-              </div>
-              <div class="testimonial__card-note">
-                <div class="testimonial__card-stars-container">
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                </div>
-                <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
-                </svg>
-              </div>
-            </div>
-          </li>
-
-          <li class="splide__slide">
-            <div class="testimonial__card">
-              <div class="testimonial__card-container">
-                <h4 class="testimonial__card-title">Pauline Lefebvre</h4>
-                <p class="testimonial__card-content">"Une expérience incroyable ! Le Zoo Arcadia est un endroit magique où j'ai passé une journée inoubliable en famille. Les animaux sont magnifiques et bien soignés, et les habitats sont très bien conçus. Nous avons particulièrement apprécié la visite guidée qui était informative et divertissante. C'est un endroit idéal pour les amoureux de la nature de tous âges. Nous reviendrons certainement !"</p>
-              </div>
-              <div class="testimonial__card-note">
-                <div class="testimonial__card-stars-container">
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                  </svg>
-                </div>
-                <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
-                </svg>
-              </div>
-            </div>
-          </li>
+            </li>
+          <?php } ?>
         </ul>
       </div>
     </div>
