@@ -40,6 +40,15 @@ require_once __DIR__ . '/templates/header.php';
     </ul>
   </nav>
   <div class="service__content">
+    <nav class="service__nav-mobile">
+      <ul class="service__mobile-list">
+        <?php foreach ($services as $key => $service) { ?>
+          <li class="service__mobile-item <?php if($key === $currentService) { echo 'active'; } ?>">
+            <a href="service.php?service=<?=$key?>" class="service__mobile-link"><?= ucfirst($service['title']) ?></a>
+          </li>
+        <?php } ?>
+      </ul>
+    </nav>
     <h1 class="service__title js-service-title"><?= ucfirst($services[$currentService]['title']) ?></h1>
     <p class="service__about"><?= ucfirst($services[$currentService]['about']) ?></p>
     <p class="service__text js-service-content"><?= $services[$currentService]['content'] ?></p>

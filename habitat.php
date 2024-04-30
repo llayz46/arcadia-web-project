@@ -38,6 +38,15 @@ require_once __DIR__ . '/templates/header.php';
     </ul>
   </nav>
   <div class="habitats__content">
+    <nav class="habitats__nav-mobile">
+      <ul class="habitats__mobile-list">
+          <?php foreach ($habitats as $key => $habitat) { ?>
+            <li class="habitats__mobile-item <?php if($key === $currentHabitat) { echo 'active'; } ?>">
+              <a href="habitat.php?habitat=<?=$key?>" class="habitats__mobile-link"><?= ucfirst($habitat['title']) ?></a>
+          </li>
+        <?php } ?>
+      </ul>
+    </nav>
     <h1 class="habitats__title js-habitats-title"><?= ucfirst($habitats[$currentHabitat]['title']) ?></h1>
     <p class="habitats__about">À propos</p>
     <p class="habitats__text js-habitats-content"><?= $habitats[$currentHabitat]['content'] ?></p>
