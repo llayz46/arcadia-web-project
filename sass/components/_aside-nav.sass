@@ -1,0 +1,57 @@
+@use '../utils/_all' as utils
+
+.aside
+  width: fit-content
+  border-radius: 0 15px 15px 0
+
+  &__container
+    display: flex
+    flex-direction: column
+    gap: utils.$margin-l
+    padding: utils.$margin-ml 0.75rem
+
+  &__nav
+    width: fit-content
+    height: 100vh
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+
+    &-logo
+      padding: 0 utils.$margin-s
+      transition: all 0.2s
+      &:hover
+        scale: 1.1
+
+    &-separator
+      height: 1px
+      background-color: rgba(utils.$color-dark, 0.25)
+      border-radius: 10px
+
+    &-list
+      display: flex
+      flex-direction: column
+      gap: utils.$margin-l
+      padding: 0 utils.$margin-s
+
+    &-item
+      display: flex
+      justify-content: center
+      & a svg
+        fill: rgba(utils.$color-dark, 0.5)
+        transition: all 0.2s
+        &:hover
+          fill: utils.$color-dark
+      &.active a svg
+        fill: utils.$color-accent
+
+  &__logout
+    width: 100%
+    display: flex
+    padding-bottom: utils.$margin-ml
+    justify-content: center
+    & svg
+      fill: rgba(utils.$color-dark, 0.5)
+      transition: all 0.2s
+      &:hover
+        fill: utils.$color-dark

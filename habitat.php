@@ -50,6 +50,7 @@ require_once __DIR__ . '/templates/header.php';
     <h1 class="habitats__title js-habitats-title"><?= ucfirst($habitats[$currentHabitat]['title']) ?></h1>
     <p class="habitats__about">À propos</p>
     <p class="habitats__text js-habitats-content"><?= $habitats[$currentHabitat]['content'] ?></p>
+    <a href="" class="habitats__button button-accent">Les animaux</a>
     <div class="habitats__bottom-nav js-line-parent">
       <h3 class="habitats__left">01</h3>
       <div class="habitats__line js-line"></div>

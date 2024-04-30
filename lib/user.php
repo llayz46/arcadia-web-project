@@ -16,3 +16,27 @@ function verifyUserAndRoleByLoginPassword(PDO $pdo, string $email, string $passw
     return false;
   }
 }
+
+function createUserByEmailPassword(PDO $pdo, string $email, string $password, string $role): bool {
+  $check = 'SELECT * FROM users WHERE email = :email';
+  $stmtCheck = $pdo->prepare($check);
+  $stmtCheck->bindValue(':email', $email);
+  $stmtCheck->execute();
+  $checkResult = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+  if ($checkResult) {
+    return false;
+  }
+
+  $sql = 'INSERT INTO users (email, password, role_id)
+          VALUES (:email, :password, (SELECT id FROM roles WHERE name = :role))';
+  $stmt = $pdo->prepare($sql);
+
+  $password = password_hash($password, PASSWORD_DEFAULT);
+
+  $stmt->bindValue(':email', $email);
+  $stmt->bindValue(':password', $password);
+  $stmt->bindValue(':role', $role);
+
+  return $stmt->execute();
+}

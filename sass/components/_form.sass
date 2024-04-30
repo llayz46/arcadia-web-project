@@ -107,3 +107,49 @@
     &-submit
       margin-top: utils.$margin-s
       cursor: pointer
+
+.dashboard__account
+  &-form
+    display: flex
+    flex-direction: column
+    width: 450px
+    margin-top: utils.$margin-ml
+    padding: utils.$margin-ssm
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    border-radius: 15px
+
+  &-label
+    display: flex
+    flex-direction: column
+    gap: utils.$margin-xs
+    padding-bottom: utils.$margin-s
+
+  &-input
+    height: 2rem
+    border-radius: 5px
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    padding: 0 0.5rem
+    background-color: transparent
+    font-size: 1rem
+    &:focus
+      outline: 1px solid utils.$color-accent
+      outline-offset: 1px
+
+  &-submit
+    margin-top: utils.$margin-s
+    cursor: pointer
+    padding: 0.7rem 0
+    border-radius: 5px
+    background-color: utils.$color-dark
+    color: utils.$color-light
+    font-weight: 700
+    border: none
+    transition: all 0.2s
+    &:hover
+      background-color: lighten(utils.$color-dark, 5%)
+      color: utils.$color-lighter
+    &:active
+      background-color: lighten(utils.$color-dark, 10%)
+      color: utils.$color-lighter
+    &:focus
+      outline: none

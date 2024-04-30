@@ -1,3 +1,11 @@
+// Burger menu
+const burger = document.querySelector('.js-header-burger')
+const nav = document.querySelector('.js-header-mobile-nav')
+
+burger.addEventListener('click', () => {
+  nav.classList.toggle('active')
+})
+
 // Récupération des éléments 'habitats' du DOM pour le contenu
 const habitatsTitle = document.querySelector('.js-habitats-title')
 const habitatsContent = document.querySelector('.js-habitats-content')

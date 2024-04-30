@@ -1,0 +1,26 @@
+@use '../utils/_all' as utils
+
+.dashboard
+  &__body
+    display: flex
+
+  &__main
+    margin: utils.$margin-ml
+
+  &__account
+    &-info
+      display: flex
+      justify-content: center
+      width: 450px
+      margin-top: utils.$margin-ml
+      padding: utils.$margin-ssm
+      border: 1px solid rgba(utils.$color-dark, 0.25)
+      border-radius: 15px
+
+    &-message
+      font-size: 1.25rem
+      font-weight: 400
+      &--success
+        color: utils.$color-accent
+      &--error
+        color: #DD230E
