@@ -6,6 +6,7 @@
 
   &__main
     margin: utils.$margin-ml
+    width: 100%
 
   &__account
     &-info
@@ -24,3 +25,44 @@
         color: utils.$color-accent
       &--error
         color: #DD230E
+
+  &__container
+    margin-top: utils.$margin-ml
+    display: grid
+    gap: utils.$margin-ssm
+    grid-template-columns: repeat(2, 1fr)
+    @media screen and (max-width: 1000px)
+      grid-template-columns: 1fr
+      gap: utils.$margin-s
+
+  &__card-wrapper
+    padding: utils.$margin-ssm
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    border-radius: 15px
+
+  &__card-title
+    font-weight: 500
+
+  &__service
+    &-link
+      color: #2b57cf
+      transition: color 0.3s
+      &:hover
+        color: utils.$color-accent
+    &-list 
+      margin-top: utils.$margin-s
+    &-item
+      display: flex
+      align-items: center
+      margin-top: utils.$margin-xs
+      padding: utils.$margin-s
+      border: 1px solid rgba(utils.$color-dark, 0.25)
+      border-radius: 10px
+      max-width: fit-content
+    &-title
+      padding-right: utils.$margin-s
+    &-separator
+      height: 1.25rem
+      width: 1px
+      background-color: rgba(utils.$color-dark, 0.5)
+      margin: 0 utils.$margin-xs

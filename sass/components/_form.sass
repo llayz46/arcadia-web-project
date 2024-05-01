@@ -153,3 +153,24 @@
       color: utils.$color-lighter
     &:focus
       outline: none
+
+.dashboard__service
+  &-form
+    display: flex
+    flex-direction: column
+    margin-top: utils.$margin-xs
+    padding: utils.$margin-s
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    border-radius: 10px
+
+  &-textarea
+    resize: none
+    height: 5rem
+    border-radius: 5px
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    padding: 0.5rem
+    background-color: transparent
+    font-size: 1rem
+    &:focus
+      outline: 1px solid utils.$color-accent
+      outline-offset: 1px

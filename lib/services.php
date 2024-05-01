@@ -25,20 +25,43 @@ function getServices(PDO $pdo, INT $limit = null): array {
   return $formattedServices;
 }
 
-// $services = [
-//   "restauration" => [
-//     "title" => "Restaurant",
-//     "about" => "Gastronome",
-//     "content" => "Succombez à une expérience culinaire exceptionnelle dans l'un de nos restaurants. Chacun de nos restaurants vous propose une cuisine et un cadre uniques, mettant en valeur des ingrédients frais et locaux. Venez savourer une escapade gustative inoubliable.",
-//   ],
-//   "train" => [
-//     "title" => "train",
-//     "about" => "Voyageur",
-//     "content" => "Embarquez pour une aventure captivante avec notre Tour en Petit Train. Laissez-vous conduire à travers les merveilles de notre zoo dans le confort de notre train pittoresque. Découvrez la beauté de notre faune et de notre flore avec des commentaires informatifs de nos guides expérimentés. Rejoignez-nous pour une exploration mémorable de la nature.",
-//   ],
-//   "guide" => [
-//     "title" => "Visite",
-//     "about" => "Curieux",
-//     "content" => "Plongez dans une expérience immersive avec notre Visite Guidée Gratuite. Laissez-vous guider à travers les merveilles de notre zoo par nos experts passionnés. Découvrez la richesse de notre faune, des majestueux lions aux curieux singes, dans un cadre naturel exceptionnel. Rejoignez-nous pour une exploration inoubliable de la nature.",
-//   ],
-// ];
+function getServiceById(PDO $pdo, INT $id): array|bool {
+  $sql = 'SELECT * FROM services WHERE id = :id';
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function createService(PDO $pdo, STRING $title, STRING $about, STRING $content): bool {
+  $title = filter_var(strtolower($title), FILTER_SANITIZE_SPECIAL_CHARS);
+  $about = filter_var($about, FILTER_SANITIZE_SPECIAL_CHARS);
+  $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS);
+
+  $check = 'SELECT * FROM services WHERE title = :title';
+  $stmtCheck = $pdo->prepare($check);
+  $stmtCheck->bindValue(':title', $title);
+  $stmtCheck->execute();
+  $checkResult = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+  if ($checkResult) {
+    return false;
+  }
+
+  $sql = 'INSERT INTO services (title, about, content)
+          VALUES (:title, :about, :content)';
+  $stmt = $pdo->prepare($sql);
+
+  $stmt->bindValue(':title', $title);
+  $stmt->bindValue(':about', $about);
+  $stmt->bindValue(':content', $content);
+
+  return $stmt->execute();
+}
+
+function deleteService(PDO $pdo, INT $id): bool {
+  $sql = 'DELETE FROM services WHERE id = :id';
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  return $stmt->execute();
+}
