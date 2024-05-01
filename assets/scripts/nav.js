@@ -20,6 +20,9 @@ const serviceBody = document.querySelector('.js-service-body')
 const serviceNavImages = document.querySelectorAll('.js-service-images')
 const serviceNavIcons = document.querySelectorAll('.js-service-icon')
 
+// Extensions autorisées
+const extensions = ['jpg', 'jpeg', 'png', 'gif']
+
 // Création d'un tableau pour stocker les images actives
 let imagesArray = []
 
@@ -35,7 +38,9 @@ const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
-    pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page)}-0${i}.jpg`)
+    for (let ext of extensions) {
+      pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page)}-0${i}.${ext}`)
+    }
   }
 
   return pageImageArray

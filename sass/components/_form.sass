@@ -154,7 +154,8 @@
     &:focus
       outline: none
 
-.dashboard__service
+.dashboard__service,
+.dashboard__habitat
   &-form
     display: flex
     flex-direction: column
@@ -174,3 +175,18 @@
     &:focus
       outline: 1px solid utils.$color-accent
       outline-offset: 1px
+
+.dashboard__form-file::file-selector-button
+  border: 1px solid rgba(utils.$color-dark, 0.25)
+  background-color: transparent
+  border-radius: 5px
+  padding: 0.5rem 1rem
+  cursor: pointer
+  transition: all 0.2s
+  &:hover
+    background-color: rgba(utils.$color-dark, 0.1)
+
+.dashboard__form-file
+  font-size: 1rem
+  line-height: 1.5
+  color: utils.$color-dark
