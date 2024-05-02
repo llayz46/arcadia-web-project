@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../../lib/config.php';
 require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
@@ -16,13 +15,14 @@ if (isset($_GET['habitat-delete-id'])) {
     if (deleteHabitat($pdo, $habitatDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . $habitatToDelete['title'] . '-0' . $i . '.' . $ext;
+          $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', $habitatToDelete['title']) . '-0' . $i . '.' . $ext;
           if (file_exists($file)) {
             unlink($file);
           }
         }
       }
-      $success[] = 'L\'habitat a été supprimé avec succès';
+      header('Location: habitats.php');
+      exit;
     } else {
       $errors[] = 'Erreur lors de la suppression de l\'habitat';
     }
@@ -58,7 +58,8 @@ if (isset($_POST['createHabitat'])) {
         if (in_array($fileActualExt, $allowed)) {
           if ($fileError === 0) {
             if ($fileSize < 1000000) {
-              $fileNameNew = 'habitat-' . $_POST['habitat-name'] . '-0' . $i . '.' . $fileActualExt;
+              $habitatName = strtolower(str_replace(' ', '_', $_POST['habitat-name']));
+              $fileNameNew = 'habitat-' . $habitatName . '-0' . $i . '.' . $fileActualExt;
               $fileDestination = '../..' . _PATH_UPLOADS_ . 'habitats/' . $fileNameNew;
               move_uploaded_file($fileTmpName, $fileDestination);
               $i++;
@@ -81,7 +82,7 @@ if (isset($_POST['createHabitat'])) {
   }
 }
 
-require_once 'templates/aside-nav.php';
+require_once '../templates/aside-nav.php';
 ?>
 
 <main class="dashboard__main">

@@ -24,10 +24,12 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
     <nav class="header__nav">
       <ul class="header__list">
         <?php foreach($mainMenu as $key => $menuItem) { 
-          if (array_key_exists('role', $menuItem) && isset($_SESSION['user']) && $_SESSION['user']['name'] === 'admin') { ?>
-          <li class="header__item">
-            <a href="<?=$key?>" class="header__link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
-          </li>
+          if (array_key_exists('role', $menuItem)) { ?>
+            <?php if(isset($_SESSION['user']) && $_SESSION['user']['name'] === $menuItem['role']) { ?>
+              <li class="header__item">
+                <a href="<?=$key?>" class="header__link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
+              </li>
+            <?php } ?>
         <?php } else if(!array_key_exists('exclude', $menuItem) && !array_key_exists('role', $menuItem)) { ?>
           <li class="header__item">
             <a href="<?=$key?>" class="header__link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>

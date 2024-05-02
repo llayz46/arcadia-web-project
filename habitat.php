@@ -5,6 +5,8 @@ require_once __DIR__ . '/lib/habitats.php';
 
 $habitats = getHabitats($pdo);
 
+$totalHabitats = count($habitats);
+
 $currentHabitat = null;
 
 $habitatsNumber = 1;
@@ -54,7 +56,7 @@ require_once __DIR__ . '/templates/header.php';
     <div class="habitats__bottom-nav js-line-parent">
       <h3 class="habitats__left">01</h3>
       <div class="habitats__line js-line"></div>
-      <h3 class="habitats__right">03</h3>
+      <h3 class="habitats__right"><?='0'.$totalHabitats?></h3>
     </div>
   </div>
   <nav class="habitats__nav-image">

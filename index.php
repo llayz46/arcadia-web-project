@@ -7,7 +7,7 @@ require_once __DIR__ . '/templates/header.php';
 
 $habitats = getHabitats($pdo, 3);
 
-$reviews = getReviews($pdo);
+$reviews = getReviews($pdo, 'published');
 ?>
 
 <!-- START : main -->
@@ -156,35 +156,62 @@ $reviews = getReviews($pdo);
   <!-- START : testimonial -->
   <section class="testimonial" id="avis">
     <h2 class="testimonial__title">Ils partagent leur <span class="accent">expérience</span></h2>
-    <div class="splide flux" role="group">
-      <div class="splide__track">
-        <ul class="splide__list">
-          <?php foreach ($reviews as $review) { ?>
-            <li class="splide__slide">
-              <div class="testimonial__card">
-                <div class="testimonial__card-container">
-                  <h4 class="testimonial__card-title"><?=$review['nickname']?></h4>
-                  <p class="testimonial__card-content">"<?=$review['content']?>"</p>
-                </div>
-                <div class="testimonial__card-note">
-                  <div class="testimonial__card-stars-container">
-                    <?php for ($i = 0; $i < $review['note']; $i++) { ?>
-                    <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
-                    </svg>
-                    <?php } ?>
+    <?php if (count($reviews) > 3) { ?>
+      <div class="splide flux" role="group">
+        <div class="splide__track">
+          <ul class="splide__list">
+            <?php foreach ($reviews as $review) { ?>
+              <li class="splide__slide">
+                <div class="testimonial__card">
+                  <div class="testimonial__card-container">
+                    <h4 class="testimonial__card-title"><?= $review['nickname'] ?></h4>
+                    <p class="testimonial__card-content">"<?= $review['content'] ?>"</p>
                   </div>
-                    <!-- IF note > * alors afficher ca sinon ca sinon ca -->
-                  <svg class="testimonial__card-smiley" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24ZM12 21.6C17.302 21.6 21.6 17.302 21.6 12C21.6 6.69806 17.302 2.4 12 2.4C6.69806 2.4 2.4 6.69806 2.4 12C2.4 17.302 6.69806 21.6 12 21.6ZM6 13.2H8.4C8.4 15.1883 10.0117 16.8 12 16.8C13.9883 16.8 15.6 15.1883 15.6 13.2H18C18 16.5137 15.3137 19.2 12 19.2C8.6863 19.2 6 16.5137 6 13.2ZM7.2 10.8C6.20588 10.8 5.4 9.99408 5.4 9C5.4 8.00588 6.20588 7.2 7.2 7.2C8.19412 7.2 9 8.00588 9 9C9 9.99408 8.19412 10.8 7.2 10.8ZM16.8 10.8C15.8059 10.8 15 9.99408 15 9C15 8.00588 15.8059 7.2 16.8 7.2C17.7941 7.2 18.6 8.00588 18.6 9C18.6 9.99408 17.7941 10.8 16.8 10.8Z" fill="#55B76B" />
-                  </svg>
+                  <div class="testimonial__card-note">
+                    <div class="testimonial__card-stars-container">
+                      <?php for ($i = 0; $i < $review['note']; $i++) { ?>
+                        <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
+                        </svg>
+                      <?php } ?>
+                    </div>
+                    <!-- IF note > 4 alors afficher ca (smiley content) sinon ca (smiley ca va) sinon ca etc.. -->
+                    <?php
+                      $note = getReviewHapinness($review['note']);
+                      echo $note;
+                    ?>
+                  </div>
                 </div>
-              </div>
-            </li>
-          <?php } ?>
-        </ul>
+              </li>
+            <?php } ?>
+          </ul>
+        </div>
       </div>
-    </div>
+    <?php } else { ?>
+      <div class="testimonial__container flux">
+        <?php foreach ($reviews as $review) { ?>
+          <div class="testimonial__card testimonial__no-carousel">
+            <div class="testimonial__card-container">
+              <h4 class="testimonial__card-title"><?= $review['nickname'] ?></h4>
+              <p class="testimonial__card-content">"<?= $review['content'] ?>"</p>
+            </div>
+            <div class="testimonial__card-note">
+              <div class="testimonial__card-stars-container">
+                <?php for ($i = 0; $i < $review['note']; $i++) { ?>
+                  <svg class="testimonial__card-star" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" fill="#FFCE31" />
+                  </svg>
+                <?php } ?>
+              </div>
+              <?php
+              $note = getReviewHapinness($review['note']);
+              echo $note;
+              ?>
+            </div>
+          </div>
+        <?php } ?>
+      </div>
+    <?php } ?>
   </section>
   <!-- END : testimonial -->
 </main>

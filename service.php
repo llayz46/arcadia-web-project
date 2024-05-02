@@ -55,7 +55,7 @@ require_once __DIR__ . '/templates/header.php';
     <div class="service__bottom-nav js-line-parent">
       <h3 class="service__left">01</h3>
       <div class="service__line js-line"></div>
-      <h3 class="service__right">03</h3>
+      <h3 class="service__right"><?='0'.$totalServices?></h3>
     </div>
   </div>
   <nav class="service__nav-image">

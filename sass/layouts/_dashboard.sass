@@ -39,6 +39,8 @@
     padding: utils.$margin-ssm
     border: 1px solid rgba(utils.$color-dark, 0.25)
     border-radius: 15px
+    &--review
+      margin-top: utils.$margin-ml
 
   &__card-title
     font-weight: 500
@@ -67,3 +69,65 @@
       width: 1px
       background-color: rgba(utils.$color-dark, 0.5)
       margin: 0 utils.$margin-xs
+
+  &__review
+    &-list
+      margin-top: utils.$margin-s
+      display: grid
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr))
+      gap: utils.$margin-s
+
+    &-text-container
+      display: flex
+      flex-direction: column
+      gap: utils.$margin-s
+
+    &-wrapper
+      display: flex
+      justify-content: space-between
+      flex-direction: column
+      gap: utils.$margin-s
+
+    &-item 
+      border: 1px solid rgba(utils.$color-dark, 0.25)
+      border-radius: 10px
+      text-align: center
+      padding: utils.$margin-s
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      gap: utils.$margin-s
+      height: 100%
+
+    &-buttons
+      width: 100%
+      display: flex
+      justify-content: space-between
+
+.review-content
+  color: rgba(utils.$color-dark , 0.85) !important
+
+.review-note-container
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.review-button
+  width: 48%
+  border: 1px solid rgba(utils.$color-dark, 0.25)
+  border-radius: 10px
+  padding: utils.$margin-xs 0
+  background-color: transparent
+  cursor: pointer
+  transition: background-color 0.3s
+  font-size: 1rem
+  &--valid
+    &:hover
+      background-color: #2bcf4f
+
+  &--reject
+    &:hover
+      background-color: #DD230E
+
+.review-one-button
+  width: 100%

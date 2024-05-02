@@ -38,9 +38,7 @@ const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
-    for (let ext of extensions) {
-      pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page)}-0${i}.${ext}`)
-    }
+    pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg`)
   }
 
   return pageImageArray
@@ -141,9 +139,9 @@ const imagesNavChanger = () => {
 // Fonction principale
 const contentChanger = () => {
   if (OnlyUrlPathname === 'service') {
-    serviceBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/uploads/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname)}-01.jpg')`
+    serviceBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/uploads/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg')`
   } else {
-    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/uploads/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname)}-01.jpg')`
+    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/uploads/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg')`
   }
 
   navBackground()
