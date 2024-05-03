@@ -1,6 +1,6 @@
 <?php
 
-function getReviews(PDO $pdo, STRING $status = null): array
+function getReviews(PDO $pdo, STRING $status = null, INT $limit = null, INT $page = null): array
 {
   $sql = "SELECT * FROM reviews ORDER BY id DESC";
 
@@ -8,10 +8,27 @@ function getReviews(PDO $pdo, STRING $status = null): array
     $sql = "SELECT * FROM reviews WHERE status = :status ORDER BY id DESC";
   }
 
+  if ($limit && !$page) {
+    $sql .= ' LIMIT :limit';
+  }
+
+  if ($page) {
+    $sql .= ' LIMIT :limit OFFSET :offset';
+  }
+
   $stmt = $pdo->prepare($sql);
 
   if ($status) {
     $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+  }
+
+  if ($limit) {
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+  }
+
+  if ($page) {
+    $offset = $limit * ($page - 1);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
   }
 
   $stmt->execute();
@@ -88,4 +105,14 @@ function getReviewHapinness(INT $note): STRING
       </defs>
     </svg>';
   }
+}
+
+function createReview(PDO $pdo, STRING $nickname, STRING $content, INT $note): bool {
+  $sql = "INSERT INTO reviews (nickname, content, note, status) VALUES (:nickname, :content, :note, 'pending')";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':nickname', $nickname, PDO::PARAM_STR);
+  $stmt->bindValue(':content', $content, PDO::PARAM_STR);
+  $stmt->bindValue(':note', $note, PDO::PARAM_INT);
+
+  return $stmt->execute();
 }

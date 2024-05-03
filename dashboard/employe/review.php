@@ -5,7 +5,10 @@ require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/reviews.php';
 
 $pendingReviews = getReviews($pdo, 'pending');
+$totalPendingReviews = count($pendingReviews);
+
 $validateReviews = getReviews($pdo, 'published');
+$totalValidateReviews = count($validateReviews);
 
 if (isset($_POST['review_id'])) {
   $reviewId = $_POST['review_id'];
@@ -29,6 +32,7 @@ require_once '../templates/aside-nav.php';
 
 <main class="dashboard__main">
   <h2 class="dashboard__title">Gestion des avis utilisateurs</h2>
+  <?php if ($totalPendingReviews > 0) { ?>
   <div class="dashboard__card-wrapper dashboard__card-wrapper--review">
     <h3 class="dashboard__card-title">Liste des avis en attente de vérification</h3>
     <ul class="dashboard__review-list">
@@ -62,21 +66,23 @@ require_once '../templates/aside-nav.php';
       <?php } ?>
     </ul>
   </div>
+  <?php } ?>
   <?php if (isset($_SESSION['errors'])) { ?>
     <div class="dashboard__account-info">
       <?php foreach ($_SESSION['errors'] as $error) { ?>
         <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
       <?php } ?>
     </div>
-    <!-- <?php unset($_SESSION['errors']) ?> -->
+    <?php unset($_SESSION['errors']) ?>
   <?php } else if (isset($_SESSION['success'])) { ?>
     <div class="dashboard__account-info">
       <?php foreach ($_SESSION['success'] as $message) { ?>
         <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
       <?php } ?>
     </div>
-    <!-- <?php unset($_SESSION['success']) ?> -->
+    <?php unset($_SESSION['success']) ?>
   <?php } ?>
+  <?php if ($totalValidateReviews > 0) { ?>
   <div class="dashboard__card-wrapper dashboard__card-wrapper--review">
     <h3 class="dashboard__card-title">Liste des avis validé</h3>
     <ul class="dashboard__review-list">
@@ -109,6 +115,7 @@ require_once '../templates/aside-nav.php';
       <?php } ?>
     </ul>
   </div>
+  <?php } ?>
 </main>
 </body>
 

@@ -5,9 +5,6 @@ require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
 
-$errors = [];
-$success = [];
-
 if (isset($_GET['service-delete-id'])) {
   $serviceDeleteId = $_GET['service-delete-id'];
   $serviceToDelete = getServiceById($pdo, $serviceDeleteId);
@@ -22,13 +19,16 @@ if (isset($_GET['service-delete-id'])) {
           }
         }
       }
+
+      $_SESSION['success'][] = 'Le service a été supprimé avec succès';
+
       header('Location: services.php');
       exit;
     } else {
-      $errors[] = 'Erreur lors de la suppression du service';
+      $_SESSION['errors'][] = 'Erreur lors de la suppression du service';
     }
   } else {
-    $errors[] = 'Le service n\'existe pas';
+    $_SESSION['errors'][] = 'Le service n\'existe pas';
   }
 }
 
@@ -36,7 +36,7 @@ $services = getServices($pdo);
 
 if (isset($_POST['createService'])) {
   if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
-    $errors[] = 'Veuillez remplir tous les champs';
+    $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
   } else {
     $res = createService($pdo, $_POST['service-name'], $_POST['service-about'], $_POST['service-content']);
 
@@ -65,20 +65,21 @@ if (isset($_POST['createService'])) {
               move_uploaded_file($fileTmpName, $fileDestination);
               $i++;
             } else {
-              $errors[] = 'Votre fichier est trop volumineux';
+              $_SESSION['errors'][] = 'Votre fichier est trop volumineux';
             }
           } else {
-            $errors[] = 'Erreur lors de l\'envoi de votre fichier';
+            $_SESSION['errors'][] = 'Erreur lors de l\'envoi de votre fichier';
           }
         } else {
-          $errors[] = 'Vous ne pouvez pas envoyer ce type de fichier';
+          $_SESSION['errors'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
         }
       }
 
-      header('Refresh: 0');
-      $success[] = 'Le service a été créé avec succès';
+      $_SESSION['success'][] = 'Le service a été créé avec succès';
+      header('Location: ' . $_SERVER['PHP_SELF']);
+      exit();
     } else {
-      $errors[] = 'Erreur lors de la création du service';
+      $_SESSION['errors'][] = 'Erreur lors de la création du service';
     }
   }
 }
@@ -124,19 +125,21 @@ require_once '../templates/aside-nav.php';
         </label>
         <input class="dashboard__account-submit" type="submit" value="Créer le service" name="createService">
       </form>
-      <?php if ($errors) {
-        foreach ($errors as $error) { ?>
-          <div class="dashboard__account-info">
-            <h3 class="dashboard__account-message--error"><?= $error ?></h3>
-          </div>
-        <?php }
-      } else if ($success) {
-        foreach ($success as $message) { ?>
-          <div class="dashboard__account-info">
-            <h3 class="dashboard__account-message--success"><?= $message ?></h3>
-          </div>
-      <?php }
-      } ?>
+      <?php if (isset($_SESSION['errors'])) { ?>
+        <div class="dashboard__account-info">
+          <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
+          <?php } ?>
+        </div>
+        <?php unset($_SESSION['errors']) ?>
+      <?php } else if (isset($_SESSION['success'])) { ?>
+        <div class="dashboard__account-info">
+          <?php foreach ($_SESSION['success'] as $message) { ?>
+            <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
+          <?php } ?>
+        </div>
+        <?php unset($_SESSION['success']) ?>
+      <?php } ?>
     </div>
   </div>
 </main>

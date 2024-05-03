@@ -155,7 +155,11 @@ $reviews = getReviews($pdo, 'published');
 
   <!-- START : testimonial -->
   <section class="testimonial" id="avis">
-    <h2 class="testimonial__title">Ils partagent leur <span class="accent">expérience</span></h2>
+    <div class="testimonial__container-text">
+      <h2 class="testimonial__title">Ils partagent leur <span class="accent">expérience</span></h2>
+      <p class="testimonial__description">Découvrez ce que nos visiteurs ont à dire sur leur expérience inoubliable au Zoo Arcadia. Vous aussi, partagez votre expérience au Zoo Arcadia et faites partie de notre communauté ! Votre avis compte pour nous.</p>
+      <a href="new_review.php" class="button-dark">Partagez votre expérience</a>
+    </div>
     <?php if (count($reviews) > 3) { ?>
       <div class="splide flux" role="group">
         <div class="splide__track">
@@ -175,7 +179,6 @@ $reviews = getReviews($pdo, 'published');
                         </svg>
                       <?php } ?>
                     </div>
-                    <!-- IF note > 4 alors afficher ca (smiley content) sinon ca (smiley ca va) sinon ca etc.. -->
                     <?php
                       $note = getReviewHapinness($review['note']);
                       echo $note;
