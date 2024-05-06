@@ -6,6 +6,7 @@ $mainMenu = [
   "habitat.php" => ["menu_title" => "Habitats", "head_title" => "Habitats", "meta_desc" => "Page des habitats du site Arcadia"],
   "contact.php" => ["menu_title" => "Contact", "head_title" => "Nous contacter", "meta_desc" => "Page de contact du site Arcadia"],
   "login.php" => ["menu_title" => "Connexion", "head_title" => "Connexion", "meta_desc" => "Page de connexion du site Arcadia", "exclude" => true],
+  "animal.php" => ["head_title" => "Les animaux", "meta_desc" => "Les animaux", "exclude" => true],
   "dashboard/admin/services.php" => ["menu_title" => "Dashboard Admin", "role" => 'admin'],
   "dashboard/employe/review.php" => ["menu_title" => "Dashboard Employé", "role" => 'employe'],
 ];

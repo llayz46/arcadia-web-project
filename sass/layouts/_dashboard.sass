@@ -45,8 +45,19 @@
   &__card-title
     font-weight: 500
 
+  &__list-wrapper
+    display: flex
+    flex-wrap: wrap
+    gap: utils.$margin-s
+
+  &__list
+    display: flex
+    align-items: center
+    gap: utils.$margin-xs
+
   &__service,
-  &__habitat
+  &__habitat,
+  &__animal
     &-link
       color: #2b57cf
       transition: color 0.3s

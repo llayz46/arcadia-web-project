@@ -16,6 +16,29 @@
   &__container-grid
     padding-top: utils.$margin-l
 
+  &-main
+    display: flex
+    flex-direction: column
+    margin-right: auto
+    margin-left: auto
+    width: calc(100% - utils.$margin-3xl)
+    gap: utils.$margin-xl
+
+  &__title
+    margin-right: auto
+    margin-left: auto
+    margin-top: utils.$margin-3xl
+    color: utils.$color-light
+
+  &__container
+    display: flex
+    justify-content: center
+    gap: utils.$margin-s
+
+  &__card-name
+    margin-top: utils.$margin-s
+    text-align: center
+
 @media screen and (max-width: 1000px)
   .animal
     &__container-text

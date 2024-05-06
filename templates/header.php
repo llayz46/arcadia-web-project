@@ -17,7 +17,7 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
-<body class="<?php if($currentPage === 'service.php') { echo 'js-service-body service-';} else if($currentPage === 'habitat.php') { echo 'js-habitats-body habitats-';} ?>body">
+<body class="<?php if($currentPage === 'service.php') { echo 'js-service-body service-';} else if($currentPage === 'habitat.php') { echo 'js-habitats-body habitats-';} else if($currentPage === 'animal.php') { echo 'animal-'; } ?>body">
   <!-- START : header -->
   <header class="<?php if($currentPage === 'service.php') { echo 'service-header ';} else if($currentPage === 'habitat.php') { echo 'habitats-header ';} ?>header flux">
     <a class="header__logo" href="./index.php">Arcadia</a>
@@ -38,9 +38,9 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
       </ul>
     </nav>
     <?php if (isset($_SESSION['user'])) { ?>
-      <a href="/logout.php" class="header__login button-<?php if($currentPage === 'service.php' || $currentPage === 'habitat.php') { echo 'light';} else { echo 'dark'; } ?>">Déconnexion</a>
+      <a href="/logout.php" class="header__login button-<?php if($currentPage === 'service.php' || $currentPage === 'habitat.php' || $currentPage === 'animal.php') { echo 'light';} else { echo 'dark'; } ?>">Déconnexion</a>
     <?php } else { ?>
-      <a href="/login.php" class="header__login button-<?php if($currentPage === 'service.php' || $currentPage === 'habitat.php') { echo 'light';} else { echo 'dark'; } ?>">Connexion</a>
+      <a href="/login.php" class="header__login button-<?php if($currentPage === 'service.php' || $currentPage === 'habitat.php' || $currentPage === 'animal.php') { echo 'light';} else { echo 'dark'; } ?>">Connexion</a>
     <?php } ?>
     <svg class="header__burger js-header-burger" xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
       <path d="M23.0897 6.81189H11.7234C11.2481 6.81189 10.8125 7.20793 10.8125 7.72278C10.8125 8.19803 11.2085 8.63367 11.7234 8.63367H23.0897C23.565 8.63367 24.0006 8.23763 24.0006 7.72278C24.0006 7.20793 23.565 6.81189 23.0897 6.81189Z" fill="white" />

@@ -155,11 +155,12 @@
       outline: none
 
 .dashboard__service,
-.dashboard__habitat
+.dashboard__habitat,
+.dashboard__animal
   &-form
     display: flex
     flex-direction: column
-    margin-top: utils.$margin-xs
+    margin-top: utils.$margin-s
     padding: utils.$margin-s
     border: 1px solid rgba(utils.$color-dark, 0.25)
     border-radius: 10px
@@ -190,6 +191,8 @@
   font-size: 1rem
   line-height: 1.5
   color: utils.$color-dark
+  @media screen and (max-width: 700px)
+    width: 100%
 
 .star__container
   padding: utils.$margin-xs 0 utils.$margin-s 0

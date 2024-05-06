@@ -103,37 +103,59 @@ if (isset($_GET['modified'])) {
     exit;
   }
 
-  $serviceImages = [];
-
-  $serviceImagesDir = '../..' . _PATH_UPLOADS_ . 'services/';
-  $files = scandir($serviceImagesDir);
-  $serviceFiles = preg_grep('/service-' . str_replace(' ', '_', $service['title']) . '-0[1-3]\.(jpg|jpeg|png|gif)/', $files);
-
   if (isset($_POST['modifiedService'])) {
 
-    if (isset($_FILES['services-images'])) {
-      foreach ($serviceFiles as $serviceFile) {
-        unlink($serviceImagesDir . $serviceFile);
+    if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
+      $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
+    } else {
+      $name = htmlspecialchars(trim($_POST['service-name']));
+      $about = htmlspecialchars(trim($_POST['service-about']));
+      $content = htmlspecialchars(trim($_POST['service-content']));
+
+      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content']) {
+        $_SESSION['errors'][] = 'Aucune modification n\'a été apportée';
+      } else {
+        if (updateService($pdo, $serviceId, $name, $about, $content)) {
+          if ($name !== $service['title']) {
+            for ($i = 1; $i <= 3; $i++) {
+              foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+                $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                if (file_exists($file)) {
+                  $newFile = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
+                  rename($file, $newFile);
+                }
+              }
+            }
+          }
+
+          if (!empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2])){
+            $serviceImages = [];
+            $serviceImagesDir = '../..' . _PATH_UPLOADS_ . 'services/';
+            $files = scandir($serviceImagesDir);
+            $serviceFiles = preg_grep('/service-' . str_replace(' ', '_', strtolower($name)) . '-0[1-3]\.(jpg|jpeg|png|gif)/', $files);
+
+            foreach ($serviceFiles as $serviceFile) {
+              unlink($serviceImagesDir . $serviceFile);
+            }
+
+            foreach ($_FILES['service-images']['tmp_name'] as $index => $tmp_name) {
+              $imagePath = $serviceImagesDir . 'service-' . str_replace(' ', '_', strtolower($name)) . '-0' . ($index + 1) . '.jpg';
+              if (move_uploaded_file($tmp_name, $imagePath)) {
+                $serviceImages[] = $imagePath;
+                var_dump($serviceImages);
+              }
+            }
+          }
+
+          $_SESSION['success'][] = 'Le service a été modifié avec succès';
+          header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
+          exit();
+        } else {
+          $_SESSION['errors'][] = 'Erreur lors de la modification du service';
+        }
       }
-    }
-
-    $imagesUploaded = false;
-
-    foreach ($_FILES['service-images']['tmp_name'] as $index => $tmp_name) {
-      $imagePath = $serviceImagesDir . 'service-' . str_replace(' ', '_', $service['title']) . '-0' . ($index + 1) . '.jpg';
-      if (move_uploaded_file($tmp_name, $imagePath)) {
-        $serviceImages[] = $imagePath;
-        $imagesUploaded = true;
-      }
-    }
-
-    if ($imagesUploaded) {
-      $_SESSION['success'][] = 'Le service a été modifiée avec succès';
-      header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
-      exit();
     }
   }
-
 }
 
 require_once '../templates/aside-nav.php';
@@ -148,10 +170,10 @@ require_once '../templates/aside-nav.php';
         <ul class="dashboard__service-list">
           <?php foreach ($services as $service) { ?>
             <li class="dashboard__service-item">
-              <h4 class="dashboard__service-title"><?=ucfirst($service['title'])?></h4>
-              <a class="dashboard__service-link" href="?modified=<?=$service['id']?>">Modifier</a>
+              <h4 class="dashboard__service-title"><?= ucfirst($service['title']) ?></h4>
+              <a class="dashboard__service-link" href="?modified=<?= $service['id'] ?>">Modifier</a>
               <div class="dashboard__service-separator"></div>
-              <a class="dashboard__service-link" href="?delete=<?=$service['id']?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce service ?')">Supprimer</a>
+              <a class="dashboard__service-link" href="?delete=<?= $service['id'] ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce service ?')">Supprimer</a>
             </li>
           <?php } ?>
         </ul>
@@ -221,7 +243,7 @@ require_once '../templates/aside-nav.php';
           <label for="service-images" class="dashboard__account-label">
             <?php for ($i = 0; $i < 3; $i++) { ?>
               <div class="dashboard__input-container">
-                <input class="dashboard__form-file" type="file" name="service-images[]" id="service-images" accept="image/*" required>
+                <input class="dashboard__form-file" type="file" name="service-images[]" id="service-images" accept="image/*">
               </div>
             <?php } ?>
           </label>

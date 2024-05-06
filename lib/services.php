@@ -65,3 +65,21 @@ function deleteService(PDO $pdo, INT $id): bool {
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
   return $stmt->execute();
 }
+
+function updateService(PDO $pdo, INT $id, STRING $title, STRING $about, STRING $content): bool {
+  $title = filter_var(strtolower($title), FILTER_SANITIZE_SPECIAL_CHARS);
+  $about = filter_var($about, FILTER_SANITIZE_SPECIAL_CHARS);
+  $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS);
+
+  $sql = 'UPDATE services
+          SET title = :title, about = :about, content = :content
+          WHERE id = :id';
+  $stmt = $pdo->prepare($sql);
+
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  $stmt->bindValue(':title', $title);
+  $stmt->bindValue(':about', $about);
+  $stmt->bindValue(':content', $content);
+
+  return $stmt->execute();
+}
