@@ -104,6 +104,30 @@
       display: flex
       justify-content: space-between
 
+  &__backlink
+    display: flex
+    align-items: center
+    gap: utils.$margin-xs
+    margin-top: utils.$margin-ssm
+    margin-bottom: utils.$margin-s
+    transition: all 0.3s
+    &:hover
+      gap: utils.$margin-s
+
+  &__input-container
+    display: flex
+    align-items: center
+    gap: utils.$margin-s
+    @media screen and (max-width: 780px)
+      flex-direction: column
+      padding-bottom: utils.$margin-m
+
+  &__actual-image
+    width: 200px
+    height: auto
+    object-fit: cover
+    border-radius: 6px
+
 .review-content
   color: rgba(utils.$color-dark , 0.85) !important
 
