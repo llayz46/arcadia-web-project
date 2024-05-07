@@ -3,11 +3,14 @@ require_once __DIR__ . '/lib/config.php';
 require_once __DIR__ . '/lib/pdo.php';
 require_once __DIR__ . '/lib/habitats.php';
 require_once __DIR__ . '/lib/reviews.php';
+require_once __DIR__ . '/lib/animals.php';
 require_once __DIR__ . '/templates/header.php';
 
 $habitats = getHabitats($pdo, 3);
 
 $reviews = getReviews($pdo, 'published');
+
+$animals = getAnimalsAndBreed($pdo, 6, true);
 ?>
 
 <!-- START : main -->
@@ -99,30 +102,12 @@ $reviews = getReviews($pdo, 'published');
       <p class="animal__description">Plongez dans la diversité de la faune à Arcadia, où chaque coin révèle une nouvelle merveille de la nature. Des tigres majestueux aux pandas roux espiègles, chaque rencontre est une expérience unique et enrichissante. Venez explorer et apprécier la beauté de nos compagnons à fourrure, à plumes et à écailles.</p>
     </div>
     <div class="animal__container-grid">
-      <div class="animal__card">
-        <img src="./assets/images/animal-tigre.jpg" alt="Image d'un tigre" class="animal__image">
-        <h3 class="animal__card-title">Tigre</h3>
-      </div>
-      <div class="animal__card">
-        <img src="./assets/images/animal-singe.jpg" alt="Image d'un singe" class="animal__image">
-        <h3 class="animal__card-title">Singe</h3>
-      </div>
-      <div class="animal__card">
-        <img src="./assets/images/animal-perroquet.jpg" alt="Image d'un perroquet" class="animal__image">
-        <h3 class="animal__card-title">Perroquet Ara</h3>
-      </div>
-      <div class="animal__card">
-        <img src="./assets/images/animal-loutre.jpg" alt="Image d'une loutre" class="animal__image">
-        <h3 class="animal__card-title">Loutre</h3>
-      </div>
-      <div class="animal__card">
-        <img src="./assets/images/animal-panda.jpg" alt="Image d'un panda roux" class="animal__image">
-        <h3 class="animal__card-title">Panda roux</h3>
-      </div>
-      <div class="animal__card">
-        <img src="./assets/images/animal-crocodile.jpg" alt="Image de deux caiman" class="animal__image">
-        <h3 class="animal__card-title">Caiman</h3>
-      </div>
+      <?php foreach($animals as $animal) { $animalHabitat = getAnimalHabitatById($pdo, $animal['animal_id']) ?>
+        <a href="animal.php?habitat=<?=$animalHabitat['habitat_title']?>" class="animal__card">
+          <img src="<?= _PATH_UPLOADS_ . 'animals/animal-' . strtolower($animal['animal_name']) . '.jpg'?>" alt="Image d'un(e) <?=strtolower($animal['breed_name'])?>" class="animal__image">
+          <h3 class="animal__card-title"><?=ucfirst($animal['breed_name'])?></h3>
+        </a>
+      <?php } ?>
     </div>
   </section>
   <!-- END : animal -->

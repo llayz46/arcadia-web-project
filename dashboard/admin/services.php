@@ -85,9 +85,9 @@ if (isset($_POST['createService'])) {
 }
 
 if (isset($_GET['modified'])) {
-  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/employe/services.php';
+  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/admin/services.php';
 
-  if (strpos($referer, 'dashboard/employe/services.php') !== false) {
+  if (strpos($referer, 'dashboard/admin/services.php') !== false) {
     $backLink = 'services.php';
   } else {
     $backLink = 'services.php';
@@ -142,7 +142,6 @@ if (isset($_GET['modified'])) {
               $imagePath = $serviceImagesDir . 'service-' . str_replace(' ', '_', strtolower($name)) . '-0' . ($index + 1) . '.jpg';
               if (move_uploaded_file($tmp_name, $imagePath)) {
                 $serviceImages[] = $imagePath;
-                var_dump($serviceImages);
               }
             }
           }
