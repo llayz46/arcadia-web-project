@@ -34,6 +34,8 @@
     @media screen and (max-width: 1000px)
       grid-template-columns: 1fr
       gap: utils.$margin-s
+    &--no-margin
+      margin-top: 0
 
   &__card-wrapper
     padding: utils.$margin-ssm
@@ -82,7 +84,8 @@
       background-color: rgba(utils.$color-dark, 0.5)
       margin: 0 utils.$margin-xs
 
-  &__review
+  &__review,
+  &__report
     &-list
       margin-top: utils.$margin-s
       display: grid
@@ -167,3 +170,19 @@
 
 .review-one-button
   width: 100%
+
+.animal-button
+  transition: background-color 0.3s ease-out
+  display: flex
+  justify-content: center
+  &:hover
+    background-color: rgba(utils.$color-dark, 0.08)
+
+.report,
+.animal
+  &-name,
+  &-content
+    text-align: left
+    &--bold
+      line-height: 1.5rem
+      font-weight: 500

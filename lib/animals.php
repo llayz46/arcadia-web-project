@@ -1,7 +1,7 @@
 <?php
 
 function getAnimalsAndBreed(PDO $pdo, INT $limit = null, BOOL $order = false): array {
-  $query = 'SELECT animals.id AS animal_id, animals.name AS animal_name, breeds.id AS breed_id, breeds.name AS breed_name 
+  $query = 'SELECT animals.id AS animal_id, animals.name AS animal_name, animals.feed AS animal_feed, animals.feed_date AS animal_feedDate, breeds.id AS breed_id, breeds.name AS breed_name 
             FROM animals 
             JOIN breeds ON animals.breed_id = breeds.id 
             WHERE animals.breed_id = breeds.id';
@@ -89,6 +89,15 @@ function updateAnimal(PDO $pdo, INT $id, STRING $name, INT $habitat, INT $breed)
 function deleteAnimal(PDO $pdo, INT $id): bool {
   $query = 'DELETE FROM animals WHERE id = :id';
   $stmt = $pdo->prepare($query);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  return $stmt->execute();
+}
+
+function addAnimalFeed(PDO $pdo, STRING $feed, INT $id, DATETIME $date): bool {
+  $query = 'UPDATE animals SET feed = :feed, feed_date = :feed_date WHERE id = :id';
+  $stmt = $pdo->prepare($query);
+  $stmt->bindValue(':feed', $feed, PDO::PARAM_STR);
+  $stmt->bindValue(':feed_date', $date->format('Y-m-d H-i-s'), PDO::PARAM_STR);
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
   return $stmt->execute();
 }

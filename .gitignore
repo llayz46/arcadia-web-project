@@ -1,5 +1,7 @@
 package-lock.json
 package.json
+/vendor/
+mongodb_connexion.php
 node_modules
 config.php
 pdo.php

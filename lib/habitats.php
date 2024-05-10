@@ -63,3 +63,12 @@ function deleteHabitat(PDO $pdo, INT $id): bool {
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
   return $stmt->execute();
 }
+
+function noteHabitat(PDO $pdo, INT $id, STRING $detail, INT $note): bool {
+  $sql = 'UPDATE habitats SET note = :note, note_detail = :note_detail WHERE id = :id';
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':note', $note, PDO::PARAM_INT);
+  $stmt->bindValue(':note_detail', $detail, PDO::PARAM_STR);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  return $stmt->execute();
+}

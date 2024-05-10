@@ -42,7 +42,7 @@ if (isset($_GET['habitat'])) {
               <p class="animal__modal-title">Espèce : <?= mb_ucfirst($animal['breed_name']) ?></p>
               <p class="animal__modal-title">Habitat : <?= mb_ucfirst($animal['habitat_title']) ?></p>
               <img src="<?= _PATH_UPLOADS_ ?>animals/animal-<?= strtolower($animal['animal_name']) ?>.jpg" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
-              <?php var_dump($report) ?>
+              <p class="animal__modal-title animal__modal-title--mt">État : <?= mb_ucfirst($report[0]['state']) ?></p>
             </div>
           </div>
         <?php } ?>

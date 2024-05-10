@@ -230,15 +230,15 @@ require_once '../templates/aside-nav.php';
         <form method="post" class="dashboard__service-form" enctype="multipart/form-data">
           <label for="service-name" class="dashboard__account-label">
             Nom du service
-            <input class="dashboard__account-input" type="text" name="service-name" id="service-name" value="<?= ucfirst($service['title']) ?>" required>
+            <input class="dashboard__account-input" type="text" name="service-name" id="service-name" value="<?= htmlentities(ucfirst($service['title'])) ?>" required>
           </label>
           <label for="service-about" class="dashboard__account-label">
             A propos du service
-            <input class="dashboard__account-input" type="text" name="service-about" id="service-about" value="<?= $service['about'] ?>" required>
+            <input class="dashboard__account-input" type="text" name="service-about" id="service-about" value="<?= htmlentities($service['about']) ?>" required>
           </label>
           <label for="service-content" class="dashboard__account-label">
             Description du service
-            <textarea class="dashboard__service-textarea" name="service-content" id="service-content" required><?= $service['content'] ?></textarea>
+            <textarea class="dashboard__service-textarea" name="service-content" id="service-content" required><?= htmlentities($service['content']) ?></textarea>
           </label>
           <label for="service-images" class="dashboard__account-label">
             <?php for ($i = 0; $i < 3; $i++) { ?>

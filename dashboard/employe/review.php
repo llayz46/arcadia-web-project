@@ -60,7 +60,7 @@ require_once '../templates/aside-nav.php';
           <form class="dashboard__review-buttons" method="post">
             <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
             <input class="review-button review-button--valid" type="submit" name="review_published" value="Validé l'avis">
-            <input class="review-button review-button--reject" type="submit" name="review_rejected" value="Rejeté l'avis">
+            <input class="review-button review-button--reject" type="submit" name="review_rejected" value="Rejeté l'avis" onclick="return confirm('Êtes-vous sûr de rejeté cet avis ?')">
           </form>
         </li>
       <?php } ?>
@@ -109,7 +109,7 @@ require_once '../templates/aside-nav.php';
           </div>
           <form class="dashboard__review-buttons" method="post">
             <input type="hidden" name="review_id" value="<?= $review['id'] ?>">
-            <input class="review-button review-one-button review-button--reject" type="submit" name="review_rejected" value="Rejeté l'avis">
+            <input class="review-button review-one-button review-button--reject" type="submit" name="review_rejected" value="Rejeté l'avis" onclick="return confirm('Êtes-vous sûr de rejeté cet avis ?')">
           </form>
         </li>
       <?php } ?>
