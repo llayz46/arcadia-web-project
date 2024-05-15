@@ -6,6 +6,14 @@ burger.addEventListener('click', () => {
   nav.classList.toggle('active')
 })
 
+document.addEventListener('scroll', () => {
+  if(window.scrollY > 0) {
+    burger.classList.add('scroll')
+  } else {
+    burger.classList.remove('scroll')
+  }
+})
+
 // Récupération des éléments 'habitats' du DOM pour le contenu
 const habitatsTitle = document.querySelector('.js-habitats-title')
 const habitatsContent = document.querySelector('.js-habitats-content')

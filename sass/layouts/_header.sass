@@ -47,12 +47,26 @@
 
   .header__burger
     display: block
+    position: fixed
+    top: utils.$margin-s
+    right: utils.$margin-xs
+    z-index: 4
     cursor: pointer
+    padding: utils.$margin-s utils.$margin-s
+    border-radius: 4px
+    &.scroll
+      background-color: rgba(utils.$color-dark , 80%)
 
   .header__nav-mobile
     position: fixed
-    top: 60px
+    z-index: 3
+    background-color: utils.$color-dark
+    top: 0
+    left: 0
+    right: 0
+    padding-top: 80px
     width: 100%
+    height: 100vh
     display: none
     justify-content: center
     &.active
@@ -60,13 +74,17 @@
 
   .header__list-mobile
     display: flex
+    flex-direction: column
     gap: utils.$margin-s
 
   .header__mobile-item
-    padding: 0.5rem 1rem
     font-size: 1.25rem
     line-height: 115.5%
     font-weight: 600
+
+  .header__mobile-link
+    display: flex
+    padding: 0.5rem 1rem
     color: utils.$color-light
     background-color: rgba(utils.$color-light, 0.25)
     border-radius: 0.5rem

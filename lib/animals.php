@@ -20,7 +20,7 @@ function getAnimalsAndBreed(PDO $pdo, INT $limit = null, BOOL $order = false): a
   }
 
   $stmt->execute();
-  return $stmt->fetchAll();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function getBreeds(PDO $pdo): array {
@@ -58,7 +58,7 @@ function getAnimalsByHabitat(PDO $pdo, STRING $habitat): array {
   $stmt = $pdo->prepare($query);
   $stmt->bindValue(':habitat', $habitat, PDO::PARAM_STR);
   $stmt->execute();
-  return $stmt->fetchAll();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function addAnimal(PDO $pdo, STRING $name, STRING $habitat, STRING $breed): bool {
@@ -71,8 +71,6 @@ function addAnimal(PDO $pdo, STRING $name, STRING $habitat, STRING $breed): bool
 }
 
 function updateAnimal(PDO $pdo, INT $id, STRING $name, INT $habitat, INT $breed): bool {
-  $title = filter_var(strtolower($name), FILTER_SANITIZE_SPECIAL_CHARS);
-
   $sql = 'UPDATE animals
           SET name = :name, habitat_id = :habitat, breed_id = :breed
           WHERE id = :id';
@@ -87,10 +85,23 @@ function updateAnimal(PDO $pdo, INT $id, STRING $name, INT $habitat, INT $breed)
 }
 
 function deleteAnimal(PDO $pdo, INT $id): bool {
-  $query = 'DELETE FROM animals WHERE id = :id';
-  $stmt = $pdo->prepare($query);
-  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-  return $stmt->execute();
+  try {
+    $pdo->beginTransaction();
+
+    $query = 'DELETE FROM animal_reports WHERE animal_id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $query = 'DELETE FROM animals WHERE id = :id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    
+    $pdo->commit();
+    return $stmt->execute();
+  } catch (PDOException $e) {
+    return false;
+  }
 }
 
 function addAnimalFeed(PDO $pdo, STRING $feed, INT $id, DATETIME $date): bool {
@@ -99,5 +110,12 @@ function addAnimalFeed(PDO $pdo, STRING $feed, INT $id, DATETIME $date): bool {
   $stmt->bindValue(':feed', $feed, PDO::PARAM_STR);
   $stmt->bindValue(':feed_date', $date->format('Y-m-d H-i-s'), PDO::PARAM_STR);
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+  return $stmt->execute();
+}
+
+function addBreed(PDO $pdo, STRING $name): bool {
+  $query = 'INSERT INTO breeds (name) VALUES (:name)';
+  $stmt = $pdo->prepare($query);
+  $stmt->bindValue(':name', $name, PDO::PARAM_STR);
   return $stmt->execute();
 }

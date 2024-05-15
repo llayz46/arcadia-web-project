@@ -98,9 +98,11 @@
     gap: utils.$margin-3xl
     margin-left: utils.$margin-l
     margin-right: utils.$margin-3xl
+    z-index: 1
 
   &-header
     position: fixed
+    z-index: 2
     top: 0
     left: 0
     right: 0
@@ -111,6 +113,15 @@
       flex-direction: column
       gap: utils.$margin-sm
       animation: 0.5s ease-in-out 0s 1 zoomIn8
+
+  &__wrapper
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 100%
+
+  &__container-text
+    padding-right: utils.$margin-xl
 
   &__num
     &-list
@@ -123,10 +134,10 @@
       @extend %flex-center
 
   &__content
-    padding-right: utils.$margin-xl
     display: flex
     flex-direction: column
     animation: 0.5s ease-in-out 0s 1 zoomIn8
+    width: 100%
 
   &__text
     text-align: justify
@@ -199,15 +210,50 @@
     &__img-list
       flex-direction: row
 
+    &__wrapper
+      flex-direction: column
+
+    &__bottom-nav
+      justify-content: center
+      left: 0
+      right: 0
+
+    &__container-text
+      padding-right: 0
+      margin-bottom: 2rem
+
     &__img-item
       overflow: hidden
       max-width: 160px
       max-height: 110px
 
-  @media screen and (max-width: 800px)
-    &-body
-      overflow: hidden
+    &__nav-mobile
+      display: flex
 
+    &__mobile
+      &-list
+        display: flex
+        gap: 1.5rem
+        margin-bottom: utils.$margin-ml
+        flex-wrap: wrap
+      &-item
+        font-size: 1.25rem
+        line-height: 115.5%
+        font-weight: 600
+
+      &-link
+        color: utils.$color-light
+        border-radius: 0.5rem
+        background-color: rgba(utils.$color-light, 0.25)
+        padding: 0.5rem 1rem
+        transition: 0.2s ease-in-out
+        &:hover 
+          background-color: rgba(utils.$color-light, 0.5)
+        &.active
+          background-color: utils.$color-light
+          color: utils.$color-dark
+
+  @media screen and (max-width: 800px)
     &-main
       width: calc(100% - utils.$margin-m)
 
@@ -217,34 +263,30 @@
     &__title
       margin-right: 0
 
-    &__nav-mobile
-      display: flex
-
     &__content
       margin-top: utils.$margin-ml
 
-    &__mobile
-      &-list
-        display: flex
-        gap: 1.5rem
-        margin-bottom: utils.$margin-ml
-      &-item
-        padding: 0.5rem 1rem
-        font-size: 1.25rem
-        line-height: 115.5%
-        font-weight: 600
-        color: utils.$color-light
-        background-color: rgba(utils.$color-light, 0.25)
-        border-radius: 0.5rem
-        transition: 0.2s ease-in-out
-        &:hover 
-          background-color: rgba(utils.$color-light, 0.5)
-        &.active
-          background-color: utils.$color-light
-          color: utils.$color-dark
+    &__wrapper
+      width: 100%
+
+    &__container-text
+      width: 100%
+      margin-bottom: 1rem
+
+    &__nav
+      &-image
+        margin-top: utils.$margin-ssm
+        margin-bottom: 0
+        width: 100%
+
+    &__img-list
+      gap: utils.$margin-xs
 
   @media screen and (max-width: 450px)
     &__line
       max-width: 330px
       width: 100%
       min-width: 225px
+
+    &__bottom-nav
+      padding: 0 utils.$margin-ssm

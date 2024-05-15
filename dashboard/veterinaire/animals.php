@@ -21,7 +21,7 @@ require_once '../templates/aside-nav.php';
           <div class="dashboard__review-item">
             <div class="dashboard__review-text-container">
               <h4 class="animal-name"><?= ucfirst($animal['animal_name']) ?></h4>
-              <p class="animal-content"><span class="report-content--bold">Conseillé : </span><?= $animalReport['food'] ?></p>
+              <p class="animal-content"><span class="report-content--bold">Conseillé : </span><?php if ($animalReport !== false) { echo $animalReport['food']; } else { echo 'Aucun repas conseillé'; } ?></p>
               <?php if ($animal['animal_feed']) { ?>
                 <p class="animal-content"><span class="report-content--bold">Repas du <?=$animal['animal_feedDate']?> : </span><?= $animal['animal_feed'] ?></p>
               <?php } ?>

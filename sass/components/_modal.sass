@@ -1,0 +1,83 @@
+@use '../utils/all' as utils
+
+.animal
+  &__modal
+    opacity: 0
+    background-color: #fff
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out
+    &-overlay
+      opacity: 0
+      position: absolute
+      width: 100%
+      height: 100%
+      background-color: #333333d3
+      transition: opacity 0.4s 0.2s ease-out
+    &-container
+      visibility: hidden
+      transition: visibility 0.4s
+      &.active
+        transition: visibility 0s
+        visibility: visible
+        & .animal__modal-overlay
+          opacity: 1
+          transition: opacity 0.4s ease-out
+        & .animal__modal
+          opacity: 1
+          transform: translate(-50%, -50%)
+          transition: opacity 0.4s 0.2s ease-out, transform 0.4s 0.2s ease-out
+    &-title
+      margin-bottom: utils.$margin-s
+      &--mt
+        margin-top: utils.$margin-s
+
+.dashboard
+  &__modal
+    background-color: utils.$color-lighter
+    border: 1px solid utils.$color-dark
+    &-overlay
+      z-index: -1
+      position: absolute
+      width: 100vw
+      height: 100vh
+      cursor: default
+
+.animal,
+.dashboard
+  &__modal
+    max-width: 500px
+    min-width: 300px
+    padding: utils.$margin-m
+    border-radius: 5px
+    position: absolute
+    top: 40%
+    left: 50%
+    transform: translate(-50%, calc(-50% - 50px))
+
+    &-container
+      position: fixed
+      top: 0
+      width: 100vw
+      height: 100vh
+
+    &-close
+      padding: utils.$margin-xs
+      border: none
+      border-radius: 5px
+      position: absolute
+      top: 10px
+      right: 10px
+      cursor: pointer
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: #DD230E
+      transition: background-color 0.3s ease-out
+      &:hover
+        background-color: #FF3C2F
+        scale: 1.01
+
+    &-content
+      margin-bottom: utils.$margin-s
+
+    &-title--span
+      color: utils.$color-accent

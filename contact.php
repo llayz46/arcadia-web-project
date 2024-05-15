@@ -1,7 +1,31 @@
 <?php 
+require_once __DIR__ . '/lib/config.php';
 require_once __DIR__ . '/lib/menu.php';
 
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
+
+if (isset($_POST['contact'])) {
+  $objet = htmlentities($_POST['objet']);
+  $email = htmlentities($_POST['email']);
+  $message = htmlentities($_POST['message']);
+
+  $to = _CONTACT_MAIL_;
+
+  $subject = 'Contact Arcadia';
+
+  $body = "Objet : $objet\n";
+  $body .= "Email : $email\n";
+  $body .= "Message :\n$message";
+
+  $headers = "From: $email\r\n";
+  $headers .= "Reply-To: $email\r\n";
+
+  if (mail($to, $subject, $body, $headers)) {
+    echo 'Message envoyé';
+  } else {
+    echo 'Erreur lors de l\'envoi du message';
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,20 +49,20 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
     <div class="contact__form-wrapper">
       <h1 class="contact__title">Nous contacter</h1>
       <p class="contact__text">Un problème ? Remplissez le formulaire ci-dessous pour nous contacter.</p>
-      <form action="" class="contact__form">
+      <form method="post" class="contact__form">
         <div class="contact__form-group">
-          <label for="name" class="contact__label">Objet</label>
-          <input type="text" id="name" class="contact__input" required>
+          <label for="objet" class="contact__label">Objet</label>
+          <input type="text" id="objet" name="objet" class="contact__input" required>
         </div>
         <div class="contact__form-group">
           <label for="email" class="contact__label">Email</label>
-          <input type="email" id="email" class="contact__input" required>
+          <input type="email" id="email" name="email" class="contact__input" required>
         </div>
         <div class="contact__form-group">
           <label for="message" class="contact__label">Message</label>
-          <textarea name="message" id="message" class="contact__textarea" required></textarea>
+          <textarea name="message" id="message" name="message" class="contact__textarea" required></textarea>
         </div>
-        <button type="submit" class="contact__button button-dark">Envoyer</button>
+        <input type="submit" class="contact__button button-dark" value="Envoyer" name="contact">
       </form>
   </main>
   <!-- END : main -->

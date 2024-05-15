@@ -25,8 +25,9 @@ if (isset($_GET['animal-feed'])) {
       $animalFeed = htmlspecialchars(trim($_POST['animal_feed']));
       $animalId = $_GET['animal-feed'];
       $date = new DateTime($_POST['animal_date']);
+      $actualDate = new DateTime();
 
-      if ($date > new DateTime()) {
+      if ($date > $actualDate->add(new DateInterval('P1D'))) {
         $_SESSION['errors'][] = 'La date ne peut pas être supérieure à la date du jour';
       } else {
         if (addAnimalFeed($pdo, $animalFeed, $animalId, $date)) {
@@ -51,14 +52,19 @@ require_once '../templates/aside-nav.php';
       <h3 class="dashboard__card-title">Liste des animaux</h3>
       <ul class="dashboard__review-list">
         <?php foreach ($animals as $index => $animal) {
-          $animalReport = getAnimalReportByAnimalId($pdo, $animal['animal_id']) ?>
+          $animalReport = getAnimalReportByAnimalId($pdo, $animal['animal_id']);
+        ?>
           <li class="dashboard__review-wrapper">
             <div class="dashboard__review-item">
               <div class="dashboard__review-text-container">
                 <h4 class="animal-name"><?= ucfirst($animal['animal_name']) ?></h4>
-                <p class="animal-content"><span class="report-content--bold">Conseillé : </span><?= $animalReport['food'] ?></p>
+                <p class="animal-content"><span class="report-content--bold">Conseillé : </span><?php if ($animalReport !== false) {
+                                                                                                  echo $animalReport['food'];
+                                                                                                } else {
+                                                                                                  echo 'Aucun repas conseillé';
+                                                                                                } ?></p>
                 <?php if ($animal['animal_feed']) { ?>
-                  <p class="animal-content"><span class="report-content--bold">Repas du <?=$animal['animal_feedDate']?> : </span><?= $animal['animal_feed'] ?></p>
+                  <p class="animal-content"><span class="report-content--bold">Repas du <?= $animal['animal_feedDate'] ?> : </span><?= $animal['animal_feed'] ?></p>
                 <?php } ?>
               </div>
             </div>
@@ -93,7 +99,7 @@ require_once '../templates/aside-nav.php';
       <div class="dashboard__container dashboard__container--no-margin">
         <div class="dashboard__card-wrapper">
           <?php $animalName = getAnimalById($pdo, $_GET['animal-feed']) ?>
-          <h3 class="dashboard__card-title"><?=$animalName['name']?></h3>
+          <h3 class="dashboard__card-title"><?= $animalName['name'] ?></h3>
           <form method="post" class="dashboard__service-form" enctype="multipart/form-data">
             <label for="animal_feed" class="dashboard__account-label">
               Nourriture
@@ -105,6 +111,21 @@ require_once '../templates/aside-nav.php';
             </label>
             <input class="dashboard__account-submit" type="submit" value="Ajouter l'alimentation du jour" name="addFeed">
           </form>
+          <?php if (isset($_SESSION['errors'])) { ?>
+            <div class="dashboard__account-info">
+              <?php foreach ($_SESSION['errors'] as $error) { ?>
+                <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
+              <?php } ?>
+            </div>
+            <?php unset($_SESSION['errors']) ?>
+          <?php } else if (isset($_SESSION['success'])) { ?>
+            <div class="dashboard__account-info">
+              <?php foreach ($_SESSION['success'] as $message) { ?>
+                <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
+              <?php } ?>
+            </div>
+            <?php unset($_SESSION['success']) ?>
+          <?php } ?>
         </div>
       </div>
     </div>

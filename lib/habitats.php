@@ -72,3 +72,17 @@ function noteHabitat(PDO $pdo, INT $id, STRING $detail, INT $note): bool {
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);
   return $stmt->execute();
 }
+
+function updateHabitat(PDO $pdo, INT $id, STRING $title, STRING $content): bool {
+  $sql = 'UPDATE habitats
+          SET title = :title, content = :content
+          WHERE id = :id';
+
+  $stmt = $pdo->prepare($sql);
+
+  $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+  $stmt->bindValue(':content', $content, PDO::PARAM_STR);
+  $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+  return $stmt->execute();
+}

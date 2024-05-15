@@ -143,33 +143,71 @@
     object-fit: cover
     border-radius: 6px
 
-.review-content
-  color: rgba(utils.$color-dark , 0.85) !important
+  @media screen and (max-width: 800px)
+    &__main
+      margin: utils.$margin-ssm
 
-.review-note-container
-  display: flex
-  justify-content: space-between
-  align-items: center
+    &__container
+      margin-top: utils.$margin-s
 
-.review-button
-  width: 48%
-  border: 1px solid rgba(utils.$color-dark, 0.25)
-  border-radius: 10px
-  padding: utils.$margin-xs 0
-  background-color: transparent
-  cursor: pointer
-  transition: background-color 0.3s
-  font-size: 1rem
-  &--valid
-    &:hover
-      background-color: #2bcf4f
+    &__service,
+    &__habitat,
+    &__animal
+      &-item
+        flex-direction: column
+        text-align: left
+        gap: utils.$margin-xs
+        max-width: 100%
 
-  &--reject
-    &:hover
-      background-color: #DD230E
+      &-title
+        margin-right: auto
 
-.review-one-button
-  width: 100%
+      &-link
+        width: 100%
+
+      &-separator
+        display: none
+
+    &__card-wrapper
+      margin-top: utils.$margin-ssm
+
+    &__review,
+    &__report
+      &-list
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+
+.review
+  &-content
+    color: rgba(utils.$color-dark , 0.85) !important
+
+  &-note-container
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+  &-button
+    width: 48%
+    border: 1px solid rgba(utils.$color-dark, 0.25)
+    border-radius: 10px
+    padding: utils.$margin-xs 0
+    background-color: transparent
+    cursor: pointer
+    transition: background-color 0.3s
+    font-size: 1rem
+    &--valid
+      &:hover
+        background-color: #2bcf4f
+
+    &--reject
+      &:hover
+        background-color: #DD230E
+
+  &-one-button
+    width: 100%
+
+  @media screen and (max-width: 800px)
+    &-button
+      width: 100%
 
 .animal-button
   transition: background-color 0.3s ease-out

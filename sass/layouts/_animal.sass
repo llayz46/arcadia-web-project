@@ -27,6 +27,8 @@
     margin-right: auto
     margin-left: auto
     margin-top: utils.$margin-3xl
+    @media screen and (max-width: 1000px)
+      margin-top: utils.$margin-l
     &--light
       color: utils.$color-light
 
@@ -39,76 +41,11 @@
     gap: utils.$margin-s
     @media screen and (max-width: 1000px)
       flex-wrap: wrap
+      margin-bottom: utils.$margin-m
 
   &__card-name
     margin-top: utils.$margin-s
     text-align: center
-
-  &__modal
-    opacity: 0
-    width: 95%
-    max-width: 500px
-    min-width: 300px
-    padding: utils.$margin-m
-    background-color: #fff
-    border-radius: 5px
-    position: absolute
-    top: 40%
-    left: 50%
-    transform: translate(-50%, calc(-50% - 50px))
-    transition: opacity 0.4s ease-out, transform 0.4s ease-out
-
-    &-container
-      visibility: hidden
-      position: fixed
-      top: 0
-      width: 100vw
-      height: 100vh
-      transition: visibility 0.4s
-      &.active
-        transition: visibility 0s
-        visibility: visible
-        & .animal__modal-overlay
-          opacity: 1
-          transition: opacity 0.4s ease-out
-        & .animal__modal
-          opacity: 1
-          transform: translate(-50%, -50%)
-          transition: opacity 0.4s 0.2s ease-out, transform 0.4s 0.2s ease-out
-
-    &-overlay
-      opacity: 0
-      position: absolute
-      width: 100%
-      height: 100%
-      // VH VW
-      background-color: #333333d3
-      transition: opacity 0.4s 0.2s ease-out
-
-    &-close
-      padding: utils.$margin-xs
-      border: none
-      border-radius: 5px
-      position: absolute
-      top: 10px
-      right: 10px
-      cursor: pointer
-      display: flex
-      justify-content: center
-      align-items: center
-      background-color: #DD230E
-      transition: background-color 0.3s ease-out
-      &:hover
-        background-color: #FF3C2F
-        scale: 1.01
-
-    &-title
-      margin-bottom: utils.$margin-s
-      &--mt
-        margin-top: utils.$margin-s
-
-    &-content
-      margin-bottom: utils.$margin-s
 
 @media screen and (max-width: 1000px)
   .animal

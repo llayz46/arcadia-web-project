@@ -8,7 +8,7 @@ function getAnimalReportsByAnimalId(PDO $pdo, INT $id): array {
   return $stmt->fetchAll();
 }
 
-function getAnimalReportByAnimalId(PDO $pdo, INT $id): array {
+function getAnimalReportByAnimalId(PDO $pdo, INT $id): array|bool {
   $query = 'SELECT * FROM animal_reports WHERE animal_id = :id ORDER BY id DESC LIMIT 1';
   $stmt = $pdo->prepare($query);
   $stmt->bindValue(':id', $id, PDO::PARAM_INT);

@@ -20,15 +20,15 @@ if (isset($_GET['delete'])) {
         }
       }
 
-      $_SESSION['success'][] = 'Le service a été supprimé avec succès';
+      $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
 
       header('Location: services.php');
       exit;
     } else {
-      $_SESSION['errors'][] = 'Erreur lors de la suppression du service';
+      $_SESSION['errorsService'][] = 'Erreur lors de la suppression du service';
     }
   } else {
-    $_SESSION['errors'][] = 'Le service n\'existe pas';
+    $_SESSION['errorsService'][] = 'Le service n\'existe pas';
   }
 }
 
@@ -36,50 +36,52 @@ $services = getServices($pdo);
 
 if (isset($_POST['createService'])) {
   if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
-    $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
+    $_SESSION['errorsService'][] = 'Veuillez remplir tous les champs';
   } else {
     $res = createService($pdo, $_POST['service-name'], $_POST['service-about'], $_POST['service-content']);
 
     if ($res) {
       $files = $_FILES['service-images'];
 
-      $i = 1;
-      foreach ($files['name'] as $key => $file) {
-        $fileName = $files['name'][$key];
-        $fileTmpName = $files['tmp_name'][$key];
-        $fileSize = $files['size'][$key];
-        $fileError = $files['error'][$key];
-        $fileType = $files['type'][$key];
-
-        $fileExt = explode('.', $fileName);
-        $fileActualExt = strtolower(end($fileExt));
-
-        $allowed = _ALLOWED_EXTENSIONS_;
-
-        if (in_array($fileActualExt, $allowed)) {
-          if ($fileError === 0) {
-            if ($fileSize < 1000000) {
-              $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
-              $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
-              $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
-              move_uploaded_file($fileTmpName, $fileDestination);
-              $i++;
+      if (count($files['name']) === 3) {
+        $i = 1;
+        foreach ($files['name'] as $key => $file) {
+          $fileName = $files['name'][$key];
+          $fileTmpName = $files['tmp_name'][$key];
+          $fileSize = $files['size'][$key];
+          $fileError = $files['error'][$key];
+          $fileType = $files['type'][$key];
+  
+          $fileExt = explode('.', $fileName);
+          $fileActualExt = strtolower(end($fileExt));
+  
+          $allowed = _ALLOWED_EXTENSIONS_;
+  
+          if (in_array($fileActualExt, $allowed)) {
+            if ($fileError === 0) {
+              if ($fileSize < 1000000) {
+                $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
+                $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
+                $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
+                move_uploaded_file($fileTmpName, $fileDestination);
+                $i++;
+              } else {
+                $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';
+              }
             } else {
-              $_SESSION['errors'][] = 'Votre fichier est trop volumineux';
+              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
             }
           } else {
-            $_SESSION['errors'][] = 'Erreur lors de l\'envoi de votre fichier';
+            $_SESSION['errorsService'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
           }
-        } else {
-          $_SESSION['errors'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
         }
       }
 
-      $_SESSION['success'][] = 'Le service a été créé avec succès';
+      $_SESSION['successService'][] = 'Le service a été créé avec succès';
       header('Location: ' . $_SERVER['PHP_SELF']);
       exit();
     } else {
-      $_SESSION['errors'][] = 'Erreur lors de la création du service';
+      $_SESSION['errorsService'][] = 'Erreur lors de la création du service';
     }
   }
 }
@@ -98,7 +100,7 @@ if (isset($_GET['modified'])) {
   $service = getServiceById($pdo, $serviceId);
 
   if (!$service) {
-    $_SESSION['errors'][] = 'Le service n\'existe pas';
+    $_SESSION['errorsService'][] = 'Le service n\'existe pas';
     header('Location: services.php');
     exit;
   }
@@ -106,14 +108,14 @@ if (isset($_GET['modified'])) {
   if (isset($_POST['modifiedService'])) {
 
     if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
-      $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
+      $_SESSION['errorsService'][] = 'Veuillez remplir tous les champs';
     } else {
       $name = htmlspecialchars(trim($_POST['service-name']));
       $about = htmlspecialchars(trim($_POST['service-about']));
       $content = htmlspecialchars(trim($_POST['service-content']));
 
       if ($name === $service['title'] && $about === $service['about'] && $content === $service['content']) {
-        $_SESSION['errors'][] = 'Aucune modification n\'a été apportée';
+        $_SESSION['errorsService'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
           if ($name !== $service['title']) {
@@ -146,11 +148,11 @@ if (isset($_GET['modified'])) {
             }
           }
 
-          $_SESSION['success'][] = 'Le service a été modifié avec succès';
+          $_SESSION['successService'][] = 'Le service a été modifié avec succès';
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
           exit();
         } else {
-          $_SESSION['errors'][] = 'Erreur lors de la modification du service';
+          $_SESSION['errorsService'][] = 'Erreur lors de la modification du service';
         }
       }
     }
@@ -199,20 +201,20 @@ require_once '../templates/aside-nav.php';
           </label>
           <input class="dashboard__account-submit" type="submit" value="Créer le service" name="createService">
         </form>
-        <?php if (isset($_SESSION['errors'])) { ?>
+        <?php if (isset($_SESSION['errorsService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?php foreach ($_SESSION['errorsService'] as $error) { ?>
               <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['errors']) ?>
-        <?php } else if (isset($_SESSION['success'])) { ?>
+          <?php unset($_SESSION['errorsService']) ?>
+        <?php } else if (isset($_SESSION['successService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['success'] as $message) { ?>
+            <?php foreach ($_SESSION['successService'] as $message) { ?>
               <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['success']) ?>
+          <?php unset($_SESSION['successService']) ?>
         <?php } ?>
       </div>
     </div>
@@ -248,20 +250,20 @@ require_once '../templates/aside-nav.php';
           </label>
           <input class="dashboard__account-submit" type="submit" value="Modifier le service" name="modifiedService">
         </form>
-        <?php if (isset($_SESSION['errors'])) { ?>
+        <?php if (isset($_SESSION['errorsService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?php foreach ($_SESSION['errorsService'] as $error) { ?>
               <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['errors']) ?>
-        <?php } else if (isset($_SESSION['success'])) { ?>
+          <?php unset($_SESSION['errorsService']) ?>
+        <?php } else if (isset($_SESSION['successService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['success'] as $message) { ?>
+            <?php foreach ($_SESSION['successService'] as $message) { ?>
               <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['success']) ?>
+          <?php unset($_SESSION['successService']) ?>
         <?php } ?>
       </div>
     </div>

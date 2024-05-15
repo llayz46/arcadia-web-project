@@ -70,7 +70,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
               <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424" />
             </svg>
           </div>
-          <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nihil tempore nam officiis nesciunt temporibus sunt exercitationem commodi illum eligendi soluta delectus error ipsa illo vel aliquid, doloribus repudiandae? Facere.</p>
+          <p class="accordion__answers js-accordion-answer">Découvrez une façon écologique et conviviale de vous rendre aux Zoo Arcadia en utilisant le covoiturage ! Partagez la route avec d'autres passionnés de la nature et réduisez votre empreinte carbone tout en profitant d'un trajet agréable vers notre zoo.</p>
         </li>
         <li class="accordion__container js-accordion-ecology">
           <div class="accordion__question">
@@ -79,7 +79,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
               <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424" />
             </svg>
           </div>
-          <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt facere dolor dolorum nostrum quasi voluptates, maxime velit necessitatibus soluta suscipit. Dicta eaque quidem totam, repellat deserunt ipsum consequuntur blanditiis recusandae.</p>
+          <p class="accordion__answers js-accordion-answer">Optez pour un voyage respectueux de l'environnement en choisissant le bus pour vous rendre aux Zoo Arcadia ! Profitez d'un trajet confortable et pratique à bord de nos bus écologiques, et laissez-vous conduire jusqu'à notre zoo en toute sécurité. Évitez les tracas de la circulation et du stationnement, et contribuez à réduire les émissions de CO2 en utilisant les transports en commun.</p>
         </li>
         <li class="accordion__container js-accordion-ecology">
           <div class="accordion__question">
@@ -88,7 +88,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
               <path d="M0 22.8571H17.1428V40H22.8428V22.8571H40V17.1429H22.8428V0H17.1428V17.1429H0V22.8571Z" fill="#242424" />
             </svg>
           </div>
-          <p class="accordion__answers js-accordion-answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora optio, nostrum rem corrupti sunt blanditiis quisquam praesentium inventore obcaecati impedit. Molestias perspiciatis repellat voluptate error eveniet optio quo natus fugiat?</p>
+          <p class="accordion__answers js-accordion-answer">Empruntez une voie durable en choisissant la voiture électrique pour vous rendre aux Zoo Arcadia ! Profitez d'un trajet écologique, silencieux et sans émissions de CO2 à bord de nos véhicules électriques. Rejoignez-nous dans notre engagement pour un avenir plus vert et contribuez à préserver notre environnement lors de votre prochaine visite à Arcadia !</p>
         </li>
       </ul>
     </div>

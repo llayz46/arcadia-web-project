@@ -54,7 +54,8 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
             <li class="header__mobile-item <?php if($currentPage === $key) { echo 'active'; } ?>">
               <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
             </li>
-        <?php } } ?>
+          <?php } 
+        } ?>
       </ul>
     </nav>
   </header>
