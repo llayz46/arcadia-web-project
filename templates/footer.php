@@ -68,9 +68,9 @@
 <!-- END : footer -->
 
 <!-- START : javascript -->
-<script src="./assets/scripts/accordions.js"></script>
-<script src="./assets/scripts/nav.js"></script>
-<script src="./node_modules/@splidejs/splide/dist/js/splide.min.js"></script>
+<script src="../assets/scripts/accordions.js"></script>
+<script src="../assets/scripts/nav.js"></script>
+<script src="../node_modules/@splidejs/splide/dist/js/splide.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     var splide = new Splide(".splide", {
