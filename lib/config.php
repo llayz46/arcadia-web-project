@@ -1,5 +1,6 @@
 <?php
 
+define('_DOMAIN_', getenv('DOMAIN'));
 define('_DB_HOST_', getenv('DB_HOST'));
 define('_DB_NAME_', getenv('DB_NAME'));
 define('_DB_PORT_', getenv('DB_PORT'));
