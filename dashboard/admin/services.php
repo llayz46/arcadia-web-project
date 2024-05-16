@@ -18,7 +18,7 @@ if (isset($_GET['delete'])) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
           $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
 
-          $blob = $blobClient->getBlob($containerName, $blobName);
+          // $blobClient->getBlob($containerName, $blobName);
 
           $blobClient->deleteBlob($containerName, $blobName);
 
