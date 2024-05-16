@@ -140,7 +140,7 @@ if (isset($_GET['modified'])) {
                 try {
                   if ($blobClient->getBlob($containerName, $oldBlobName)) {
                     $optionsCopy = new CopyBlobOptions();
-                    $blobClient->copyBlob($containerName, $newblobName, $containerName, $oldblobName, $optionsCopy);
+                    $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
   
                     $optionsDelete = new DeleteBlobOptions();
                     $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
