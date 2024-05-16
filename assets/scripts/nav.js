@@ -43,17 +43,17 @@ const UrlPathname = window.location.pathname
 const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 
 // Récupération du fichier de configuration
-const xhr = new XMLHttpRequest()
-xhr.open('GET', '../../lib/config.php', true)
-xhr.onreadystatechange = () => {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    const config = JSON.parse(xhr.responseText)
-    const accountName = config.accountName
-    console.log(config)
-    return accountName
-  }
-}
-xhr.send()
+// const xhr = new XMLHttpRequest()
+// xhr.open('GET', '../../lib/config.php', true)
+// xhr.onreadystatechange = () => {
+//   if (xhr.readyState === 4 && xhr.status === 200) {
+//     const config = JSON.parse(xhr.responseText)
+//     const accountName = config.accountName
+//     console.log(config)
+//     return accountName
+//   }
+// }
+// xhr.send()
 
 // Fonction pour créer un tableau d'images
 const imageArrayCreator = (page) => {
