@@ -2,9 +2,5 @@
   "require": {
       "mongodb/mongodb": "^1.17",
       "azure/storage-blob": "dev-master"
-  },
-  "config": {
-    "upload_max_filesize": "20M",
-    "post_max_size": "20M"
   }
 }
