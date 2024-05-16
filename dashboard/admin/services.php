@@ -6,6 +6,9 @@ require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
 require_once __DIR__ . '/../../lib/azure.php';
 
+use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+
 $containerName = 'services';
 
 if (isset($_GET['delete'])) {
