@@ -138,11 +138,13 @@ if (isset($_GET['modified'])) {
                 $newBlobName = 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
 
                 try {
-                  $optionsCopy = new CopyBlobOptions();
-                  $blobClient->copyBlob($containerName, $newblobName, $containerName, $oldblobName, $optionsCopy);
-
-                  $optionsDelete = new DeleteBlobOptions();
-                  $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  if ($blobClient->getBlob($containerName, $oldBlobName)) {
+                    $optionsCopy = new CopyBlobOptions();
+                    $blobClient->copyBlob($containerName, $newblobName, $containerName, $oldblobName, $optionsCopy);
+  
+                    $optionsDelete = new DeleteBlobOptions();
+                    $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  }
                 } catch (ServiceException $e) {
                 }
               }
