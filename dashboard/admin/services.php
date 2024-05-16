@@ -24,12 +24,7 @@ if (isset($_GET['delete'])) {
           try {
             $options = new DeleteBlobOptions();
             $blobClient->deleteBlob($containerName, $blobName, $options);
-
-            $imagesDeleted = true;
           } catch (ServiceException $e) {
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            $_SESSION['errorsService'][] = $code . ': ' . $error_message;
           }
 
           // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
@@ -39,10 +34,7 @@ if (isset($_GET['delete'])) {
         }
       }
 
-      if ($imagesDeleted) {
-        $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
-      }
-
+      $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
       header('Location: services.php');
       exit;
     } else {
