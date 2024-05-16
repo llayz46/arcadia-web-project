@@ -157,8 +157,6 @@ if (isset($_GET['modified'])) {
           }
 
           if (!empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2])){
-            $serviceImages = [];
-
             for ($i = 1; $i <= 3; $i++) {
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
                 $oldBlobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
