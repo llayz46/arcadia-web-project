@@ -5,13 +5,10 @@ session_set_cookie_params([
   'path' => '/',
   'domain' => _DOMAIN_,
   'httponly' => true,
+  'sameSite' => 'lax',
 ]);
 
 session_start();
-
-// if (!isset($_SESSION['csrf_token'])) {
-//   $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-// }
 
 function roleOnly(string $role): void {
   if (!isset($_SESSION['user'])) {
