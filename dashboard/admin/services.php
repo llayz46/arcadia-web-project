@@ -21,17 +21,16 @@ if (isset($_GET['delete'])) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
           $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
 
-          $options = new DeleteBlobOptions();
-          $blobClient->deleteBlob($containerName, $blobName, $options);
+          try {
+            $options = new DeleteBlobOptions();
+            $blobClient->deleteBlob($containerName, $blobName, $options);
 
-          // try {
-          //   $options = new DeleteBlobOptions();
-          //   $blobClient->deleteBlob($containerName, $blobName, $options);
-          // } catch (ServiceException $e) {
-          //   $code = $e->getCode();
-          //   $error_message = $e->getMessage();
-          //   $_SESSION['errorsService'][] = $code . ': ' . $error_message;
-          // }
+            $imagesDeleted = true;
+          } catch (ServiceException $e) {
+            $code = $e->getCode();
+            $error_message = $e->getMessage();
+            $_SESSION['errorsService'][] = $code . ': ' . $error_message;
+          }
 
           // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
           // if (file_exists($file)) {
@@ -40,7 +39,9 @@ if (isset($_GET['delete'])) {
         }
       }
 
-      $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
+      if ($imagesDeleted) {
+        $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
+      }
 
       header('Location: services.php');
       exit;
