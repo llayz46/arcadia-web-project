@@ -21,14 +21,17 @@ if (isset($_GET['delete'])) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
           $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
 
-          try {
-            $options = new DeleteBlobOptions();
-            $blobClient->deleteBlob($containerName, $blobName, $options);
-          } catch (ServiceException $e) {
-            $code = $e->getCode();
-            $error_message = $e->getMessage();
-            $_SESSION['errorsService'][] = $code . ': ' . $error_message;
-          }
+          $options = new DeleteBlobOptions();
+          $blobClient->deleteBlob($containerName, $blobName, $options);
+
+          // try {
+          //   $options = new DeleteBlobOptions();
+          //   $blobClient->deleteBlob($containerName, $blobName, $options);
+          // } catch (ServiceException $e) {
+          //   $code = $e->getCode();
+          //   $error_message = $e->getMessage();
+          //   $_SESSION['errorsService'][] = $code . ': ' . $error_message;
+          // }
 
           // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
           // if (file_exists($file)) {
