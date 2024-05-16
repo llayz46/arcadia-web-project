@@ -44,7 +44,7 @@ const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 
 // Récupération du fichier de configuration
 const xhr = new XMLHttpRequest()
-xhr.open('GET', '../../lib/config.php', true)
+xhr.open('GET', '../lib/config.php', true)
 xhr.onreadystatechange = () => {
   if (xhr.readyState === 4 && xhr.status === 200) {
     const config = JSON.parse(xhr.responseText)
