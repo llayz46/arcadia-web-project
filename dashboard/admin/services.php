@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
 require_once __DIR__ . '/../../lib/azure.php';
 
+$containerName = 'services';
+
 if (isset($_GET['delete'])) {
   $serviceDeleteId = $_GET['delete'];
   $serviceToDelete = getServiceById($pdo, $serviceDeleteId);
@@ -14,10 +16,18 @@ if (isset($_GET['delete'])) {
     if (deleteService($pdo, $serviceDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
-          if (file_exists($file)) {
-            unlink($file);
+          $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+
+          try {
+            $blobClient->deleteBlob($containerName, $blobName);
+          } catch (ServiceException $e) {
+            $_SESSION['errorsService'][] = 'Erreur lors de la suppression des images du service';
           }
+
+          // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+          // if (file_exists($file)) {
+          //   unlink($file);
+          // }
         }
       }
 
@@ -61,13 +71,9 @@ if (isset($_POST['createService'])) {
           if (in_array($fileActualExt, $allowed)) {
             if ($fileError === 0) {
               if ($fileSize < 1000000) {
-                $containerName = 'services';
-
                 $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
                 $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
-                // $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
                 $fileDestination = 'services/' . $fileNameNew;
-                // move_uploaded_file($fileTmpName, $fileDestination);
 
                 $content = fopen($fileTmpName, 'r');
                 $blobClient->createBlockBlob($containerName, $fileDestination, $content);
