@@ -10,8 +10,6 @@ $role = basename(dirname($_SERVER['SCRIPT_NAME']));
 roleOnly($role);
 
 $menu = $role . 'Menu';
-
-var_dump(phpinfo());
 ?>
 
 <!DOCTYPE html>
