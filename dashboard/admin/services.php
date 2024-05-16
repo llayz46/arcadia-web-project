@@ -18,12 +18,9 @@ if (isset($_GET['delete'])) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
           $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
 
-          try {
-            $blob = $blobClient->getBlob($containerName, $blobName);
+          $blob = $blobClient->getBlob($containerName, $blobName);
 
-            $blobClient->deleteBlob($containerName, $blobName);
-          } catch (ServiceException $e) {
-          }
+          $blobClient->deleteBlob($containerName, $blobName);
 
           // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
           // if (file_exists($file)) {
