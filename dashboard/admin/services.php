@@ -173,6 +173,7 @@ if (isset($_GET['modified'])) {
             for ($i = 1; $i <= 3; $i++) {
               $tmp_name = $_FILES['service-images']['tmp_name'][$i];
 
+              $ext = pathinfo($_FILES['service-images']['name'][$i], PATHINFO_EXTENSION);
               $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
 
               try {
