@@ -80,14 +80,14 @@ if (isset($_POST['createService'])) {
                   $blobClient->createBlockBlob($containerName, $fileDestination, $content);
                   $i++;
                 } else {
-                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
+                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier1' . $fileTmpName . ' ' . $content;
                 }
 
               } else {
                 $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';
               }
             } else {
-              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
+              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier2' . $fileError;
             }
           } else {
             $_SESSION['errorsService'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
