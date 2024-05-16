@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../lib/config.php';
 require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
+require_once __DIR__ . '/../../lib/azure.php';
 
 if (isset($_GET['delete'])) {
   $serviceDeleteId = $_GET['delete'];
