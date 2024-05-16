@@ -136,8 +136,6 @@ if (isset($_GET['modified'])) {
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
           if ($name !== $service['title']) {
-            var_dump($service['title']);
-            var_dump($name);
             for ($i = 1; $i <= 3; $i++) {
               $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
@@ -208,6 +206,7 @@ if (isset($_GET['modified'])) {
           // }
 
           $_SESSION['successService'][] = 'Le service a été modifié avec succès';
+          $_SESSION['successService'][] = var_dump($_FILES['service-images'], var_dump($_POST), var_dump($name));
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
           exit();
         } else {
