@@ -60,10 +60,17 @@ if (isset($_POST['createService'])) {
           if (in_array($fileActualExt, $allowed)) {
             if ($fileError === 0) {
               if ($fileSize < 1000000) {
+                $containerName = 'services';
+
                 $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
                 $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
-                $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
-                move_uploaded_file($fileTmpName, $fileDestination);
+                // $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
+                $fileDestination = 'services/' . $fileNameNew;
+                // move_uploaded_file($fileTmpName, $fileDestination);
+
+                $content = fopen($fileTmpName, 'r');
+                $blobClient->createBlockBlob($containerName, $fileDestination, $content);
+
                 $i++;
               } else {
                 $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';

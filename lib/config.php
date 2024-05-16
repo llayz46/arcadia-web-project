@@ -13,6 +13,9 @@ define('_MONGO_COLLECTION_', getenv('MONGO_COLLECTION'));
 
 define('_CONTACT_MAIL_', getenv('CONTACT_MAIL'));
 
+define('_AZURE_ACCOUNT_NAME_', getenv('AZURE_ACCOUNT_NAME'));
+define('_AZURE_ACCOUNT_KEY_', getenv('AZURE_ACCOUNT_KEY'));
+
 define('_PATH_ASSETS_IMAGES_', 'assets/images/');
 define('_PATH_UPLOADS_', 'assets/uploads/');
 

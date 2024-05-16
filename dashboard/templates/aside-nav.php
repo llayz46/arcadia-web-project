@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../../lib/config.php';
 require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/menu.php';
+require_once __DIR__ . '/../../lib/azure.php';
 
 $currentPage = basename($_SERVER['SCRIPT_FILENAME']);
 $role = basename(dirname($_SERVER['SCRIPT_NAME']));
