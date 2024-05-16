@@ -78,7 +78,6 @@ if (isset($_POST['createService'])) {
 
                 if ($content) {
                   $blobClient->createBlockBlob($containerName, $fileDestination, $content);
-                  fclose($content);
                   $i++;
                 } else {
                   $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
