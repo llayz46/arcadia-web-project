@@ -76,6 +76,7 @@ if (isset($_POST['createService'])) {
 
                 $content = fopen($fileTmpName, 'r');
                 $blobClient->createBlockBlob($containerName, $fileDestination, $content);
+                fclose($content);
 
                 $i++;
               } else {
