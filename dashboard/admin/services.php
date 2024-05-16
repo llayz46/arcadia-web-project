@@ -82,7 +82,6 @@ if (isset($_POST['createService'])) {
                 } else {
                   $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier1' . $fileTmpName . ' ' . $content;
                 }
-
               } else {
                 $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';
               }
@@ -138,8 +137,19 @@ if (isset($_GET['modified'])) {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
           if ($name !== $service['title']) {
             for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $oldBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
+
+              if ($oldBlobName !== '') {
                 $newBlobName = 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
 
                 try {
@@ -153,38 +163,49 @@ if (isset($_GET['modified'])) {
                 } catch (ServiceException $e) {
                 }
               }
+
             }
           }
 
           $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
-          if ($newImagesUploaded){
+          if ($newImagesUploaded) {
             for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $oldBlobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+                $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
 
+              if ($oldBlobName !== '') {
                 try {
                   $options = new DeleteBlobOptions();
                   $blobClient->deleteBlob($containerName, $oldBlobName, $options);
                 } catch (ServiceException $e) {
                 }
-              }
-            }
 
-            for ($i = 1; $i <= 3; $i++) {
-              $tmp_name = $_FILES['service-images']['tmp_name'][$i];
+                for ($i = 1; $i <= 3; $i++) {
+                  $tmp_name = $_FILES['service-images']['tmp_name'][$i];
 
-              $ext = pathinfo($_FILES['service-images']['name'][$i], PATHINFO_EXTENSION);
-              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
+                  $ext = pathinfo($_FILES['service-images']['name'][$i], PATHINFO_EXTENSION);
+                  $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
 
-              try {
-                $content = fopen($tmp_name, 'r');
-                $options = new CreateBlockBlobOptions();
-                $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+                  try {
+                    $content = fopen($tmp_name, 'r');
+                    $options = new CreateBlockBlobOptions();
+                    $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
 
-                if ($i === 3) {
-                  fclose($content);
+                    if ($i === 3) {
+                      fclose($content);
+                    }
+                  } catch (ServiceException $e) {
+                  }
                 }
-              } catch (ServiceException $e) {
               }
             }
           }
