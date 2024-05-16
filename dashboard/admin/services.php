@@ -19,9 +19,10 @@ if (isset($_GET['delete'])) {
           $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
 
           try {
+            $blob = $blobClient->getBlob($containerName, $blobName);
+
             $blobClient->deleteBlob($containerName, $blobName);
           } catch (ServiceException $e) {
-            $_SESSION['errorsService'][] = 'Erreur lors de la suppression des images du service';
           }
 
           // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
