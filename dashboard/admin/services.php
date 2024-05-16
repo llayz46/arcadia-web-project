@@ -69,7 +69,7 @@ if (isset($_POST['createService'])) {
 
           if (in_array($fileActualExt, $allowed)) {
             if ($fileError === 0) {
-              if ($fileSize < 1000000) {
+              if ($fileSize < 3000000) {
                 $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
                 $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
                 $fileDestination = 'services/' . $fileNameNew;
