@@ -42,11 +42,24 @@ const URLParams = new URLSearchParams(searchUrl)
 const UrlPathname = window.location.pathname
 const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 
+// Récupération du fichier de configuration
+const xhr = new XMLHttpRequest()
+xhr.open('GET', 'config.php', true)
+xhr.onreadystatechange = () => {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    const response = JSON.parse(xhr.responseText)
+    const containerName = response.containerName
+    return containerName
+  }
+}
+xhr.send()
+
 // Fonction pour créer un tableau d'images
 const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
-    pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg`)
+    // pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg`)
+    pageImageArray.push(`https://${containerName}.blob.core.windows.net/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg`)
   }
 
   return pageImageArray
