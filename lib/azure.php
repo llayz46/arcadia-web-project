@@ -3,6 +3,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once 'config.php';
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 // use MicrosoftAzure\Storage\Blob\Models\CreateBlobBlockOptions;
 // use MicrosoftAzure\Storage\Blob\Models\ListBlobsOptions;
 // use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
