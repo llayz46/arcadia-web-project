@@ -1,5 +1,6 @@
 {
   "require": {
-      "mongodb/mongodb": "^1.18"
+      "mongodb/mongodb": "^1.17",
+      "azure/storage-blob": "dev-master"
   }
 }
