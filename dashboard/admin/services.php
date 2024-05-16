@@ -7,6 +7,8 @@ require_once __DIR__ . '/../../lib/services.php';
 require_once __DIR__ . '/../../lib/azure.php';
 
 use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 
 $containerName = 'services';
@@ -26,11 +28,6 @@ if (isset($_GET['delete'])) {
             $blobClient->deleteBlob($containerName, $blobName, $options);
           } catch (ServiceException $e) {
           }
-
-          // $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
-          // if (file_exists($file)) {
-          //   unlink($file);
-          // }
         }
       }
 
@@ -137,10 +134,16 @@ if (isset($_GET['modified'])) {
           if ($name !== $service['title']) {
             for ($i = 1; $i <= 3; $i++) {
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
-                if (file_exists($file)) {
-                  $newFile = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
-                  rename($file, $newFile);
+                $oldBlobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+                $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . '.' . $ext;
+
+                try {
+                  $optionsCopy = new CopyBlobOptions();
+                  $blobClient->copyBlob($containerName, $newblobName, $containerName, $oldblobName, $optionsCopy);
+
+                  $optionsDelete = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                } catch (ServiceException $e) {
                 }
               }
             }
@@ -148,18 +151,33 @@ if (isset($_GET['modified'])) {
 
           if (!empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2])){
             $serviceImages = [];
-            $serviceImagesDir = '../..' . _PATH_UPLOADS_ . 'services/';
-            $files = scandir($serviceImagesDir);
-            $serviceFiles = preg_grep('/service-' . str_replace(' ', '_', strtolower($name)) . '-0[1-3]\.(jpg|jpeg|png|gif)/', $files);
 
-            foreach ($serviceFiles as $serviceFile) {
-              unlink($serviceImagesDir . $serviceFile);
+            for ($i = 1; $i <= 3; $i++) {
+              foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+                $oldBlobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+
+                try {
+                  $options = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $options);
+                } catch (ServiceException $e) {
+                }
+              }
             }
 
-            foreach ($_FILES['service-images']['tmp_name'] as $index => $tmp_name) {
-              $imagePath = $serviceImagesDir . 'service-' . str_replace(' ', '_', strtolower($name)) . '-0' . ($index + 1) . '.jpg';
-              if (move_uploaded_file($tmp_name, $imagePath)) {
-                $serviceImages[] = $imagePath;
+            for ($i = 1; $i <= 3; $i++) {
+              $tmp_name = $_FILES['service-images']['tmp_name'][$i];
+
+              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
+
+              try {
+                $content = fopen($tmp_name, 'r');
+                $options = new CreateBlockBlobOptions();
+                $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+
+                if ($i === 3) {
+                  fclose($content);
+                }
+              } catch (ServiceException $e) {
               }
             }
           }
