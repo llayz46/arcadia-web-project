@@ -134,8 +134,8 @@ if (isset($_GET['modified'])) {
           if ($name !== $service['title']) {
             for ($i = 1; $i <= 3; $i++) {
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $oldBlobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
-                $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . '.' . $ext;
+                $oldBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                $newBlobName = 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
 
                 try {
                   $optionsCopy = new CopyBlobOptions();
