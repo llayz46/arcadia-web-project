@@ -136,6 +136,8 @@ if (isset($_GET['modified'])) {
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
           if ($name !== $service['title']) {
+            var_dump($service['title']);
+            var_dump($name);
             for ($i = 1; $i <= 3; $i++) {
               $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
