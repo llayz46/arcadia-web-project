@@ -25,7 +25,7 @@ if (isset($_GET['animal-delete-id'])) {
       $collection->deleteOne(["animal" => $animalToDelete['name']]);
 
       foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-        $blobName = 'animals/animal-' . str_replace(' ', '_', $animalToDelete['name']) . '.' . $ext;
+        $blobName = 'animals/animal-' . strtolower(str_replace(' ', '_', $animalToDelete['name'])) . '.' . $ext;
 
         try {
           $options = new DeleteBlobOptions();
