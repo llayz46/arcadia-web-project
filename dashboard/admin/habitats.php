@@ -232,7 +232,7 @@ require_once '../templates/aside-nav.php';
                 </svg>
               </a>
               <p class="dashboard__modal-title">Note :</p>
-              <?php for ($i = 1; $i <= $_GET['note']; $i++) { ?>
+              <?php for ($i = 1; $i <= $habitats[$_GET['note']]['note']; $i++) { ?>
                 <svg class="star rated" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" />
                 </svg>
@@ -254,6 +254,10 @@ require_once '../templates/aside-nav.php';
               <a class="dashboard__habitat-link" href="?modified=<?= $habitat['id'] ?>">Modifier</a>
               <div class="dashboard__habitat-separator"></div>
               <a class="dashboard__habitat-link" href="?habitat-delete-id=<?= $habitat['id'] ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet habitat ?')">Supprimer</a>
+              <?php if ($habitat['note'] !== null) { ?>
+                <div class="dashboard__habitat-separator"></div>
+                <a class="dashboard__habitat-link" href="?note=<?= $habitat['title'] ?>">Note</a>
+              <?php } ?>
             </li>
           <?php } ?>
         </ul>
