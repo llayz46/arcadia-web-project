@@ -54,10 +54,11 @@ if (isset($_GET['habitat'])) {
           <?php } ?>
         </div>
       </main>
-    <?php } else {
-      header('Location: /habitat.php?habitat=' . array_keys($habitats)[0]);
-      exit();
-    }
+    <?php } else { ?>
+      <main class="animal-main">
+        <h1 class="animal__title animal__title--light">Pour le moment, il n'y a malheureusement aucun animal dans cet habitat.</h1>
+      </main>
+    <?php }
   } else {
     header('Location: /animal.php?habitat=' . array_keys($habitats)[0]);
     exit();
