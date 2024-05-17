@@ -154,37 +154,80 @@ if (isset($_GET['modified'])) {
     if (empty($_POST['animal-name']) || empty($_POST['animal-habitat']) || empty($_POST['animal-breed'])) {
       $_SESSION['errorsModificate'][] = 'Veuillez remplir tous les champs';
     } else {
-      $name = htmlspecialchars(trim($_POST['animal-name']));
+      $name = htmlspecialchars(trim(strtolower($_POST['animal-name'])));
 
-      if ($name === $animal['name'] && $_POST['animal-habitat'] === $animal['habitat_id'] && $_POST['animal-breed'] === $animal['breed_id']) {
+      if ($name === strtolower($animal['name']) && $_POST['animal-habitat'] === $animal['habitat_id'] && $_POST['animal-breed'] === $animal['breed_id']) {
         $_SESSION['errorsModificate'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateAnimal($pdo, $animalId, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
           if ($name !== $animal['name']) {
             $collection->updateOne(["animal" => $animal['name']], ['$set' => ["animal" => $name]]);
-          }
 
-          if ($name !== $animal['name']) {
+            $oldBlobName = '';
             foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-              $file = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
-              if (file_exists($file)) {
-                $newFile = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
-                rename($file, $newFile);
+              $potentialBlobName = 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
+              try {
+                if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                  $oldBlobName = $potentialBlobName;
+                  break;
+                }
+              } catch (ServiceException $e) {
+              }
+            }
+
+            if ($oldBlobName !== '') {
+              $newBlobName = 'animals/animal-' . str_replace(' ', '_', $name) . '.' . $ext;
+
+              try {
+                $optionsCopy = new CopyBlobOptions();
+                $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
+
+                if ($blobClient->getBlob($containerName, $newBlobName)) {
+                  $optionsDelete = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                }
+              } catch (ServiceException $e) {
               }
             }
           }
 
-          if (!empty($_FILES['animal-image']['tmp_name'])) {
-            $animalImagesDir = '../..' . _PATH_UPLOADS_ . 'animals/';
-            $animalFile = '/animal-' . str_replace(' ', '_', strtolower($name)) . '.jpg';
+          $newImagesUploaded = !empty($_FILES['animal-image']['tmp_name']);
+          if ($newImagesUploaded) {
+            $oldBlobName = '';
+            foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+              $potentialBlobName = 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
+              try {
+                if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                  $oldBlobName = $potentialBlobName;
+                  break;
+                }
+              } catch (ServiceException $e) {
+              }
+            }
 
-            if (file_exists($animalImagesDir . $animalFile)) {
-              unlink($animalImagesDir . $animalFile);
+            if ($oldBlobName !== '') {
+              try {
+                $options = new DeleteBlobOptions();
+                $blobClient->deleteBlob($containerName, $oldBlobName, $options);
+              } catch (ServiceException $e) {
+              }
             }
 
             $tmp_name = $_FILES['animal-image']['tmp_name'];
-            $imagePath = $animalImagesDir . $animalFile;
-            move_uploaded_file($tmp_name, $imagePath);
+
+            $ext = pathinfo($_FILES['animal-image']['name'], PATHINFO_EXTENSION);
+            $newBlobName = 'animals/animal-' . str_replace(' ', '_', $name) . '.' . $ext;
+
+            try {
+              $content = fopen($tmp_name, 'r');
+              if ($content) {
+                $options = new CreateBlockBlobOptions();
+                $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+              } else {
+                $_SESSION['errorsModificate'][] = 'Erreur lors de l\'envoi de votre fichier';
+              }
+            } catch (ServiceException $e) {
+            }
           }
 
           $_SESSION['successModificate'][] = 'L\'animal a été modifié avec succès';

@@ -56,7 +56,9 @@ if (isset($_GET['habitat'])) {
       </main>
     <?php } else { ?>
       <main class="animal-main">
-        <h1 class="animal__title animal__title--light">Pour le moment, il n'y a malheureusement aucun animal dans cet habitat.</h1>
+        <div class="animal__container">
+          <h1 class="animal__title animal__title--light">Pour le moment, il n'y a malheureusement aucun animal dans cet habitat.</h1>
+        </div>
       </main>
     <?php }
   } else {
