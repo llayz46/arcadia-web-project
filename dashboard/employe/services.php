@@ -80,13 +80,13 @@ if (isset($_POST['createService'])) {
                   $blobClient->createBlockBlob($containerName, $fileDestination, $content);
                   $i++;
                 } else {
-                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier1' . $fileTmpName . ' ' . $content;
+                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
                 }
               } else {
                 $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';
               }
             } else {
-              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier2' . $fileError;
+              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
             }
           } else {
             $_SESSION['errorsService'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
@@ -258,20 +258,20 @@ require_once '../templates/aside-nav.php';
           </label>
           <input class="dashboard__account-submit" type="submit" value="Créer le service" name="createService">
         </form>
-        <?php if (isset($_SESSION['errors'])) { ?>
+        <?php if (isset($_SESSION['errorsService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?php foreach ($_SESSION['errorsService'] as $error) { ?>
               <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['errors']) ?>
-        <?php } else if (isset($_SESSION['success'])) { ?>
+          <?php unset($_SESSION['errorsService']) ?>
+        <?php } else if (isset($_SESSION['successService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['success'] as $message) { ?>
+            <?php foreach ($_SESSION['successService'] as $message) { ?>
               <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['success']) ?>
+          <?php unset($_SESSION['successService']) ?>
         <?php } ?>
       </div>
     </div>
@@ -307,20 +307,20 @@ require_once '../templates/aside-nav.php';
           </label>
           <input class="dashboard__account-submit" type="submit" value="Modifier le service" name="modifiedService">
         </form>
-        <?php if (isset($_SESSION['errors'])) { ?>
+        <?php if (isset($_SESSION['errorsService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?php foreach ($_SESSION['errorsService'] as $error) { ?>
               <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['errors']) ?>
-        <?php } else if (isset($_SESSION['success'])) { ?>
+          <?php unset($_SESSION['errorsService']) ?>
+        <?php } else if (isset($_SESSION['successService'])) { ?>
           <div class="dashboard__account-info">
-            <?php foreach ($_SESSION['success'] as $message) { ?>
+            <?php foreach ($_SESSION['successService'] as $message) { ?>
               <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
             <?php } ?>
           </div>
-          <?php unset($_SESSION['success']) ?>
+          <?php unset($_SESSION['successService']) ?>
         <?php } ?>
       </div>
     </div>
