@@ -47,7 +47,7 @@ const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
     // pageImageArray.push(`https://arcadiaweb.blob.core.windows.net/${page}s/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=r&st=2024-05-16T12:52:24Z&se=2026-05-16T20:52:24Z&spr=https&sv=2022-11-02&sr=c&sig=rbb1%2BNYJLwFTVmbw5316UIEpD7xc1DY4gEcfpYDfsTg%3D`)
-    pageImageArray.push(`https://arcadiaweb.blob.core.windows.net/images/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=r&st=2024-05-16T12:52:24Z&se=2026-05-16T20:52:24Z&spr=https&sv=2022-11-02&sr=c&sig=rbb1%2BNYJLwFTVmbw5316UIEpD7xc1DY4gEcfpYDfsTg%3D`)
+    pageImageArray.push(`https://arcadiaweb.blob.core.windows.net/images/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=r&st=2024-05-17T09:26:15Z&se=2026-05-17T17:26:15Z&spr=https&sv=2022-11-02&sr=c&sig=Gjf2Um4a1sGoTS2iWAgJKnZ9LZenwUsz3WGoC5toG9M%3D`)
   }
 
   return pageImageArray
