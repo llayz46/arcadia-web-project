@@ -27,7 +27,7 @@ if (isset($_GET['habitat'])) {
         <div class="animal__container">
           <?php foreach ($animals as $index => $animal) { $report = getAnimalReportsByAnimalId($pdo, $animal['animal_id']) ?>
             <div class="animal__card animal__card--page">
-              <img src="<?= _PATH_UPLOADS_ ?>animals/animal-<?= strtolower($animal['animal_name']) ?>.jpg" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
+              <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?=str_replace(' ', '_', strtolower($animal['animal_name']))?>.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
               <h3 class="animal__card-name"><?= mb_ucfirst($animal['animal_name']) ?></h3>
               <button class="animal__card-button js-modal-trigger button-dark js-animal-button" data-target="<?=$index?>">En savoir plus</button>
             </div>
