@@ -10,8 +10,6 @@ use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 
-// $containerName = 'habitats';
-
 if (isset($_GET['habitat-delete-id'])) {
   $habitatDeleteId = $_GET['habitat-delete-id'];
   $habitatToDelete = getHabitatById($pdo, $habitatDeleteId);

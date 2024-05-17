@@ -11,8 +11,6 @@ use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 
-// $containerName = 'services';
-
 if (isset($_GET['delete'])) {
   $serviceDeleteId = $_GET['delete'];
   $serviceToDelete = getServiceById($pdo, $serviceDeleteId);

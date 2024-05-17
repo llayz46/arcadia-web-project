@@ -40,7 +40,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
         <div class="habitat__card <?php if ($i === 2) {
                                     echo 'habitat__card--middle';
                                   } ?>">
-          <img src="<?= _PATH_UPLOADS_ . 'habitats/habitat-' . $key . '-01.jpg' ?>" alt="Photo de l'habitat : <?= $key ?>" class="habitat__image">
+          <img src="https://arcadiaweb.blob.core.windows.net/images/habitats/habitat-<?=str_replace(' ', '_', $key)?>-01.jpg" alt="Photo de l'habitat : <?= $key ?>" class="habitat__image">
           <div class="habitat__button">
             <a href="habitat.php?habitat=<?= $key ?>" class="habitat__link"><?= ucfirst($key) ?>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
