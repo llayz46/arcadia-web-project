@@ -196,11 +196,12 @@ if (isset($_GET['modified'])) {
 
               try {
                 $content = fopen($tmp_name, 'r');
-                $options = new CreateBlockBlobOptions();
-                $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
-
-                if ($i === 3) {
+                if ($content) {
+                  $options = new CreateBlockBlobOptions();
+                  $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
                   fclose($content);
+                } else {
+                  error_log("Failed to open file: $tmp_name");
                 }
               } catch (ServiceException $e) {
               }
