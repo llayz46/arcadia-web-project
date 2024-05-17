@@ -17,14 +17,12 @@ function mb_ucfirst($string, $encoding = 'UTF-8')
 
 if (isset($_GET['habitat'])) {
   $habitat = $_GET['habitat'];
+  $habitats = getHabitats($pdo);
 
-  if (!empty($habitat)) {
+  if (!empty($habitat) && array_key_exists($habitat, $habitats)) {
     $animals = getAnimalsByHabitat($pdo, $habitat);
-    var_dump($animals);
-    $test = getHabitats($pdo);
-    var_dump($test);
-    if (count($animals) !== 0) { ?>
 
+    if (count($animals) !== 0) { ?>
       <main class="animal-main">
         <h1 class="animal__title animal__title--light"><?= ucfirst($animals[0]['habitat_title']) ?></h1>
         <div class="animal__container">
@@ -56,10 +54,8 @@ if (isset($_GET['habitat'])) {
           <?php } ?>
         </div>
       </main>
-
 <?php }
   } else {
-    $habitats = getHabitats($pdo);
     header('Location: /animal.php?habitat=' . array_keys($habitats)[0]);
   }
 } ?>
