@@ -238,14 +238,7 @@ require_once '../templates/aside-nav.php';
                 </svg>
               <?php } ?>
               <p class="dashboard__modal-title"><?= mb_ucfirst($habitats[$_GET['note']]['note_detail']) ?></p>
-              <pre>
-                habitat:
-                <?php var_dump($habitats) ?>
-              </pre>
-              <pre>
-                habitatsETC:
-                <?php var_dump($habitats[$_GET['note']]) ?>
-              </pre>
+              <p class="dashboard__modal-title">TEST</p>
             </div>
           </div>
         <?php } else {
@@ -255,6 +248,14 @@ require_once '../templates/aside-nav.php';
       <?php } ?>
       <div class="dashboard__card-wrapper">
         <h3 class="dashboard__card-title">Liste des habitats</h3>
+        <pre>
+          habitat:
+          <?php var_dump($habitats) ?>
+        </pre>
+        <pre>
+          habitatsETC:
+          <?php var_dump($habitats[$_GET['note']]) ?>
+        </pre>
         <ul class="dashboard__habitat-list">
           <?php foreach ($habitats as $habitat) { ?>
             <li class="dashboard__habitat-item">
