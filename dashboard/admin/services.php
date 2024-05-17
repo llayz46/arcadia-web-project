@@ -199,9 +199,6 @@ if (isset($_GET['modified'])) {
                 if ($content) {
                   $options = new CreateBlockBlobOptions();
                   $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
-                  fclose($content);
-                } else {
-                  error_log("Failed to open file: $tmp_name");
                 }
               } catch (ServiceException $e) {
               }
