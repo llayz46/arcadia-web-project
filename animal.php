@@ -24,6 +24,9 @@ if (isset($_GET['habitat'])) {
 
     if (count($animals) !== 0) { ?>
       <main class="animal-main">
+        <pre>
+          <?php var_dump($animals) ?>
+        </pre>
         <h1 class="animal__title animal__title--light"><?= ucfirst($animals[0]['habitat_title']) ?></h1>
         <div class="animal__container">
           <?php foreach ($animals as $index => $animal) {
@@ -54,7 +57,7 @@ if (isset($_GET['habitat'])) {
           <?php } ?>
         </div>
       </main>
-<?php }
+    <?php }
   } else {
     header('Location: /animal.php?habitat=' . array_keys($habitats)[0]);
   }
