@@ -5,6 +5,12 @@ require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/mongodb.php';
 require_once __DIR__ . '/../../lib/animals.php';
 require_once __DIR__ . '/../../lib/habitats.php';
+require_once __DIR__ . '/../../lib/azure.php';
+
+use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 
 $habitats = getHabitats($pdo);
 $animals = getAnimalsAndBreed($pdo);
@@ -19,9 +25,12 @@ if (isset($_GET['animal-delete-id'])) {
       $collection->deleteOne(["animal" => $animalToDelete['name']]);
 
       foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-        $file = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', $animalToDelete['name']) . '.' . $ext;
-        if (file_exists($file)) {
-          unlink($file);
+        $blobName = 'animals/animal-' . str_replace(' ', '_', $animalToDelete['name']) . '.' . $ext;
+
+        try {
+          $options = new DeleteBlobOptions();
+          $blobClient->deleteBlob($containerName, $blobName, $options);
+        } catch (ServiceException $e) {
         }
       }
 
@@ -67,21 +76,33 @@ if (isset($_POST['createAnimal'])) {
         if ($fileSize < 3000000) {
           $animalName = strtolower(str_replace(' ', '_', $_POST['animal-name']));
           $fileNameNew = 'animal-' . $animalName . '.' . $fileActualExt;
-          $fileDestination = '../..' . _PATH_UPLOADS_ . 'animals/' . $fileNameNew;
+          $fileDestination = 'animals/' . $fileNameNew;
 
-          if (move_uploaded_file($fileTmpName, $fileDestination)) {
-            if ($res = addAnimal($pdo, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
-              $collection->insertOne([
-                "animal" => $name,
-                "view" => 0,
-              ]);
+          $content = fopen($fileTmpName, 'r');
 
-              $_SESSION['successCreate'][] = 'L\'animal a bien été ajouté';
-              header('Location: ' . $_SERVER['PHP_SELF']);
-              exit();
+          if ($content) {
+            $blobClient->createBlockBlob($containerName, $fileDestination, $content);
+
+            if ($blobClient->getBlob($containerName, $fileDestination)) {
+              fclose($content);
+
+              if ($res = addAnimal($pdo, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
+                $collection->insertOne([
+                  "animal" => $name,
+                  "view" => 0,
+                ]);
+  
+                $_SESSION['successCreate'][] = 'L\'animal a bien été ajouté';
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit();
+              } else {
+                $_SESSION['errorsCreate'][] = 'Une erreur est survenue lors de l\'ajout de l\'animal';
+              }
             } else {
-              $_SESSION['errorsCreate'][] = 'Une erreur est survenue lors de l\'ajout de l\'animal';
+              $_SESSION['errorsCreate'][] = 'Erreur lors de l\'envoi de votre fichier';
             }
+          } else {
+            $_SESSION['errorsCreate'][] = 'Erreur lors de l\'ouverture de votre fichier';
           }
         } else {
           $_SESSION['errorsCreate'][] = 'Votre fichier est trop volumineux';
