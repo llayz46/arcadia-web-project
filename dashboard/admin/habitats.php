@@ -233,11 +233,19 @@ require_once '../templates/aside-nav.php';
               </a>
               <p class="dashboard__modal-title">Note :</p>
               <?php for ($i = 1; $i <= $habitats[$_GET['note']]['note']; $i++) { ?>
-                <svg class="star rated" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg class="star--habitat" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" />
                 </svg>
               <?php } ?>
-              <p class="dashboard__modal-title"><?=mb_ucfirst($habitats[$_GET['note']]['note_detail'])?></p>
+              <p class="dashboard__modal-title"><?= mb_ucfirst($habitats[$_GET['note']]['note_detail']) ?></p>
+              <pre>
+                habitat:
+                <?php var_dump($habitats) ?>
+              </pre>
+              <pre>
+                habitatsETC:
+                <?php var_dump($habitats[$_GET['note']]) ?>
+              </pre>
             </div>
           </div>
         <?php } else {
