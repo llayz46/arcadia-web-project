@@ -50,31 +50,31 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
     </svg>
     <nav class="header__nav-mobile js-header-mobile-nav">
       <ul class="header__list-mobile">
-        <!-- <?php foreach($mainMenu as $key => $menuItem) { 
-          if(!array_key_exists('exclude', $menuItem)) { ?>
-            <li class="header__mobile-item <?php if($currentPage === $key) { echo 'active'; } ?>">
-              <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
-            </li>
-          <?php } 
-        } ?> -->
-        <?php foreach($mainMenu as $key => $menuItem) { 
+        <?php 
+        foreach($mainMenu as $key => $menuItem) { 
           if (array_key_exists('role', $menuItem)) { ?>
             <?php if(isset($_SESSION['user']) && $_SESSION['user']['name'] === $menuItem['role']) { ?>
               <li class="header__mobile-item">
                 <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
               </li>
             <?php } ?>
-        <?php } else if(!array_key_exists('exclude', $menuItem) && !array_key_exists('role', $menuItem)) { ?>
-          <li class="header__mobile-item">
-            <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
-          </li>
-        <?php } else { ?> 
-          <?php if (isset($_SESSION['user'])) { ?>
-            <a href="/logout.php" class="header__mobile-link">Déconnexion</a>
-          <?php } else { ?>
-            <a href="/login.php" class="header__mobile-link">Connexion</a>
+          <?php } else if(!array_key_exists('exclude', $menuItem) && !array_key_exists('role', $menuItem)) { ?>
+            <li class="header__mobile-item">
+              <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
+            </li>
           <?php }
-        } } ?>
+        }
+
+        if (isset($_SESSION['user'])) { ?>
+          <li class="header__mobile-item">
+            <a href="/logout.php" class="header__mobile-link">Déconnexion</a>
+          </li>
+        <?php } else { ?>
+          <li class="header__mobile-item">
+            <a href="/login.php" class="header__mobile-link">Connexion</a>
+          </li>
+        <?php }
+        ?>
       </ul>
     </nav>
   </header>
