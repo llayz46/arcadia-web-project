@@ -43,7 +43,7 @@ if (isset($_GET['habitat'])) {
                 <p class="animal__modal-title">Nom : <?= mb_ucfirst($animal['animal_name']) ?></p>
                 <p class="animal__modal-title">Espèce : <?= mb_ucfirst($animal['breed_name']) ?></p>
                 <p class="animal__modal-title">Habitat : <?= mb_ucfirst($animal['habitat_title']) ?></p>
-                <img src="<?= _PATH_UPLOADS_ ?>animals/animal-<?= strtolower($animal['animal_name']) ?>.jpg" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
+                <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?=str_replace(' ', '_', strtolower($animal['animal_name']))?>.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
                 <?php if($report) { ?>
                   <p class="animal__modal-title animal__modal-title--mt">État : <?= mb_ucfirst($report[0]['state']) ?></p>
                 <?php } ?>
