@@ -242,7 +242,6 @@ require_once '../templates/aside-nav.php';
           </div>
         <?php } else {
           header('Location: habitats.php');
-          exit;
         } ?>
       <?php } ?>
       <div class="dashboard__card-wrapper">
