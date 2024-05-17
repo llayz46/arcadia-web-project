@@ -131,13 +131,11 @@ if (isset($_GET['modified'])) {
       $about = htmlspecialchars(trim($_POST['service-about']));
       $content = htmlspecialchars(trim($_POST['service-content']));
 
-      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content']) {
+      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content'] && empty($_FILES['service-images']['tmp_name'][0])){
         $_SESSION['errorsService'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
-          error_log("service title : $service[title]");
           if ($name !== $service['title']) {
-            error_log("title changed : $service[title] :: $name");
             for ($i = 1; $i <= 3; $i++) {
               $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
@@ -148,7 +146,6 @@ if (isset($_GET['modified'])) {
                     break;
                   }
                 } catch (ServiceException $e) {
-                  error_log("Copying blob from $oldBlobName to $newBlobName");
                 }
               }
 
@@ -162,57 +159,53 @@ if (isset($_GET['modified'])) {
                   if ($blobClient->getBlob($containerName, $newBlobName)) {
                     $optionsDelete = new DeleteBlobOptions();
                     $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
-                    error_log("Deleted old blob: $oldBlobName");
-                  } else {
-                    error_log("Blob copy failed, not deleting old blob: $oldBlobName");
                   }
                 } catch (ServiceException $e) {
-                  error_log("Error copying or deleting blob: " . $e->getMessage());
                 }
               }
             }
           }
 
-          // $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
-          // if ($newImagesUploaded) {
-          //   for ($i = 1; $i <= 3; $i++) {
-          //     $oldBlobName = '';
-          //     foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          //       $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
-          //       try {
-          //         if ($blobClient->getBlob($containerName, $potentialBlobName)) {
-          //           $oldBlobName = $potentialBlobName;
-          //           break;
-          //         }
-          //       } catch (ServiceException $e) {
-          //       }
-          //     }
+          $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
+          if ($newImagesUploaded) {
+            for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
+              foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+                $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
 
-          //     if ($oldBlobName !== '') {
-          //       try {
-          //         $options = new DeleteBlobOptions();
-          //         $blobClient->deleteBlob($containerName, $oldBlobName, $options);
-          //       } catch (ServiceException $e) {
-          //       }
-          //     }
+              if ($oldBlobName !== '') {
+                try {
+                  $options = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $options);
+                } catch (ServiceException $e) {
+                }
+              }
 
-          //     $tmp_name = $_FILES['service-images']['tmp_name'][$i];
+              $tmp_name = $_FILES['service-images']['tmp_name'][$i];
 
-          //     $ext = pathinfo($_FILES['service-images']['name'][$i], PATHINFO_EXTENSION);
-          //     $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
+              $ext = pathinfo($_FILES['service-images']['name'][$i], PATHINFO_EXTENSION);
+              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
 
-          //     try {
-          //       $content = fopen($tmp_name, 'r');
-          //       $options = new CreateBlockBlobOptions();
-          //       $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+              try {
+                $content = fopen($tmp_name, 'r');
+                $options = new CreateBlockBlobOptions();
+                $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
 
-          //       if ($i === 3) {
-          //         fclose($content);
-          //       }
-          //     } catch (ServiceException $e) {
-          //     }
-          //   }
-          // }
+                if ($i === 3) {
+                  fclose($content);
+                }
+              } catch (ServiceException $e) {
+              }
+            }
+          }
 
           $_SESSION['successService'][] = 'Le service a été modifié avec succès';  
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
