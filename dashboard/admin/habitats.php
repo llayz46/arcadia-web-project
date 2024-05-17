@@ -221,6 +221,37 @@ require_once '../templates/aside-nav.php';
   <h2 class="dashboard__title">Gestion des habitats</h2>
   <?php if (!isset($_GET['modified'])) { ?>
     <div class="dashboard__container">
+      <?php if (isset($_GET['note'])) { ?>
+        <pre>
+          habitat:
+          <?php var_dump($habitats) ?>
+        </pre>
+        <!-- <?php if (in_array($_GET['note'], array_column($habitats, 'note'))) { ?>
+          <div class="dashboard__modal-container js-modal-container">
+            <a href="animals.php" class="dashboard__modal-overlay"></a>
+            <div class="dashboard__modal">
+              <a href="animals.php" class="dashboard__modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7.79222 6.99691L13.8329 0.958904C14.0557 0.736191 14.0557 0.389748 13.8329 0.167035C13.6101 -0.0556783 13.2635 -0.0556783 13.0407 0.167035L7 6.20504L0.959328 0.167035C0.736516 -0.0556783 0.38992 -0.0556783 0.167109 0.167035C-0.0557029 0.389748 -0.0557029 0.736191 0.167109 0.958904L6.20778 6.99691L0.167109 13.0349C-0.0557029 13.2576 -0.0557029 13.6041 0.167109 13.8268C0.266136 13.9258 0.414677 14 0.563218 14C0.71176 14 0.860301 13.9505 0.959328 13.8268L7 7.78878L13.0407 13.8268C13.1397 13.9258 13.2882 14 13.4368 14C13.5853 14 13.7339 13.9505 13.8329 13.8268C14.0557 13.6041 14.0557 13.2576 13.8329 13.0349L7.79222 6.99691Z" fill="#ffffff" />
+                </svg>
+              </a>
+              <p class="dashboard__modal-title"><?= mb_ucfirst($_GET['vues']) ?> à été consulté(e) <span class="dashboard__modal-title--span"><?php $result = $collection->findOne(["animal" => $_GET['vues']]); echo $result->view ?></span> fois.</p>
+            </div>
+          </div>
+        <?php } else { ?>
+          <div class="dashboard__modal-container js-modal-container">
+            <a href="animals.php" class="dashboard__modal-overlay"></a>
+            <div class="dashboard__modal">
+              <a href="animals.php" class="dashboard__modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7.79222 6.99691L13.8329 0.958904C14.0557 0.736191 14.0557 0.389748 13.8329 0.167035C13.6101 -0.0556783 13.2635 -0.0556783 13.0407 0.167035L7 6.20504L0.959328 0.167035C0.736516 -0.0556783 0.38992 -0.0556783 0.167109 0.167035C-0.0557029 0.389748 -0.0557029 0.736191 0.167109 0.958904L6.20778 6.99691L0.167109 13.0349C-0.0557029 13.2576 -0.0557029 13.6041 0.167109 13.8268C0.266136 13.9258 0.414677 14 0.563218 14C0.71176 14 0.860301 13.9505 0.959328 13.8268L7 7.78878L13.0407 13.8268C13.1397 13.9258 13.2882 14 13.4368 14C13.5853 14 13.7339 13.9505 13.8329 13.8268C14.0557 13.6041 14.0557 13.2576 13.8329 13.0349L7.79222 6.99691Z" fill="#ffffff" />
+                </svg>
+              </a>
+              <p class="dashboard__modal-title">Malheureusement, <?=$_GET['vues']?> n'a pas été trouvé.</p>
+            </div>
+          </div>
+        <?php } ?> -->
+      <?php } ?>
       <div class="dashboard__card-wrapper">
         <h3 class="dashboard__card-title">Liste des habitats</h3>
         <ul class="dashboard__habitat-list">
