@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../lib/config.php';
 require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
+require_once __DIR__ . '/../../lib/azure.php';
 
 use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
 use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
@@ -103,9 +104,9 @@ if (isset($_POST['createService'])) {
 }
 
 if (isset($_GET['modified'])) {
-  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/admin/services.php';
+  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/employe/services.php';
 
-  if (strpos($referer, 'dashboard/admin/services.php') !== false) {
+  if (strpos($referer, 'dashboard/employe/services.php') !== false) {
     $backLink = 'services.php';
   } else {
     $backLink = 'services.php';
