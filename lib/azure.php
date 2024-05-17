@@ -11,3 +11,5 @@ $blobClient = BlobRestProxy::createBlobService($connection);
 if (!$blobClient) {
   die('Could not create blob client');
 }
+
+$containerName = 'images';
