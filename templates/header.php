@@ -68,6 +68,10 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
           <li class="header__mobile-item">
             <a href="<?=$key?>" class="header__mobile-link <?php if($currentPage === $key) { echo 'active'; } ?>"><?=$menuItem['menu_title']?></a>
           </li>
+        <?php } else if (isset($_SESSION['user'])) { ?>
+          <a href="/logout.php" class="header__mobile-link">Déconnexion</a>
+        <?php } else if (!isset($_SESSION['user'])) { ?>
+          <a href="/login.php" class="header__mobile-link">Connexion</a>
         <?php } } ?>
       </ul>
     </nav>
