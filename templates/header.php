@@ -14,7 +14,7 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $mainMenu[$currentPage]['head_title'] ?> - Arcadia</title>
   <link rel="shortcut icon" href="../assets/images/arcadia-favicon.svg" type="image/x-icon">
-  <link rel="stylesheet" href="./node_modules/@splidejs/splide/dist/css/splide.min.css">
+  <link rel="stylesheet" href="./assets/css/splide.min.css">
   <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 
