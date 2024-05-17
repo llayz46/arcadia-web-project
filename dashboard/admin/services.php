@@ -156,14 +156,14 @@ if (isset($_GET['modified'])) {
                   $optionsCopy = new CopyBlobOptions();
                   $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
 
-                  // $optionsDelete = new DeleteBlobOptions();
-                  // $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  if ($blobClient->getBlob($containerName, $newBlobName)) {
+                    $optionsDelete = new DeleteBlobOptions();
+                    $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  }
                 } catch (ServiceException $e) {
                 }
               }
             }
-          } else {
-
           }
 
           // $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
