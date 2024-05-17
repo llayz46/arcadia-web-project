@@ -127,7 +127,7 @@ if (isset($_GET['modified'])) {
     if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
       $_SESSION['errorsService'][] = 'Veuillez remplir tous les champs';
     } else {
-      $name = htmlspecialchars(trim($_POST['service-name']));
+      $name = strtolower(htmlspecialchars(trim($_POST['service-name'])));
       $about = htmlspecialchars(trim($_POST['service-about']));
       $content = htmlspecialchars(trim($_POST['service-content']));
 
