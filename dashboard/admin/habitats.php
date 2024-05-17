@@ -3,6 +3,14 @@ require_once __DIR__ . '/../../lib/config.php';
 require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/habitats.php';
+require_once __DIR__ . '/../../lib/azure.php';
+
+use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+
+$containerName = 'habitats';
 
 if (isset($_GET['habitat-delete-id'])) {
   $habitatDeleteId = $_GET['habitat-delete-id'];
@@ -12,9 +20,12 @@ if (isset($_GET['habitat-delete-id'])) {
     if (deleteHabitat($pdo, $habitatDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', $habitatToDelete['title']) . '-0' . $i . '.' . $ext;
-          if (file_exists($file)) {
-            unlink($file);
+          $blobName = 'habitats/habitat-' . str_replace(' ', '_', $habitatToDelete['title']) . '-0' . $i . '.' . $ext;
+
+          try {
+            $options = new DeleteBlobOptions();
+            $blobClient->deleteBlob($containerName, $blobName, $options);
+          } catch (ServiceException $e) {
           }
         }
       }
@@ -41,35 +52,44 @@ if (isset($_POST['createHabitat'])) {
     if ($res) {
       $files = $_FILES['habitat-images'];
 
-      $i = 1;
-      foreach ($files['name'] as $key => $file) {
-        $fileName = $files['name'][$key];
-        $fileTmpName = $files['tmp_name'][$key];
-        $fileSize = $files['size'][$key];
-        $fileError = $files['error'][$key];
-        $fileType = $files['type'][$key];
+      if (count($files['name']) === 3) {
+        $i = 1;
+        foreach ($files['name'] as $key => $file) {
+          $fileName = $files['name'][$key];
+          $fileTmpName = $files['tmp_name'][$key];
+          $fileSize = $files['size'][$key];
+          $fileError = $files['error'][$key];
+          $fileType = $files['type'][$key];
+  
+          $fileExt = explode('.', $fileName);
+          $fileActualExt = strtolower(end($fileExt));
+  
+          $allowed = _ALLOWED_EXTENSIONS_;
+  
+          if (in_array($fileActualExt, $allowed)) {
+            if ($fileError === 0) {
+              if ($fileSize < 10000000) {
+                $habitatName = strtolower(str_replace(' ', '_', $_POST['habitat-name']));
+                $fileNameNew = 'habitat-' . $habitatName . '-0' . $i . '.' . $fileActualExt;
+                $fileDestination = 'habitats/' . $fileNameNew;
 
-        $fileExt = explode('.', $fileName);
-        $fileActualExt = strtolower(end($fileExt));
+                $content = fopen($fileTmpName, 'r');
 
-        $allowed = _ALLOWED_EXTENSIONS_;
-
-        if (in_array($fileActualExt, $allowed)) {
-          if ($fileError === 0) {
-            if ($fileSize < 1000000) {
-              $habitatName = strtolower(str_replace(' ', '_', $_POST['habitat-name']));
-              $fileNameNew = 'habitat-' . $habitatName . '-0' . $i . '.' . $fileActualExt;
-              $fileDestination = '../..' . _PATH_UPLOADS_ . 'habitats/' . $fileNameNew;
-              move_uploaded_file($fileTmpName, $fileDestination);
-              $i++;
+                if ($content) {
+                  $blobClient->createBlockBlob($containerName, $fileDestination, $content);
+                  $i++;
+                } else {
+                  $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
+                }
+              } else {
+                $_SESSION['errorsHabitat'][] = 'Votre fichier est trop volumineux';
+              }
             } else {
-              $_SESSION['errorsHabitat'][] = 'Votre fichier est trop volumineux';
+              $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
             }
           } else {
-            $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
+            $_SESSION['errorsHabitat'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
           }
-        } else {
-          $_SESSION['errorsHabitat'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
         }
       }
 
@@ -106,7 +126,7 @@ if (isset($_GET['modified'])) {
     if (empty($_POST['habitat-title']) || empty($_POST['habitat-content'])) {
       $_SESSION['errorsHabitat'][] = 'Veuillez remplir tous les champs';
     } else {
-      $title = htmlspecialchars(trim($_POST['habitat-title']));
+      $title = strtolower(htmlspecialchars(trim($_POST['habitat-title'])));
       $content = htmlspecialchars(trim($_POST['habitat-content']));
 
       if ($title === $habitat['title'] && $content === $habitat['content'] && empty($_FILES['habitat-images']['name'][0])) {
@@ -115,44 +135,72 @@ if (isset($_GET['modified'])) {
         if (updateHabitat($pdo, $habitatId, $title, $content)) {
           if ($title !== $habitat['title']) {
             for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', strtolower($habitat['title'])) . '-0' . $i . '.' . $ext;
-                if (file_exists($file)) {
-                  $newFile = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', strtolower($title)) . '-0' . $i . '.' . $ext;
-                  rename($file, $newFile);
+                $potentialBlobName = 'habitats/habitat-' . str_replace(' ', '_', strtolower($habitat['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
+
+              if ($oldBlobName !== '') {
+                $newBlobName = 'habitats/habitat-' . str_replace(' ', '_', strtolower($title)) . '-0' . $i . '.' . $ext;
+
+                try {
+                  $optionsCopy = new CopyBlobOptions();
+                  $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
+
+                  if ($blobClient->getBlob($containerName, $newBlobName)) {
+                    $optionsDelete = new DeleteBlobOptions();
+                    $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  }
+                } catch (ServiceException $e) {
                 }
               }
             }
           }
 
-          if (!empty($_FILES['habitat-images']['name'][0])) {
-            $habitatImagesDir = '../..' . _PATH_UPLOADS_ . 'habitats/';
-
-            foreach ($_FILES['habitat-images']['tmp_name'] as $key => $tmp_name) {
-              $fileName = $_FILES['habitat-images']['name'][$key];
-              $fileTmpName = $_FILES['habitat-images']['tmp_name'][$key];
-              $fileSize = $_FILES['habitat-images']['size'][$key];
-              $fileError = $_FILES['habitat-images']['error'][$key];
-              $fileType = $_FILES['habitat-images']['type'][$key];
-
-              if ($fileError === UPLOAD_ERR_OK) {
-                $fileExt = explode('.', $fileName);
-                $fileActualExt = strtolower(end($fileExt));
-
-                if (in_array($fileActualExt, _ALLOWED_EXTENSIONS_)) {
-                  if ($fileSize < 1000000) {
-                    $habitatName = strtolower(str_replace(' ', '_', $_POST['habitat-title']));
-                    $fileNameNew = 'habitat-' . $habitatName . '-0' . ($key + 1) . '.' . $fileActualExt;
-                    $fileDestination = $habitatImagesDir . $fileNameNew;
-                    move_uploaded_file($fileTmpName, $fileDestination);
-                  } else {
-                    $_SESSION['errorsHabitat'][] = 'Votre fichier est trop volumineux';
+          $newImagesUploaded = !empty($_FILES['habitat-images']['tmp_name'][0]) && !empty($_FILES['habitat-images']['tmp_name'][1]) && !empty($_FILES['habitat-images']['tmp_name'][2]);
+          if ($newImagesUploaded) {
+            for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
+              foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+                $potentialBlobName = 'habitats/habitat-' . str_replace(' ', '_', strtolower($habitat['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
                   }
-                } else {
-                  $_SESSION['errorsHabitat'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
+                } catch (ServiceException $e) {
                 }
-              } else {
-                $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
+              }
+
+              if ($oldBlobName !== '') {
+                try {
+                  $options = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $options);
+                } catch (ServiceException $e) {
+                }
+              }
+
+              $tmp_name = $_FILES['habitat-images']['tmp_name'][$i - 1];
+
+              $ext = pathinfo($_FILES['habitat-images']['name'][$i - 1], PATHINFO_EXTENSION);
+              $newBlobName = 'habitats/habitat-' . str_replace(' ', '_', $title) . '-0' . $i . '.' . $ext;
+
+              try {
+                $content = fopen($tmp_name, 'r');
+                if ($content) {
+                  $options = new CreateBlockBlobOptions();
+                  $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+                } else {
+                  $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
+                }
+              } catch (ServiceException $e) {
               }
             }
           }

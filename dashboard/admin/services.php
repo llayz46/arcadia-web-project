@@ -199,6 +199,8 @@ if (isset($_GET['modified'])) {
                 if ($content) {
                   $options = new CreateBlockBlobOptions();
                   $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+                } else {
+                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier';
                 }
               } catch (ServiceException $e) {
               }
