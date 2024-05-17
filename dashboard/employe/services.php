@@ -5,6 +5,13 @@ require_once __DIR__ . '/../../lib/session.php';
 require_once __DIR__ . '/../../lib/pdo.php';
 require_once __DIR__ . '/../../lib/services.php';
 
+use MicrosoftAzure\Storage\Blob\Models\DeleteBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CopyBlobOptions;
+use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+
+$containerName = 'services';
+
 if (isset($_GET['delete'])) {
   $serviceDeleteId = $_GET['delete'];
   $serviceToDelete = getServiceById($pdo, $serviceDeleteId);
@@ -13,22 +20,24 @@ if (isset($_GET['delete'])) {
     if (deleteService($pdo, $serviceDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
-          if (file_exists($file)) {
-            unlink($file);
+          $blobName = 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+
+          try {
+            $options = new DeleteBlobOptions();
+            $blobClient->deleteBlob($containerName, $blobName, $options);
+          } catch (ServiceException $e) {
           }
         }
       }
 
-      $_SESSION['success'][] = 'Le service a été supprimé avec succès';
-
+      $_SESSION['successService'][] = 'Le service a été supprimé avec succès';
       header('Location: services.php');
       exit;
     } else {
-      $_SESSION['errors'][] = 'Erreur lors de la suppression du service';
+      $_SESSION['errorsService'][] = 'Erreur lors de la suppression du service';
     }
   } else {
-    $_SESSION['errors'][] = 'Le service n\'existe pas';
+    $_SESSION['errorsService'][] = 'Le service n\'existe pas';
   }
 }
 
@@ -36,58 +45,67 @@ $services = getServices($pdo);
 
 if (isset($_POST['createService'])) {
   if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
-    $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
+    $_SESSION['errorsService'][] = 'Veuillez remplir tous les champs';
   } else {
     $res = createService($pdo, $_POST['service-name'], $_POST['service-about'], $_POST['service-content']);
 
     if ($res) {
       $files = $_FILES['service-images'];
 
-      $i = 1;
-      foreach ($files['name'] as $key => $file) {
-        $fileName = $files['name'][$key];
-        $fileTmpName = $files['tmp_name'][$key];
-        $fileSize = $files['size'][$key];
-        $fileError = $files['error'][$key];
-        $fileType = $files['type'][$key];
+      if (count($files['name']) === 3) {
+        $i = 1;
+        foreach ($files['name'] as $key => $file) {
+          $fileName = $files['name'][$key];
+          $fileTmpName = $files['tmp_name'][$key];
+          $fileSize = $files['size'][$key];
+          $fileError = $files['error'][$key];
+          $fileType = $files['type'][$key];
 
-        $fileExt = explode('.', $fileName);
-        $fileActualExt = strtolower(end($fileExt));
+          $fileExt = explode('.', $fileName);
+          $fileActualExt = strtolower(end($fileExt));
 
-        $allowed = _ALLOWED_EXTENSIONS_;
+          $allowed = _ALLOWED_EXTENSIONS_;
 
-        if (in_array($fileActualExt, $allowed)) {
-          if ($fileError === 0) {
-            if ($fileSize < 1000000) {
-              $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
-              $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
-              $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
-              move_uploaded_file($fileTmpName, $fileDestination);
-              $i++;
+          if (in_array($fileActualExt, $allowed)) {
+            if ($fileError === 0) {
+              if ($fileSize < 10000000) {
+                $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
+                $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
+                $fileDestination = 'services/' . $fileNameNew;
+
+                $content = fopen($fileTmpName, 'r');
+
+                if ($content) {
+                  $blobClient->createBlockBlob($containerName, $fileDestination, $content);
+                  $i++;
+                } else {
+                  $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier1' . $fileTmpName . ' ' . $content;
+                }
+              } else {
+                $_SESSION['errorsService'][] = 'Votre fichier est trop volumineux';
+              }
             } else {
-              $_SESSION['errors'][] = 'Votre fichier est trop volumineux';
+              $_SESSION['errorsService'][] = 'Erreur lors de l\'envoi de votre fichier2' . $fileError;
             }
           } else {
-            $_SESSION['errors'][] = 'Erreur lors de l\'envoi de votre fichier';
+            $_SESSION['errorsService'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
           }
-        } else {
-          $_SESSION['errors'][] = 'Vous ne pouvez pas envoyer ce type de fichier';
         }
       }
 
-      $_SESSION['success'][] = 'Le service a été créé avec succès';
+      $_SESSION['successService'][] = 'Le service a été créé avec succès';
       header('Location: ' . $_SERVER['PHP_SELF']);
       exit();
     } else {
-      $_SESSION['errors'][] = 'Erreur lors de la création du service';
+      $_SESSION['errorsService'][] = 'Erreur lors de la création du service';
     }
   }
 }
 
 if (isset($_GET['modified'])) {
-  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/employe/services.php';
+  $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'dashboard/admin/services.php';
 
-  if (strpos($referer, 'dashboard/employe/services.php') !== false) {
+  if (strpos($referer, 'dashboard/admin/services.php') !== false) {
     $backLink = 'services.php';
   } else {
     $backLink = 'services.php';
@@ -98,7 +116,7 @@ if (isset($_GET['modified'])) {
   $service = getServiceById($pdo, $serviceId);
 
   if (!$service) {
-    $_SESSION['errors'][] = 'Le service n\'existe pas';
+    $_SESSION['errorsService'][] = 'Le service n\'existe pas';
     header('Location: services.php');
     exit;
   }
@@ -106,52 +124,91 @@ if (isset($_GET['modified'])) {
   if (isset($_POST['modifiedService'])) {
 
     if (empty($_POST['service-name']) || empty($_POST['service-about']) || empty($_POST['service-content'])) {
-      $_SESSION['errors'][] = 'Veuillez remplir tous les champs';
+      $_SESSION['errorsService'][] = 'Veuillez remplir tous les champs';
     } else {
-      $name = htmlspecialchars(trim($_POST['service-name']));
+      $name = strtolower(htmlspecialchars(trim($_POST['service-name'])));
       $about = htmlspecialchars(trim($_POST['service-about']));
       $content = htmlspecialchars(trim($_POST['service-content']));
 
-      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content']) {
-        $_SESSION['errors'][] = 'Aucune modification n\'a été apportée';
+      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content'] && empty($_FILES['service-images']['tmp_name'][0])) {
+        $_SESSION['errorsService'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
           if ($name !== $service['title']) {
             for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
-                if (file_exists($file)) {
-                  $newFile = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
-                  rename($file, $newFile);
+                $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
+
+              if ($oldBlobName !== '') {
+                $newBlobName = 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
+
+                try {
+                  $optionsCopy = new CopyBlobOptions();
+                  $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
+
+                  if ($blobClient->getBlob($containerName, $newBlobName)) {
+                    $optionsDelete = new DeleteBlobOptions();
+                    $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  }
+                } catch (ServiceException $e) {
                 }
               }
             }
           }
 
-          if (!empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2])){
-            $serviceImages = [];
-            $serviceImagesDir = '../..' . _PATH_UPLOADS_ . 'services/';
-            $files = scandir($serviceImagesDir);
-            $serviceFiles = preg_grep('/service-' . str_replace(' ', '_', strtolower($name)) . '-0[1-3]\.(jpg|jpeg|png|gif)/', $files);
+          $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
+          if ($newImagesUploaded) {
+            for ($i = 1; $i <= 3; $i++) {
+              $oldBlobName = '';
+              foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+                $potentialBlobName = 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                try {
+                  if ($blobClient->getBlob($containerName, $potentialBlobName)) {
+                    $oldBlobName = $potentialBlobName;
+                    break;
+                  }
+                } catch (ServiceException $e) {
+                }
+              }
 
-            foreach ($serviceFiles as $serviceFile) {
-              unlink($serviceImagesDir . $serviceFile);
-            }
+              if ($oldBlobName !== '') {
+                try {
+                  $options = new DeleteBlobOptions();
+                  $blobClient->deleteBlob($containerName, $oldBlobName, $options);
+                } catch (ServiceException $e) {
+                }
+              }
 
-            foreach ($_FILES['service-images']['tmp_name'] as $index => $tmp_name) {
-              $imagePath = $serviceImagesDir . 'service-' . str_replace(' ', '_', strtolower($name)) . '-0' . ($index + 1) . '.jpg';
-              if (move_uploaded_file($tmp_name, $imagePath)) {
-                $serviceImages[] = $imagePath;
-                var_dump($serviceImages);
+              $tmp_name = $_FILES['service-images']['tmp_name'][$i - 1];
+
+              $ext = pathinfo($_FILES['service-images']['name'][$i - 1], PATHINFO_EXTENSION);
+              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . '.' . $ext;
+
+              try {
+                $content = fopen($tmp_name, 'r');
+                if ($content) {
+                  $options = new CreateBlockBlobOptions();
+                  $blobClient->createBlockBlob($containerName, $newBlobName, $content, $options);
+                }
+              } catch (ServiceException $e) {
               }
             }
           }
 
-          $_SESSION['success'][] = 'Le service a été modifié avec succès';
+          $_SESSION['successService'][] = 'Le service a été modifié avec succès';
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
           exit();
         } else {
-          $_SESSION['errors'][] = 'Erreur lors de la modification du service';
+          $_SESSION['errorsService'][] = 'Erreur lors de la modification du service';
         }
       }
     }

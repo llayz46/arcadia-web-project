@@ -131,7 +131,7 @@ if (isset($_GET['modified'])) {
       $about = htmlspecialchars(trim($_POST['service-about']));
       $content = htmlspecialchars(trim($_POST['service-content']));
 
-      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content'] && empty($_FILES['service-images']['tmp_name'][0])){
+      if ($name === $service['title'] && $about === $service['about'] && $content === $service['content'] && empty($_FILES['service-images']['tmp_name'][0])) {
         $_SESSION['errorsService'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
@@ -205,7 +205,7 @@ if (isset($_GET['modified'])) {
             }
           }
 
-          $_SESSION['successService'][] = 'Le service a été modifié avec succès';  
+          $_SESSION['successService'][] = 'Le service a été modifié avec succès';
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
           exit();
         } else {
@@ -288,15 +288,15 @@ require_once '../templates/aside-nav.php';
         <form method="post" class="dashboard__service-form" enctype="multipart/form-data">
           <label for="service-name" class="dashboard__account-label">
             Nom du service
-            <input class="dashboard__account-input" type="text" name="service-name" id="service-name" value="<?= ucfirst($service['title']) ?>" required>
+            <input class="dashboard__account-input" type="text" name="service-name" id="service-name" value="<?= htmlentities(ucfirst($service['title'])) ?>" required>
           </label>
           <label for="service-about" class="dashboard__account-label">
             A propos du service
-            <input class="dashboard__account-input" type="text" name="service-about" id="service-about" value="<?= $service['about'] ?>" required>
+            <input class="dashboard__account-input" type="text" name="service-about" id="service-about" value="<?= htmlentities($service['about']) ?>" required>
           </label>
           <label for="service-content" class="dashboard__account-label">
             Description du service
-            <textarea class="dashboard__service-textarea" name="service-content" id="service-content" required><?= $service['content'] ?></textarea>
+            <textarea class="dashboard__service-textarea" name="service-content" id="service-content" required><?= htmlentities($service['content']) ?></textarea>
           </label>
           <label for="service-images" class="dashboard__account-label">
             <?php for ($i = 0; $i < 3; $i++) { ?>
