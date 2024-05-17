@@ -156,12 +156,14 @@ if (isset($_GET['modified'])) {
                   $optionsCopy = new CopyBlobOptions();
                   $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
 
-                  $optionsDelete = new DeleteBlobOptions();
-                  $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  // $optionsDelete = new DeleteBlobOptions();
+                  // $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
                 } catch (ServiceException $e) {
                 }
               }
             }
+          } else {
+
           }
 
           // $newImagesUploaded = !empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2]);
@@ -310,14 +312,14 @@ require_once '../templates/aside-nav.php';
         <?php if (isset($_SESSION['errorsService'])) { ?>
           <div class="dashboard__account-info">
             <?php foreach ($_SESSION['errorsService'] as $error) { ?>
-              <p class="dashboard__account-message dashboard__account-message--error"><?= $error, $_FILES['service-images'], $name, $_POST ?></p>
+              <p class="dashboard__account-message dashboard__account-message--error"><?= $error ?></p>
             <?php } ?>
           </div>
           <?php unset($_SESSION['errorsService']) ?>
         <?php } else if (isset($_SESSION['successService'])) { ?>
           <div class="dashboard__account-info">
             <?php foreach ($_SESSION['successService'] as $message) { ?>
-              <p class="dashboard__account-message dashboard__account-message--success"><?= $message, $_FILES['service-images'], $name, $_POST ?></p>
+              <p class="dashboard__account-message dashboard__account-message--success"><?= $message ?></p>
             <?php } ?>
           </div>
           <?php unset($_SESSION['successService']) ?>
