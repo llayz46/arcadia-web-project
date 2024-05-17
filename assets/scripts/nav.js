@@ -46,7 +46,6 @@ const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
-    // pageImageArray.push(`assets/uploads/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg`)
     pageImageArray.push(`https://arcadiaweb.blob.core.windows.net/${page}s/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=r&st=2024-05-16T12:52:24Z&se=2026-05-16T20:52:24Z&spr=https&sv=2022-11-02&sr=c&sig=rbb1%2BNYJLwFTVmbw5316UIEpD7xc1DY4gEcfpYDfsTg%3D`)
   }
 
@@ -150,7 +149,7 @@ const contentChanger = () => {
   if (OnlyUrlPathname === 'service') {
     serviceBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiaweb.blob.core.windows.net/${OnlyUrlPathname}s/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=r&st=2024-05-16T12:52:24Z&se=2026-05-16T20:52:24Z&spr=https&sv=2022-11-02&sr=c&sig=rbb1%2BNYJLwFTVmbw5316UIEpD7xc1DY4gEcfpYDfsTg%3D")`
   } else {
-    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/uploads/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg')`
+    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiaweb.blob.core.windows.net/${OnlyUrlPathname}s/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=r&st=2024-05-16T12:52:24Z&se=2026-05-16T20:52:24Z&spr=https&sv=2022-11-02&sr=c&sig=rbb1%2BNYJLwFTVmbw5316UIEpD7xc1DY4gEcfpYDfsTg%3D")`
   }
 
   navBackground()
