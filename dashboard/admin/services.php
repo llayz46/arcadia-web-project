@@ -135,7 +135,9 @@ if (isset($_GET['modified'])) {
         $_SESSION['errorsService'][] = 'Aucune modification n\'a été apportée';
       } else {
         if (updateService($pdo, $serviceId, $name, $about, $content)) {
+          error_log("service title : $service[title]");
           if ($name !== $service['title']) {
+            error_log("title changed : $service[title] :: $name");
             for ($i = 1; $i <= 3; $i++) {
               $oldBlobName = '';
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
@@ -146,18 +148,26 @@ if (isset($_GET['modified'])) {
                     break;
                   }
                 } catch (ServiceException $e) {
+                  error_log("Copying blob from $oldBlobName to $newBlobName");
                 }
               }
 
               if ($oldBlobName !== '') {
                 $newBlobName = 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
 
-                $optionsCopy = new CopyBlobOptions();
-                $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
+                try {
+                  $optionsCopy = new CopyBlobOptions();
+                  $blobClient->copyBlob($containerName, $newBlobName, $containerName, $oldBlobName, $optionsCopy);
 
-                if ($blobClient->getBlob($containerName, $newBlobName)) {
-                  $optionsDelete = new DeleteBlobOptions();
-                  $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                  if ($blobClient->getBlob($containerName, $newBlobName)) {
+                    $optionsDelete = new DeleteBlobOptions();
+                    $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
+                    error_log("Deleted old blob: $oldBlobName");
+                  } else {
+                    error_log("Blob copy failed, not deleting old blob: $oldBlobName");
+                  }
+                } catch (ServiceException $e) {
+                  error_log("Error copying or deleting blob: " . $e->getMessage());
                 }
               }
             }
