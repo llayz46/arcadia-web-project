@@ -84,8 +84,6 @@ if (isset($_POST['createAnimal'])) {
             $blobClient->createBlockBlob($containerName, $fileDestination, $content);
 
             if ($blobClient->getBlob($containerName, $fileDestination)) {
-              fclose($content);
-
               if ($res = addAnimal($pdo, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
                 $collection->insertOne([
                   "animal" => $name,
