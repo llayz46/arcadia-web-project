@@ -237,7 +237,7 @@ require_once '../templates/aside-nav.php';
                   <path d="M24 9.18621H14.84L12 0L9.16 9.18621H0L7.4 14.8552L4.6 24L12 18.331L19.4 24L16.56 14.8138L24 9.18621Z" />
                 </svg>
               <?php } ?>
-              <p class="dashboard__modal-title"><?= mb_ucfirst($habitats[$_GET['note']]['note_detail']) ?></p>
+              <!-- <p class="dashboard__modal-title"><?= mb_ucfirst($habitats[$_GET['note']]['note_detail']) ?></p> -->
               <p class="dashboard__modal-title">TEST</p>
             </div>
           </div>
@@ -249,12 +249,8 @@ require_once '../templates/aside-nav.php';
       <div class="dashboard__card-wrapper">
         <h3 class="dashboard__card-title">Liste des habitats</h3>
         <pre>
-          habitat:
-          <?php var_dump($habitats) ?>
-        </pre>
-        <pre>
           habitatsETC:
-          <?php var_dump($habitats[$_GET['note']]) ?>
+          <?php var_dump($habitats['jungle']['note_detail']) ?>
         </pre>
         <ul class="dashboard__habitat-list">
           <?php foreach ($habitats as $habitat) { ?>
