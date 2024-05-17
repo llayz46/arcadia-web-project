@@ -205,8 +205,12 @@ if (isset($_GET['modified'])) {
           //   }
           // }
 
-          $_SESSION['successService'][] = 'Le service a été modifié avec succès';
-          $_SESSION['successService'][] = var_dump($_FILES['service-images'], var_dump($_POST), var_dump($name));
+          // $_SESSION['successService'][] = 'Le service a été modifié avec succès';
+          $_SESSION['successService'][] = [
+            'files' => $_FILES['service-images'],
+            'post' => $_POST,
+            'name' => $name
+          ];        
           header('Location: ' . $_SERVER['PHP_SELF'] . '?modified=' . $serviceId);
           exit();
         } else {
