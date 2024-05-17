@@ -192,7 +192,7 @@ if (isset($_GET['modified'])) {
               $tmp_name = $_FILES['service-images']['tmp_name'][$i - 1];
 
               $ext = pathinfo($_FILES['service-images']['name'][$i - 1], PATHINFO_EXTENSION);
-              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . $ext;
+              $newBlobName = 'services/service-' . str_replace(' ', '_', $name) . '-0' . $i . '.' . $ext;
 
               try {
                 $content = fopen($tmp_name, 'r');
