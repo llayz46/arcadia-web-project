@@ -73,7 +73,7 @@ if (isset($_POST['createAnimal'])) {
 
     if (in_array($fileActualExt, $allowed)) {
       if ($fileError === 0) {
-        if ($fileSize < 3000000) {
+        if ($fileSize < 10000000) {
           $animalName = strtolower(str_replace(' ', '_', $_POST['animal-name']));
           $fileNameNew = 'animal-' . $animalName . '.' . $fileActualExt;
           $fileDestination = 'animals/' . $fileNameNew;

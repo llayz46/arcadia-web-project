@@ -104,7 +104,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
     <div class="animal__container-grid">
       <?php foreach($animals as $animal) { $animalHabitat = getAnimalHabitatById($pdo, $animal['animal_id']) ?>
         <a href="animal.php?habitat=<?=$animalHabitat['habitat_title']?>" class="animal__card animal__card--index">
-          <img src="<?= _PATH_UPLOADS_ . 'animals/animal-' . strtolower($animal['animal_name']) . '.jpg'?>" alt="Image d'un(e) <?=strtolower($animal['breed_name'])?>" class="animal__image">
+          <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?=strtolower(str_replace(' ', '_', $animal['animal_name']))?>.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="Image d'un(e) <?=strtolower($animal['breed_name'])?>" class="animal__image">
           <h3 class="animal__card-title"><?=ucfirst($animal['breed_name'])?></h3>
         </a>
       <?php } ?>
