@@ -93,8 +93,6 @@ const backgroundChanger = () => {
         imagesArray[0].firstElementChild.classList.add('active')
         serviceBody.style.backgroundImage = imagesArray[0].firstElementChild.style.backgroundImage
         
-        // imagesNavChanger()
-        
         navBackground()
       })
     })
@@ -113,36 +111,11 @@ const backgroundChanger = () => {
         imagesArray[0].firstElementChild.classList.add('active')
         habitatsBody.style.backgroundImage = imagesArray[0].firstElementChild.style.backgroundImage
         
-        // imagesNavChanger()
-        
         navBackground()
       })
     })
   }
 }
-
-// Changement des images actives
-// const imagesNavChanger = () => {
-//   if (OnlyUrlPathname === 'service') {
-//     serviceNavImages.forEach((image, index) => {
-//       if (image.classList.contains('active')) {
-//         image.style.backgroundImage = `url(${imageArrayCreator(OnlyUrlPathname)[index]})`
-//         imagesArray.push(image)
-//       } else {
-//         image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageArrayCreator(OnlyUrlPathname)[index]})`
-//       }
-//     })
-//   } else if (OnlyUrlPathname === 'habitat') {
-//     habitatsNavImages.forEach((image, index) => {
-//       if (image.classList.contains('active')) {
-//         image.style.backgroundImage = `url(${imageArrayCreator(OnlyUrlPathname)[index]})`
-//         imagesArray.push(image)
-//       } else {
-//         image.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageArrayCreator(OnlyUrlPathname)[index]})`
-//       }
-//     })
-//   }
-// }
 
 // Fonction principale
 const contentChanger = () => {
