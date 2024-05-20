@@ -154,7 +154,7 @@ Follow these steps to install and set up Arcadia on your development environment
 
 11.  **Modify the config:**
 
-- **Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
+**Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
 
 11.  **Users:**
 
