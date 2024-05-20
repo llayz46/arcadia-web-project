@@ -133,7 +133,9 @@ Follow these steps to install and set up Arcadia on your development environment
 
     - **Terminal command:** Run the following command in your terminal : 
 
+        ```
         npm install @splidejs/splide
+        ```
 
 9.  **Install Composer dependencies**
 
@@ -148,17 +150,17 @@ Follow these steps to install and set up Arcadia on your development environment
 
     8.2. **Install the dependencies:** In your terminal run the following command and follow the composer instructions :
 
-        composer install
+    composer install
 
-10.  **Modify the config:**
+11.  **Modify the config:**
 
-    - **Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
+- **Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
 
 11.  **Users:**
 
-    - **Admin account:** user@test.fr:test
-    - **Veterinaire account:** veto@veto.fr:test
-    - **Employe account:** employe@employe.fr:test
+- **Admin account:** user@test.fr:test
+- **Veterinaire account:** veto@veto.fr:test
+- **Employe account:** employe@employe.fr:test
 
 ## Deployment
 
