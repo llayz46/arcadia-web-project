@@ -7,16 +7,25 @@ $errors = [];
 $success = [];
 
 if (isset($_POST['createUser'])) {
-  if ($_POST['password'] !== $_POST['password_confirm']) {
-    $errors[] = 'Les mots de passe ne correspondent pas';
-  } else {
-    $res = createUserByEmailPassword($pdo, $_POST['email'], $_POST['password'], $_POST['role']);
+  if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_confirm']) && isset($_POST['role'])) {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $password_confirm = filter_input(INPUT_POST, 'password_confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    if ($res) {
-      $success[] = 'Le compte a été créé avec succès';
+    if ($_POST['password'] !== $_POST['password_confirm']) {
+      $errors[] = 'Les mots de passe ne correspondent pas';
     } else {
-      $errors[] = 'Erreur lors de la création du compte';
+      $res = createUserByEmailPassword($pdo, $_POST['email'], $_POST['password'], $_POST['role']);
+  
+      if ($res) {
+        $success[] = 'Le compte a été créé avec succès';
+      } else {
+        $errors[] = 'Erreur lors de la création du compte';
+      }
     }
+  } else {
+    $errors[] = 'Veuillez remplir tous les champs';
   }
 }
 ?>
