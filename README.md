@@ -102,14 +102,6 @@ Follow these steps to install and set up Arcadia on your development environment
 
     4.1. **Extension directory:** In first you'll to open the extension directory of your local server.
 
-    ### WAMP:
-
-    On wamp, you'll find the extension directory at `C:\wamp64\bin\php\<your_php_version>\ext`.
-
-    ### XAMPP:
-
-    On xampp, you'll find the extension directory at `C:\xampp\php\ext`.
-
     4.2. **MongoDB extension:** Download the MongoDB PHP extension for your PHP version from this link : `https://github.com/mongodb/mongo-php-driver/releases/tag/1.19.0`. Once you downloaded, drag the `php_mongodb.dll` file into the extension directory.
 
     4.3. **Activate the extensions:** Edit `php.ini` extension my adding this line : 
@@ -117,13 +109,13 @@ Follow these steps to install and set up Arcadia on your development environment
 
     ### WAMP:
 
-    On xampp, the php.ini file is located at : `C:\wamp64\bin\php\<your_php_version>`
+    On wamp, you'll find the extension directory at `C:\wamp64\bin\php\<your_php_version>\ext` and the php.ini file is located at : `C:\wamp64\bin\php\<your_php_version>`.
 
     ### XAMPP:
 
-    On xampp, the php.ini file is located at : `C:\xampp\php\php.ini`
+    On xampp, you'll find the extension directory at `C:\xampp\php\ext` and the php.ini file is located at : `C:\xampp\php\php.ini`.
 
-5.  **Create the relational database**
+6.  **Create the relational database**
 
     5.1. **Go to phpMyAdmin:** Ensure your local server is running, then open your web browser and enter the following URL : `localhost/phpmyadmin/`. Log in to access your phpMyAdmin panel.
 
@@ -131,19 +123,19 @@ Follow these steps to install and set up Arcadia on your development environment
 
     5.3. **Import data:** Once you created the database, in the top menu, click on "Import", then import the file `arcadia.sql` from the project.
 
-6.  **Create the non relational database**
+7.  **Create the non relational database**
 
     6.1. **Install MongoDB:** In your web browser, navigate to this URL : `https://www.mongodb.com/try/download/community` and download MongoDB for your operating system by following the instructions on the website. Please don't forget to install MongoDB Compass during the installation.
 
     6.2. **Create a new database & collection:** Connect to the localhost and then click on create Database. Enter a database and collection name.
 
-7.  **Install SplideJS dependency**
+8.  **Install SplideJS dependency**
 
     - **Terminal command:** Run the following command in your terminal : 
 
         npm install @splidejs/splide
 
-8.  **Install Composer dependencies**
+9.  **Install Composer dependencies**
 
     8.1. **Create composer.json file:** At the root of the project, create a composer.json file and write this: 
 
@@ -158,11 +150,11 @@ Follow these steps to install and set up Arcadia on your development environment
 
         composer install
 
-9.  **Modify the config:**
+10.  **Modify the config:**
 
     - **Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
 
-10.  **Users:**
+11.  **Users:**
 
     - **Admin account:** user@test.fr:test
     - **Veterinaire account:** veto@veto.fr:test
