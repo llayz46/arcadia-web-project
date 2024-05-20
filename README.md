@@ -153,10 +153,10 @@ Follow these steps to install and set up Arcadia on your development environment
     composer install
 
 11.  **Modify the config:**
+    
+     - Open and edit the config.php file: In `lib/config.php` file, make all the necessary modifications.
 
-   Open and edit the config.php file: In `lib/config.php` file, make all the necessary modifications.
-
-11.  **Users:**
+12.  **Users:**
 
 - **Admin account:** user@test.fr:test
 - **Veterinaire account:** veto@veto.fr:test
