@@ -26,7 +26,7 @@ Follow these steps to install and set up Arcadia on your development environment
 
     - Open your terminal or command prompt and use the following command to clone the Arcadia repository:
 
-        git clone ADEFINIR
+        git clone https://github.com/llayz46/arcadia-web-project.git
 
 2.  **Create a local domain:** Create a domain for running the project locally:
 
@@ -151,6 +151,10 @@ Follow these steps to install and set up Arcadia on your development environment
     8.2. **Install the dependencies:** In your terminal run the following command and follow the composer instructions :
 
         composer install
+
+9.  **Modify the config:**
+
+    - **Open and edit the config.php file:** In `lib/config.php` file, make all the necessary modifications.
 
 ## Deployment
 
