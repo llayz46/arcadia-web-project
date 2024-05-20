@@ -150,7 +150,9 @@ Follow these steps to install and set up Arcadia on your development environment
 
     8.2. **Install the dependencies:** In your terminal run the following command and follow the composer instructions :
 
+    ```
     composer install
+    ```
 
 11.  **Modify the config:**
     
