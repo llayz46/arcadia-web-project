@@ -70,7 +70,7 @@ Follow these steps to install and set up Arcadia on your development environment
 
     ### WAMP:
 
-    3.1. **Open the httpd-vhosts.conf file:** Navigate to the httpd-vhosts.conf file located at `C:\wamp64\bin\apache\apache2.4.58\conf\extra\httpd-vhosts.conf`.
+    3.1. **Open the httpd-vhosts.conf file:** Navigate to the httpd-vhosts.conf file located at `C:\wamp64\bin\apache\<apache_version>\conf\extra\httpd-vhosts.conf`.
 
     3.2. **Edit the hosts file:** Open the hosts file with a text editor that has administrative privileges.
 
