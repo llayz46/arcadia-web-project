@@ -26,7 +26,9 @@ Follow these steps to install and set up Arcadia on your development environment
 
     - Open your terminal or command prompt and use the following command to clone the Arcadia repository:
 
+        ```
         git clone https://github.com/llayz46/arcadia-web-project.git
+        ```
 
 2.  **Create a local domain:** Create a domain for running the project locally:
 
