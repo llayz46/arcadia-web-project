@@ -13,10 +13,10 @@ if (isset($_POST['createUser'])) {
     $password_confirm = filter_input(INPUT_POST, 'password_confirm', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    if ($_POST['password'] !== $_POST['password_confirm']) {
+    if ($password !== $password_confirm) {
       $errors[] = 'Les mots de passe ne correspondent pas';
     } else {
-      $res = createUserByEmailPassword($pdo, $_POST['email'], $_POST['password'], $_POST['role']);
+      $res = createUserByEmailPassword($pdo, $email, $password, $role);
   
       if ($res) {
         $success[] = 'Le compte a été créé avec succès';
