@@ -143,29 +143,30 @@ if (isset($_GET['modified'])) {
         if (updateAnimal($pdo, $animalId, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
           if ($name !== $animal['name']) {
             $collection->updateOne(["animal" => $animal['name']], ['$set' => ["animal" => $name]]);
-          }
 
-          if ($name !== $animal['name']) {
             foreach (_ALLOWED_EXTENSIONS_ as $ext) {
               $file = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
               if (file_exists($file)) {
                 $newFile = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
                 rename($file, $newFile);
+                break;
               }
             }
           }
 
           if (!empty($_FILES['animal-image']['tmp_name'])) {
             $animalImagesDir = '../..' . _PATH_UPLOADS_ . 'animals/';
-            $animalFile = '/animal-' . str_replace(' ', '_', strtolower($name)) . '.jpg';
 
-            if (file_exists($animalImagesDir . $animalFile)) {
-              unlink($animalImagesDir . $animalFile);
+            foreach (_ALLOWED_EXTENSIONS_ as $ext) {
+              $file = $animalImagesDir . 'animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
+              if (file_exists($file)) {
+                unlink($file);
+
+                $tmp_name = $_FILES['animal-image']['tmp_name'];
+                move_uploaded_file($tmp_name, $file);
+                break;
+              }
             }
-
-            $tmp_name = $_FILES['animal-image']['tmp_name'];
-            $imagePath = $animalImagesDir . $animalFile;
-            move_uploaded_file($tmp_name, $imagePath);
           }
 
           $_SESSION['successModificate'][] = 'L\'animal a été modifié avec succès';
