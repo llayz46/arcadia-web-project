@@ -48,7 +48,7 @@ if (isset($_POST['contact'])) {
     <div class="contact__image"></div>
     <div class="contact__form-wrapper">
       <h1 class="contact__title">Nous contacter</h1>
-      <p class="contact__text">Un problème ? Remplissez le formulaire ci-dessous pour nous contacter.</p>
+      <p class="contact__text">Une question ? Remplissez le formulaire ci-dessous pour nous contacter.</p>
       <form method="post" class="contact__form">
         <div class="contact__form-group">
           <label for="objet" class="contact__label">Objet</label>
