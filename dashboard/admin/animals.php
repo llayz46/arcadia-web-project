@@ -19,7 +19,7 @@ if (isset($_GET['animal-delete-id'])) {
       $collection->deleteOne(["animal" => $animalToDelete['name']]);
 
       foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-        $file = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', $animalToDelete['name']) . '.' . $ext;
+        $file = '../../' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', $animalToDelete['name']) . '.' . $ext;
         if (file_exists($file)) {
           unlink($file);
         }
@@ -67,7 +67,7 @@ if (isset($_POST['createAnimal'])) {
         if ($fileSize < 3000000) {
           $animalName = strtolower(str_replace(' ', '_', $_POST['animal-name']));
           $fileNameNew = 'animal-' . $animalName . '.' . $fileActualExt;
-          $fileDestination = '../..' . _PATH_UPLOADS_ . 'animals/' . $fileNameNew;
+          $fileDestination = '../../' . _PATH_UPLOADS_ . 'animals/' . $fileNameNew;
 
           if (move_uploaded_file($fileTmpName, $fileDestination)) {
             if ($res = addAnimal($pdo, $name, $_POST['animal-habitat'], $_POST['animal-breed'])) {
@@ -145,9 +145,9 @@ if (isset($_GET['modified'])) {
             $collection->updateOne(["animal" => $animal['name']], ['$set' => ["animal" => $name]]);
 
             foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-              $file = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
+              $file = '../../' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($animal['name'])) . '.' . $ext;
               if (file_exists($file)) {
-                $newFile = '../..' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
+                $newFile = '../../' . _PATH_UPLOADS_ . 'animals/animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
                 rename($file, $newFile);
                 break;
               }
@@ -155,7 +155,7 @@ if (isset($_GET['modified'])) {
           }
 
           if (!empty($_FILES['animal-image']['tmp_name'])) {
-            $animalImagesDir = '../..' . _PATH_UPLOADS_ . 'animals/';
+            $animalImagesDir = '../../' . _PATH_UPLOADS_ . 'animals/';
 
             foreach (_ALLOWED_EXTENSIONS_ as $ext) {
               $file = $animalImagesDir . 'animal-' . str_replace(' ', '_', strtolower($name)) . '.' . $ext;
