@@ -59,7 +59,7 @@ if (isset($_POST['createHabitat'])) {
             if ($fileSize < 1000000) {
               $habitatName = strtolower(str_replace(' ', '_', $_POST['habitat-name']));
               $fileNameNew = 'habitat-' . $habitatName . '-0' . $i . '.' . $fileActualExt;
-              $fileDestination = '../..' . _PATH_UPLOADS_ . 'habitats/' . $fileNameNew;
+              $fileDestination = '../../' . _PATH_UPLOADS_ . 'habitats/' . $fileNameNew;
               move_uploaded_file($fileTmpName, $fileDestination);
               $i++;
             } else {
@@ -106,7 +106,7 @@ if (isset($_GET['modified'])) {
     if (empty($_POST['habitat-title']) || empty($_POST['habitat-content'])) {
       $_SESSION['errorsHabitat'][] = 'Veuillez remplir tous les champs';
     } else {
-      $title = htmlspecialchars(trim($_POST['habitat-title']));
+      $title = htmlspecialchars(trim(strtolower($_POST['habitat-title'])));
       $content = htmlspecialchars(trim($_POST['habitat-content']));
 
       if ($title === $habitat['title'] && $content === $habitat['content'] && empty($_FILES['habitat-images']['name'][0])) {
@@ -116,9 +116,9 @@ if (isset($_GET['modified'])) {
           if ($title !== $habitat['title']) {
             for ($i = 1; $i <= 3; $i++) {
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', strtolower($habitat['title'])) . '-0' . $i . '.' . $ext;
+                $file = '../../' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', strtolower($habitat['title'])) . '-0' . $i . '.' . $ext;
                 if (file_exists($file)) {
-                  $newFile = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', strtolower($title)) . '-0' . $i . '.' . $ext;
+                  $newFile = '../../' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', $title) . '-0' . $i . '.' . $ext;
                   rename($file, $newFile);
                 }
               }
@@ -126,7 +126,7 @@ if (isset($_GET['modified'])) {
           }
 
           if (!empty($_FILES['habitat-images']['name'][0])) {
-            $habitatImagesDir = '../..' . _PATH_UPLOADS_ . 'habitats/';
+            $habitatImagesDir = '../../' . _PATH_UPLOADS_ . 'habitats/';
 
             foreach ($_FILES['habitat-images']['tmp_name'] as $key => $tmp_name) {
               $fileName = $_FILES['habitat-images']['name'][$key];
