@@ -13,7 +13,7 @@ if (isset($_GET['delete'])) {
     if (deleteService($pdo, $serviceDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
+          $file = '../../' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', $serviceToDelete['title']) . '-0' . $i . '.' . $ext;
           if (file_exists($file)) {
             unlink($file);
           }
@@ -61,7 +61,7 @@ if (isset($_POST['createService'])) {
             if ($fileSize < 1000000) {
               $serviceName = strtolower(str_replace(' ', '_', $_POST['service-name']));
               $fileNameNew = 'service-' . $serviceName . '-0' . $i . '.' . $fileActualExt;
-              $fileDestination = '../..' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
+              $fileDestination = '../../' . _PATH_UPLOADS_ . 'services/' . $fileNameNew;
               move_uploaded_file($fileTmpName, $fileDestination);
               $i++;
             } else {
@@ -119,9 +119,9 @@ if (isset($_GET['modified'])) {
           if ($name !== $service['title']) {
             for ($i = 1; $i <= 3; $i++) {
               foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-                $file = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
+                $file = '../../' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($service['title'])) . '-0' . $i . '.' . $ext;
                 if (file_exists($file)) {
-                  $newFile = '../..' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
+                  $newFile = '../../' . _PATH_UPLOADS_ . 'services/service-' . str_replace(' ', '_', strtolower($name)) . '-0' . $i . '.' . $ext;
                   rename($file, $newFile);
                 }
               }
@@ -130,7 +130,7 @@ if (isset($_GET['modified'])) {
 
           if (!empty($_FILES['service-images']['tmp_name'][0]) && !empty($_FILES['service-images']['tmp_name'][1]) && !empty($_FILES['service-images']['tmp_name'][2])){
             $serviceImages = [];
-            $serviceImagesDir = '../..' . _PATH_UPLOADS_ . 'services/';
+            $serviceImagesDir = '../../' . _PATH_UPLOADS_ . 'services/';
             $files = scandir($serviceImagesDir);
             $serviceFiles = preg_grep('/service-' . str_replace(' ', '_', strtolower($name)) . '-0[1-3]\.(jpg|jpeg|png|gif)/', $files);
 
