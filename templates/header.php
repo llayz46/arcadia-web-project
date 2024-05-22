@@ -15,6 +15,7 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
   <title><?= $mainMenu[$currentPage]['head_title'] ?> - Arcadia</title>
   <link rel="stylesheet" href="./node_modules/@splidejs/splide/dist/css/splide.min.css">
   <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="shortcut icon" href="./assets/images/arcadia-favicon.svg" type="image/x-icon">
 </head>
 
 <body class="<?php if($currentPage === 'service.php') { echo 'js-service-body service-';} else if($currentPage === 'habitat.php') { echo 'js-habitats-body habitats-';} else if($currentPage === 'animal.php') { echo 'animal-'; } ?>body">
