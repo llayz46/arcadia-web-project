@@ -12,7 +12,7 @@ if (isset($_GET['habitat-delete-id'])) {
     if (deleteHabitat($pdo, $habitatDeleteId)) {
       for ($i = 1; $i <= 3; $i++) {
         foreach (_ALLOWED_EXTENSIONS_ as $ext) {
-          $file = '../..' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', $habitatToDelete['title']) . '-0' . $i . '.' . $ext;
+          $file = '../../' . _PATH_UPLOADS_ . 'habitats/habitat-' . str_replace(' ', '_', $habitatToDelete['title']) . '-0' . $i . '.' . $ext;
           if (file_exists($file)) {
             unlink($file);
           }
