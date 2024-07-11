@@ -40,7 +40,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
         <div class="habitat__card <?php if ($i === 2) {
                                     echo 'habitat__card--middle';
                                   } ?>">
-          <img src="https://arcadiaweb.blob.core.windows.net/images/habitats/habitat-<?=str_replace(' ', '_', $key)?>-01.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="Photo de l'habitat : <?= $key ?>" class="habitat__image">
+          <img src="https://arcadiastockage.blob.core.windows.net/images/habitats/habitat-<?=str_replace(' ', '_', $key)?>-01.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="Photo de l'habitat : <?= $key ?>" class="habitat__image">
           <div class="habitat__button">
             <a href="habitat.php?habitat=<?= $key ?>" class="habitat__link"><?= ucfirst($key) ?>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -104,7 +104,7 @@ $animals = getAnimalsAndBreed($pdo, 6, true);
     <div class="animal__container-grid">
       <?php foreach($animals as $animal) { $animalHabitat = getAnimalHabitatById($pdo, $animal['animal_id']) ?>
         <a href="animal.php?habitat=<?=$animalHabitat['habitat_title']?>" class="animal__card animal__card--index">
-          <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?=strtolower(str_replace(' ', '_', $animal['animal_name']))?>.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="Image d'un(e) <?=strtolower($animal['breed_name'])?>" class="animal__image">
+          <img src="https://arcadiastockage.blob.core.windows.net/images/animals/animal-<?=strtolower(str_replace(' ', '_', $animal['animal_name']))?>.jpg?<?=_AZURE_CONTAINER_KEY_?>" alt="Image d'un(e) <?=strtolower($animal['breed_name'])?>" class="animal__image">
           <h3 class="animal__card-title"><?=ucfirst($animal['breed_name'])?></h3>
         </a>
       <?php } ?>

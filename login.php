@@ -19,6 +19,7 @@ if (isset($_POST['loginUser'])) {
 
   $user = verifyUserAndRoleByLoginPassword($pdo, $email, $password);
 
+  
   if ($user) {
     session_regenerate_id(true);
     $_SESSION['user'] = $user;

@@ -24,6 +24,7 @@ if (isset($_GET['habitat-delete-id'])) {
             $options = new DeleteBlobOptions();
             $blobClient->deleteBlob($containerName, $blobName, $options);
           } catch (ServiceException $e) {
+            error_log($e->getMessage());
           }
         }
       }
@@ -142,6 +143,7 @@ if (isset($_GET['modified'])) {
                     break;
                   }
                 } catch (ServiceException $e) {
+                  error_log($e->getMessage());
                 }
               }
 
@@ -157,6 +159,7 @@ if (isset($_GET['modified'])) {
                     $blobClient->deleteBlob($containerName, $oldBlobName, $optionsDelete);
                   }
                 } catch (ServiceException $e) {
+                  error_log($e->getMessage());
                 }
               }
             }
@@ -174,6 +177,7 @@ if (isset($_GET['modified'])) {
                     break;
                   }
                 } catch (ServiceException $e) {
+                  error_log($e->getMessage());
                 }
               }
 
@@ -182,6 +186,7 @@ if (isset($_GET['modified'])) {
                   $options = new DeleteBlobOptions();
                   $blobClient->deleteBlob($containerName, $oldBlobName, $options);
                 } catch (ServiceException $e) {
+                  error_log($e->getMessage());
                 }
               }
 
@@ -199,6 +204,7 @@ if (isset($_GET['modified'])) {
                   $_SESSION['errorsHabitat'][] = 'Erreur lors de l\'envoi de votre fichier';
                 }
               } catch (ServiceException $e) {
+                error_log($e->getMessage());
               }
             }
           }

@@ -46,7 +46,7 @@ const OnlyUrlPathname = UrlPathname.replace(/^\/|\.php$/g, '')
 const imageArrayCreator = (page) => {
   let pageImageArray = []
   for (let i = 1; i <= 3; i++) {
-    pageImageArray.push(`https://arcadiaweb.blob.core.windows.net/images/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=r&st=2024-05-17T09:26:15Z&se=2026-05-17T17:26:15Z&spr=https&sv=2022-11-02&sr=c&sig=Gjf2Um4a1sGoTS2iWAgJKnZ9LZenwUsz3WGoC5toG9M%3D`)
+    pageImageArray.push(`https://arcadiastockage.blob.core.windows.net/images/${page}s/${page}-${URLParams.get(page).replace(/\s/g, '_')}-0${i}.jpg?sp=racwdli&st=2024-07-11T18:55:44Z&se=2024-12-12T03:55:44Z&spr=https&sv=2022-11-02&sr=c&sig=PdthKWT%2BndencXhrKpdrF%2F5EWTkM10S7H%2FQ8shMeu6U%3D`)
   }
 
   return pageImageArray
@@ -120,9 +120,9 @@ const backgroundChanger = () => {
 // Fonction principale
 const contentChanger = () => {
   if (OnlyUrlPathname === 'service') {
-    serviceBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiaweb.blob.core.windows.net/images/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=r&st=2024-05-17T09:26:15Z&se=2026-05-17T17:26:15Z&spr=https&sv=2022-11-02&sr=c&sig=Gjf2Um4a1sGoTS2iWAgJKnZ9LZenwUsz3WGoC5toG9M%3D")`
+    serviceBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiastockage.blob.core.windows.net/images/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=racwdli&st=2024-07-11T18:55:44Z&se=2024-12-12T03:55:44Z&spr=https&sv=2022-11-02&sr=c&sig=PdthKWT%2BndencXhrKpdrF%2F5EWTkM10S7H%2FQ8shMeu6U%3D")`
   } else {
-    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiaweb.blob.core.windows.net/images/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=r&st=2024-05-17T09:26:15Z&se=2026-05-17T17:26:15Z&spr=https&sv=2022-11-02&sr=c&sig=Gjf2Um4a1sGoTS2iWAgJKnZ9LZenwUsz3WGoC5toG9M%3D")`
+    habitatsBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://arcadiastockage.blob.core.windows.net/images/${OnlyUrlPathname}s/${OnlyUrlPathname}-${URLParams.get(OnlyUrlPathname).replace(/\s/g, '_')}-01.jpg?sp=racwdli&st=2024-07-11T18:55:44Z&se=2024-12-12T03:55:44Z&spr=https&sv=2022-11-02&sr=c&sig=PdthKWT%2BndencXhrKpdrF%2F5EWTkM10S7H%2FQ8shMeu6U%3D")`
   }
 
   navBackground()

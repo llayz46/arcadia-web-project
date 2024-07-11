@@ -29,7 +29,7 @@ if (isset($_GET['habitat'])) {
           <?php foreach ($animals as $index => $animal) {
             $report = getAnimalReportsByAnimalId($pdo, $animal['animal_id']) ?>
             <div class="animal__card animal__card--page">
-              <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?= str_replace(' ', '_', strtolower($animal['animal_name'])) ?>.jpg?<?= _AZURE_CONTAINER_KEY_ ?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
+              <img src="https://arcadiastockage.blob.core.windows.net/images/animals/animal-<?= str_replace(' ', '_', strtolower($animal['animal_name'])) ?>.jpg?<?= _AZURE_CONTAINER_KEY_ ?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
               <h3 class="animal__card-name"><?= mb_ucfirst($animal['animal_name']) ?></h3>
               <button class="animal__card-button js-modal-trigger button-dark js-animal-button" data-target="<?= $index ?>">En savoir plus</button>
             </div>
@@ -45,7 +45,7 @@ if (isset($_GET['habitat'])) {
                 <p class="animal__modal-title">Nom : <?= mb_ucfirst($animal['animal_name']) ?></p>
                 <p class="animal__modal-title">Espèce : <?= mb_ucfirst($animal['breed_name']) ?></p>
                 <p class="animal__modal-title">Habitat : <?= mb_ucfirst($animal['habitat_title']) ?></p>
-                <img src="https://arcadiaweb.blob.core.windows.net/images/animals/animal-<?= str_replace(' ', '_', strtolower($animal['animal_name'])) ?>.jpg?<?= _AZURE_CONTAINER_KEY_ ?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
+                <img src="https://arcadiastockage.blob.core.windows.net/images/animals/animal-<?= str_replace(' ', '_', strtolower($animal['animal_name'])) ?>.jpg?<?= _AZURE_CONTAINER_KEY_ ?>" alt="<?= mb_ucfirst($animal['animal_name']) ?>" class="animal__image">
                 <?php if ($report) { ?>
                   <p class="animal__modal-title animal__modal-title--mt">État : <?= mb_ucfirst($report[0]['state']) ?></p>
                 <?php } ?>
